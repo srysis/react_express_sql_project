@@ -1,0 +1,29 @@
+section#posts {
+	margin-top: 20px;
+
+	article.post {
+		display: flex;
+		justify-content: space-between;
+		width: 50%;
+		margin: 10px auto;
+		border: 2px solid black;
+		padding-inline: 10px;
+
+		div {
+			margin-block: 10px;
+			border: 1px solid black;
+			padding: 5px 15px;
+		}
+
+		div.post_title {
+			width: 90%;
+			border-right: 0;
+			text-align: left;
+		}
+
+		div.post_author {
+			width: 10%;
+		}
+	}
+}
+
