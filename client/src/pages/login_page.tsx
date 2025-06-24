@@ -1,0 +1,69 @@
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
+
+import axios from '../api/axios'
+import { setAuthorizationHeader } from '../tools/setHeaders'
+
+function LoginPage({ isLoggedIn, setLoggedIn }) {
+	const [user_credentials, setUserCredentials] = useState({});
+
+	const navigate = useNavigate();
+
+	const REQUEST_HEADERS = {
+		'Content-Type': 'application/json'
+	}
+
+	useEffect(() => {
+		if (isLoggedIn) navigate('/');
+	}, [])
+
+	function onChangeHandler(event) {
+		setUserCredentials({
+			...user_credentials,
+			[event.target.name]: event.target.value
+		})
+	}
+
+	function onSubmitHandler(event) {
+		event.preventDefault();
+
+		axios.post('/login', user_credentials, { headers: REQUEST_HEADERS })
+		.then(response => {
+			const result = response.data;
+
+			if (result.success) {
+				const token = result.token;
+				const user_id = result.user_id;
+
+				window.localStorage.setItem('t', token);
+				window.localStorage.setItem('id', user_id);
+
+				setAuthorizationHeader(token);
+
+				setLoggedIn(true);
+
+				navigate('/');
+			}
+		})
+		.catch(error => console.error(error));
+	}
+
+	return(
+		<>
+			{ !isLoggedIn && 
+				<div id="login">
+					<h1>Login</h1>
+					<form onSubmit={onSubmitHandler}>
+						<input type="text" name="username" autoComplete="off" onChange={onChangeHandler} />
+						<input type="password" name="password" onChange={onChangeHandler} />
+						<button>Login</button>
+					</form>
+					<Link to="/register">Register</Link>
+				</div>
+			}
+		</>
+	)
+}
+
+export default LoginPage;

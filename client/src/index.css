@@ -1,0 +1,38 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scrollbar-width: thin;
+	scrollbar-color: #aaa #000;
+}
+
+body {
+	text-align: center;
+	overflow-y: scroll;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+header {
+	display: flex;
+	flex-direction: column;
+
+	div {
+		display: flex;
+		justify-content: space-evenly;
+		width: 30%;
+		margin: auto;
+		margin-top: 10px;
+	}
+}
+
+main {
+	margin-top: 30vh;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
