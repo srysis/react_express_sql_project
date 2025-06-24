@@ -24,7 +24,7 @@ const database = mysql.createConnection({
 
 // root
 app.get('/', (request, response) => {
-	response.json("This is a root of localhost on port 8081.");
+	response.json(`This is a root of localhost on port ${port}.`);
 });
 
 app.post('/register', (request, response) => {
@@ -61,9 +61,9 @@ app.post('/login', (request, response) => {
 
 		if (data.length) {
 			const signed_token = jwt.sign({ id: data[0].id }, jwt_key);
-			response.json({success: true, token: signed_token, user_id: data[0].id});
+			response.json({success: true, token: signed_token, admin: data[0].admin, user_id: data[0].id});
 		} else {
-			response.status(401).json({success: false, message: 'No user found.'});
+			response.status(404).json({success: false, message: 'No user found.'});
 		}
 	})
 });
@@ -77,7 +77,18 @@ app.get('/verify/:id', (request, response) => {
 			const decoded_token = jwt.verify(token, jwt_key);
 
 			if (decoded_token.id == user_id) { 
-				response.json({success: true, message: "User is logged in."}); 
+				let isAdmin;
+
+				const sql_query = "SELECT `id`,`admin` FROM `users` WHERE `id` = " + decoded_token.id;
+
+				database.query(sql_query, (error, data) => {
+					if (error) return response.json(error);
+
+					if (data[0].admin == 1) isAdmin = data[0].admin;
+
+					response.json({success: true, message: "User is logged in.", admin: isAdmin});
+				})
+
 			} else {
 				response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID."});
 			}
