@@ -88,7 +88,7 @@ app.get('/verify/:id', (request, response) => {
 
 					response.json({success: true, message: "User is logged in.", admin: isAdmin});
 				})
-				
+
 			} else {
 				response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID."});
 			}
@@ -131,7 +131,7 @@ app.get('/user/:id', (request, response) => {
 		})
 
 	} else {
-		response.json({success: false, message: "No authorization header passed."});
+		response.json({success: false, message: "No user ID passed."});
 	}
 });
 
@@ -163,6 +163,8 @@ app.delete('/user/:id/delete', authenticator, (request, response) => {
 			response.json({success: true, message: "User record was deleted."});
 		})
 	})
+
+	response.status(500).json({success: false, message: "Unidentified error in '/user/:id/delete' request."});
 })
 
 app.get('/search/:queue', (request, response) => {
