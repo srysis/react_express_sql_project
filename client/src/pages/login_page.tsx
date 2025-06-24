@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import axios from '../api/axios'
 import { setAuthorizationHeader } from '../tools/setHeaders'
 
-function LoginPage({ isLoggedIn, setLoggedIn }) {
+function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 	const [user_credentials, setUserCredentials] = useState({});
 
 	const navigate = useNavigate();
@@ -42,6 +42,8 @@ function LoginPage({ isLoggedIn, setLoggedIn }) {
 				setAuthorizationHeader(token);
 
 				setLoggedIn(true);
+
+				if (result.admin) setHasAdminRights(true);
 
 				navigate('/');
 			}
