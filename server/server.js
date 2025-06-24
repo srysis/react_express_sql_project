@@ -198,4 +198,22 @@ app.get('/posts', (request, response) => {
 	})
 })
 
+app.get('/posts/:id', (request, response) => {
+	const requested_id = request.params.id;
+
+	const get_posts_of_one_user_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_content`, `user_posts`.`post_date` " +
+										"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " +
+										"WHERE `user_posts`.`post_author` = " + requested_id + ";";
+
+	database.query(get_posts_of_one_user_query, (error, data) => {
+		if (error) return response.json(error);
+
+		if (data.length) {
+			response.json({results: data})
+		} else {
+			response.json({message: "User has no posts."})
+		}
+	})
+})
+
 app.listen(port, () => {console.log(`server runs on port ${port}`)});
