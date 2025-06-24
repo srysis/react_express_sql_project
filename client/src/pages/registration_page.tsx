@@ -53,7 +53,7 @@ function RegistrationPage({isLoggedIn}) {
 				<div id="registration_form">
 					<h1>Register</h1>
 					<form onSubmit={onSubmitHandler}>
-						<input type="text" name="username" autocomplete="off" onChange={onChangeHandler} />
+						<input type="text" name="username" autoComplete="off" onChange={onChangeHandler} />
 						<input type="password" name="password" onChange={onChangeHandler} />
 						<button>Register!</button>
 					</form>
