@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import axios from '../api/axios'
 
-function ProfilePage({isLoggedIn}) {
+function ProfilePage({isLoggedIn, isAdmin}) {
 	const { id } = useParams();
 
 	const [hasUserData, setHasUserData] = useState(false);
@@ -64,6 +64,7 @@ function ProfilePage({isLoggedIn}) {
 				<h3>{userData.description}</h3>
 				{ ownership && <p>this is your profile</p> }
 				{ ownership && <Link to={`/user/${id}/edit`}>Edit profile</Link> }
+				{ isAdmin && <p>You are an admin. Rejoice.</p> }
 			</div>
 		)
 	}
