@@ -187,4 +187,15 @@ app.get('/search/:queue', (request, response) => {
 	}
 })
 
+app.get('/posts', (request, response) => {
+	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_content`, `user_posts`.`post_date` " +
+								"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author`;"
+
+	database.query(get_all_posts_query, (error, data) => {
+		if (error) return response.json(error);
+
+		response.json({posts: data});
+	})
+})
+
 app.listen(port, () => {console.log(`server runs on port ${port}`)});
