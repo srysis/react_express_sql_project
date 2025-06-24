@@ -27,6 +27,7 @@ function App() {
 	}
 
 	const [isLoggedIn, setLoggedInState] = useState(logged_in);
+	const [hasAdminRights, setHasAdminRights] = useState(false);
 
 	useEffect(() => {
 		if (stored_web_token && stored_user_ID) {
@@ -36,6 +37,8 @@ function App() {
 			.then(response => {
 				if (response.data.success) {
 					setLoggedInState(true);
+
+					if (response.data.admin) setHasAdminRights(true);
 				} else {
 					setLoggedInState(false);
 				}
@@ -43,6 +46,7 @@ function App() {
 			.catch(error => {
 				if (!error.response.data.success) {
 					setLoggedInState(false);
+					setHasAdminRights(false);
 
 					setAuthorizationHeader(null);
 
@@ -54,6 +58,7 @@ function App() {
 			});
 		} else {
 			setLoggedInState(false);
+			setHasAdminRights(false);
 
 			setAuthorizationHeader(null);
 
@@ -67,6 +72,10 @@ function App() {
 		setLoggedInState(value);
 	}
 
+	function setHasAdminRightsWrapper(value) {
+		setHasAdminRights(value);
+	}
+
 	return (
 		<BrowserRouter basename="/">
 			<Routes>
@@ -75,10 +84,10 @@ function App() {
 						<Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
 						<Route path="/user/:id/edit" element={<ProfileEditPage isLoggedIn={isLoggedIn} />} />
 					</Route>
-					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} />} />
+					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
-					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} />} />
+					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
