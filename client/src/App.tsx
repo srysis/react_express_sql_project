@@ -80,14 +80,16 @@ function App() {
 		<BrowserRouter basename="/">
 			<Routes>
 				<Route element={<BaseLayout isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} />} >
-					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
-						<Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
-						<Route path="/user/:id/edit" element={<ProfileEditPage isLoggedIn={isLoggedIn} />} />
-					</Route>
+					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
 					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
+
+					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
+						<Route path="/user/:id/edit" element={<ProfileEditPage isLoggedIn={isLoggedIn} />} />
+					</Route>
+
 				</Route>
 			</Routes>
 		</BrowserRouter>
