@@ -88,7 +88,7 @@ app.get('/verify/:id', (request, response) => {
 
 					response.json({success: true, message: "User is logged in.", admin: isAdmin});
 				})
-
+				
 			} else {
 				response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID."});
 			}
@@ -145,6 +145,23 @@ app.patch('/user/:id/edit', authenticator, (request, response) => {
 		if (error) return response.json(error);
 
 		response.json({success: true, message: "User's info was updated successfully."});
+	})
+})
+
+app.delete('/user/:id/delete', authenticator, (request, response) => {
+	const requested_id = request.params.id;
+
+	const delete_user_info_query = "DELETE FROM users_info WHERE `users_info`.`user_id` = " + requested_id;
+	const delete_user_query = "DELETE FROM `users` WHERE `users`.`id` = " + requested_id;
+
+	database.query(delete_user_info_query, (error, data) => {
+		if (error) return response.json(error);
+
+		database.query(delete_user_query, (error, data) => {
+			if (error) return response.json(error);
+
+			response.json({success: true, message: "User record was deleted."});
+		})
 	})
 })
 
