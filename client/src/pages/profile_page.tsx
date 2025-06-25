@@ -64,7 +64,7 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 				<h3>{userData.description}</h3>
 				{ ownership && <p>this is your profile</p> }
 				{ ownership && <Link to={`/user/${id}/edit`}>Edit profile</Link> }
-				{ isAdmin && <p>You are an admin. Rejoice.</p> }
+				{ ownership && isAdmin && <p>You are an admin. Rejoice.</p> }
 			</div>
 		)
 	}
