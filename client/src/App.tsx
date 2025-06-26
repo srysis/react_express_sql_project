@@ -12,6 +12,7 @@ import RegistrationPage from './pages/registration_page'
 import LoginPage from './pages/login_page'
 import ProfilePage from './pages/profile_page'
 import ProfileEditPage from './pages/profile_edit_page'
+import PostPage from './pages/post_page'
 import CreatePostPage from './pages/create_post_page'
 import SearchPage from './pages/search_page'
 
@@ -86,6 +87,7 @@ function App() {
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
 					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
+					<Route path="/post/:post_id" element={<PostPage isLoggedIn={isLoggedIn} />} />
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/edit" element={<ProfileEditPage isLoggedIn={isLoggedIn} />} />
