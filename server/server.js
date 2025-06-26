@@ -198,7 +198,25 @@ app.get('/posts', (request, response) => {
 	})
 })
 
-app.get('/posts/:id', (request, response) => {
+app.get('/post/:post_id', (request, response) => {
+	const requested_post_id = request.params.post_id;
+
+	const get_post_by_id_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author` " +
+								 "FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " +
+								 "WHERE `user_posts`.`post_id` = " + requested_post_id;
+
+	database.query(get_post_by_id_query, (error, data) => {
+		if (error) return response.json(error);
+
+		if (data.length) {
+			response.json({post: data})
+		} else {
+			response.json({message: "Post does not exist or was deleted by it's author."})
+		}
+	})
+})
+
+app.get('/user/:id/posts', (request, response) => {
 	const requested_id = request.params.id;
 
 	const get_posts_of_one_user_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author` " +
