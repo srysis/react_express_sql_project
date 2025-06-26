@@ -5,7 +5,7 @@ function Post({content}) {
 	return (
 		<article className="post">
 			<div className="post_title">
-				<p>{content.post_content}</p>
+				<p>{content.post_title}</p>
 			</div>
 			<div className="post_author">
 				<Link to={`/user/${content.post_author}`}>{content.post_author_name}</Link>
