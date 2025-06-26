@@ -11,18 +11,30 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 	const [userData, setUserData] = useState({});
 	const [ownership, setOwnership] = useState(false);
 
+	const [arePostsRetrieved, setArePostsRetrieved] = useState(false);
+	const [user_posts, setUserPosts] = useState([]);
+
 	useEffect(() => {
 		if (!hasUserData) {
 			axios.get(`/user/${id}`)
 			.then(response => {
 				setUserData(response.data.user_info);
-				setHasUserData(true);
-
+				
 				if (response.data.ownership) {
 					setOwnership(true);
 				} else {
 					setOwnership(false);
 				}
+
+				axios.get(`/user/${id}/posts`)
+				.then(response => {
+					setUserPosts(response.data.results);
+
+					setArePostsRetrieved(true);
+				})
+				.catch(error => console.log(error.response.data))
+
+				setHasUserData(true);
 			})
 			.catch(error => {
 				setHasUserData(false);
@@ -43,13 +55,22 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 		axios.get(`/user/${id}`)
 		.then(response => {
 			setUserData(response.data.user_info);
-			setHasUserData(true);
-
+			
 			if (response.data.ownership) {
 				setOwnership(true);
 			} else {
 				setOwnership(false);
 			}
+
+			axios.get(`/user/${id}/posts`)
+			.then(response => {
+				setUserPosts(response.data.results);
+
+				setArePostsRetrieved(true);
+			})
+			.catch(error => console.log(error.response.data))
+
+			setHasUserData(true);
 		})
 		.catch(error => {
 			setHasUserData(false);
@@ -72,6 +93,11 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 					</>
 				}
 				{ ownership && isAdmin && <p>You are an admin. Rejoice.</p> }
+				<br />
+				{ 
+					arePostsRetrieved && (user_posts != undefined) && 
+					user_posts.map((post, index) => <h1 key={index}>{post.post_title}</h1>) 
+				}
 			</div>
 		)
 	}
