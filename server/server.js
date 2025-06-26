@@ -188,7 +188,7 @@ app.get('/search/:queue', (request, response) => {
 })
 
 app.get('/posts', (request, response) => {
-	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author` " +
+	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author` " +
 								"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author`;"
 
 	database.query(get_all_posts_query, (error, data) => {
@@ -201,7 +201,7 @@ app.get('/posts', (request, response) => {
 app.get('/posts/:id', (request, response) => {
 	const requested_id = request.params.id;
 
-	const get_posts_of_one_user_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author` " +
+	const get_posts_of_one_user_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author` " +
 										"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " +
 										"WHERE `user_posts`.`post_author` = " + requested_id + ";";
 
