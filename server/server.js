@@ -209,9 +209,9 @@ app.get('/post/:post_id', (request, response) => {
 		if (error) return response.json(error);
 
 		if (data.length) {
-			response.json({post: data})
+			response.json({post: data[0]})
 		} else {
-			response.json({message: "Post does not exist or was deleted by it's author."})
+			response.json({message: "Post does not exist or was deleted by it's author.", post: null})
 		}
 	})
 })
