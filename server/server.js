@@ -216,4 +216,18 @@ app.get('/posts/:id', (request, response) => {
 	})
 })
 
+app.post('/user/:id/create_post', authenticator, (request, response) => {
+	const user_id = request.params.id;
+	const post = request.body.post;
+
+	const sql_query = "INSERT INTO `user_posts` (`post_id`, `post_title`, `post_content`, `post_date`, `post_author`) VALUES (NULL, '" + 
+						post.post_title + "', '" + post.post_content + "', CURRENT_TIMESTAMP, '" + user_id + "');";
+
+	database.query(sql_query, (error, data) => {
+		if (error) return response.json(error);
+
+		response.json({success: true, message: "Posted.", post_content: post})
+	})
+})
+
 app.listen(port, () => {console.log(`server runs on port ${port}`)});
