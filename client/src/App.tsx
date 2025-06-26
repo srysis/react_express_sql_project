@@ -89,7 +89,7 @@ function App() {
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/edit" element={<ProfileEditPage isLoggedIn={isLoggedIn} />} />
-						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} />} />
+						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
 					</Route>
 
 				</Route>
