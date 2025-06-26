@@ -12,6 +12,7 @@ import RegistrationPage from './pages/registration_page'
 import LoginPage from './pages/login_page'
 import ProfilePage from './pages/profile_page'
 import ProfileEditPage from './pages/profile_edit_page'
+import CreatePostPage from './pages/create_post_page'
 import SearchPage from './pages/search_page'
 
 function App() {
@@ -88,6 +89,7 @@ function App() {
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/edit" element={<ProfileEditPage isLoggedIn={isLoggedIn} />} />
+						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} />} />
 					</Route>
 
 				</Route>
