@@ -1,0 +1,39 @@
+section#posts_by_user {
+	margin-top: 20px;
+
+	article.post {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 65%;
+		margin: 10px auto;
+		border: 2px solid black;
+
+		div {
+			padding: 5px 15px;
+		}
+
+		div.link_container {
+			width: 100%;
+			position: relative;
+
+			div.overlay > a {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				z-index: 2;
+			}
+		}
+
+		div.link_container:hover {
+			background-color: #ddd;
+		}
+
+		div.post_content {
+			text-align: left;
+		}
+	}
+}
+
