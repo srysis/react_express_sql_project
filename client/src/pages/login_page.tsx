@@ -57,9 +57,17 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 				<div id="login">
 					<h1>Login</h1>
 					<form onSubmit={onSubmitHandler}>
-						<input type="text" name="username" autoComplete="off" onChange={onChangeHandler} />
-						<input type="password" name="password" onChange={onChangeHandler} />
-						<button>Login</button>
+						<div className="input_container">
+							<label htmlFor="username">Username:</label>
+							<input type="text" id="username" name="username" autoComplete="off" onChange={onChangeHandler} />
+						</div>
+						<div className="input_container">
+							<label htmlFor="password">Password:</label>
+							<input type="password" name="password" onChange={onChangeHandler} />
+						</div>
+						<div className="subimt_container">
+							<button>Login</button>
+						</div>
 					</form>
 					<Link to="/register">Register</Link>
 				</div>
