@@ -18,28 +18,25 @@ function CreatePostPage({isLoggedIn, USER_ID, setLoggedIn, setHasAdminRights}) {
 		}
 	}, [])
 
-	function onSubmitHandler(event) {
+	async function onSubmitHandler(event) {
 		event.preventDefault();
 
-		/*
-			to make sure that user is allowed to post, make a 'verify' call to check
-			if user's client does not contain modified token or changed 'id'
-		*/
+		try {
+			/*
+				to make sure that user is allowed to post, make a 'verify' call to check
+				if user's client does not contain modified token or changed 'id'
+			*/
+			const verification_response = await axios.get(`/verify/${window.localStorage.getItem('id')}`);
 
-		axios.get(`/verify/${window.localStorage.getItem('id')}`)
-		.then(response => {
-			if (response.data.success) {
+			if (verification_response.data.success) {
+				// if user has been verified, create a post
+				const create_post_response = await axios.post(`/user/${USER_ID}/create_post`, { post: post_content });
 
-				/* if user is successfully verified, create a post */
-				axios.post(`/user/${USER_ID}/create_post`, { post: post_content })
-				.then(response => {
-					console.log(response.data)
-				})
-				.catch(error => error.response.data)
-
+				if (create_post_response.data.success) {
+					navigate('/');
+				}
 			}
-		})
-		.catch(error => {
+		} catch (error) {
 			if (!error.response.data.success) {
 				setLoggedIn(false);
 				setHasAdminRights(false);
@@ -51,23 +48,29 @@ function CreatePostPage({isLoggedIn, USER_ID, setLoggedIn, setHasAdminRights}) {
 
 				console.error(error.response.data.message);
 			}
-		})
+		}
 	}
 
 	function onChangeHandler(event) {
 		setPostContent({
 			...post_content,
-			[event.target.name]: event.target.value
+			[event.target.id]: event.target.value
 		})
 	}
 
 	return (
 		<form onSubmit={onSubmitHandler}>
-			<input type="text" name="post_title" placeholder="Title" onChange={onChangeHandler} />
-			<br /><br />
-			<textarea name="post_content" rows="4" cols="50" placeholder="Content" onChange={onChangeHandler}></textarea>
-			<br />
-			<button>Post</button>
+			<div className="input_container">
+				<label htmlFor="post_title">Title:</label>
+				<input type="text" id="post_title" placeholder="Title" onChange={onChangeHandler} />
+			</div>
+			<div className="input_container">
+				<label htmlFor="post_content">Content:</label>
+				<textarea id="post_content" rows="4" cols="50" placeholder="Share your opinions..." onChange={onChangeHandler}></textarea>
+			</div>
+			<div className="input_container">
+				<button>Post</button>
+			</div>
 		</form>
 	)
 }
