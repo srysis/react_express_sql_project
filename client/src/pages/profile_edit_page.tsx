@@ -9,11 +9,13 @@ function ProfileEditPage({isLoggedIn}) {
 
 	const { id } = useParams();
 
-	const [hasUserData, setHasUserData] = useState(false);
 	const [userData, setUserData] = useState({});
+	const [hasUserData, setHasUserData] = useState(false);
 
 	const [wasUserDataChanged, setWasNewUserDataChanged] = useState(false);
-	const [new_user_data, setNewUserData] = useState({})
+
+	const [newUsername, setNewUsername] = useState("");
+	const [newDescription, setNewDescription] = useState("");
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
@@ -28,9 +30,11 @@ function ProfileEditPage({isLoggedIn}) {
 				let data = response.data.user_info;
 
 				setUserData(data);
-				setNewUserData(data);
+				setNewUsername(data.name);
+				setNewDescription(data.description);
 			})
 			.catch(error => {
+				console.error(error)
 				setHasUserData(false);
 				setUserData({});
 			}) 
@@ -38,34 +42,49 @@ function ProfileEditPage({isLoggedIn}) {
 	}, []);
 
 	function onChangeHandler(event) {
-		setNewUserData({
-			...new_user_data,
-			[event.target.name]: event.target.value
-		})
+		switch (event.target.id) {
+			case "username":
+				setNewUsername(event.target.value);
+				break;
+			case "description":
+				setNewDescription(event.target.value);
+				break;
+			default:
+				console.error("Unexpected error")
+				break;
+		}
 
 		setWasNewUserDataChanged(true);
 	}
 
-	function onSubmitHandler(event) {
+	async function onSubmitHandler(event) {
 		event.preventDefault();
 
-		axios.patch(`/user/${id}/edit`, {new_user_data: new_user_data})
-		.then(response => {
+		try {
+			const response = await axios.patch(`/user/${id}/edit`, {username: newUsername, description: newDescription});
+
 			if (response.data.success) {
 				navigate(`/user/${id}`);
 			}
-		})
-		.catch(error => {
-			console.error(error.response.data.message);
-		})
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	if (hasUserData) {
 		return(
 			<form onSubmit={onSubmitHandler}>
-				<input type="text" name="name" defaultValue={userData.name} placeholder="New name" autoComplete="off" onChange={onChangeHandler} />
-				<input type="text" name="description" defaultValue={userData.description} placeholder="New profile description" autoComplete="off" onChange={onChangeHandler} />
-				<button disabled={!wasUserDataChanged}>Apply changes</button>
+				<div className="input_container">
+					<label htmlFor="username">Username:</label>
+					<input type="text" id="username" defaultValue={userData.name} placeholder="New name" autoComplete="off" onChange={onChangeHandler} />
+				</div>
+				<div className="input_container">
+					<label htmlFor="description">Description</label>
+					<textarea id="description" defaultValue={userData.description} rows="4" cols="50" placeholder="Content" onChange={onChangeHandler}></textarea>
+				</div>
+				<div className="input_container">
+					<button disabled={!wasUserDataChanged}>Apply changes</button>
+				</div>
 			</form>
 		)
 	}
