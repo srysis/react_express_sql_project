@@ -83,6 +83,8 @@ function App() {
 			<Routes>
 				<Route element={<BaseLayout isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} />} >
 					<Route path="/" element={<Home />} />
+					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
+					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
 					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
 					<Route path="/post/:post_id" element={<PostPage isLoggedIn={isLoggedIn} />} />
@@ -91,9 +93,8 @@ function App() {
 						<Route path="/user/:id/edit" element={<ProfileEditPage isLoggedIn={isLoggedIn} />} />
 						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
 					</Route>
+
 				</Route>
-				<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
-				<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 			</Routes>
 		</BrowserRouter>
 	)
