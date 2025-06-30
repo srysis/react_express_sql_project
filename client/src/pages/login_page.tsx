@@ -48,7 +48,7 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 				navigate('/');
 			}
 		})
-		.catch(error => console.error(error));
+		.catch(error => console.error(error.response.data.message));
 	}
 
 	return(

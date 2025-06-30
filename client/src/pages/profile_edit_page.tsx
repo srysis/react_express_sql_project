@@ -67,7 +67,7 @@ function ProfileEditPage({isLoggedIn}) {
 				navigate(`/user/${id}`);
 			}
 		} catch (error) {
-			console.error(error);
+			console.error(error.response.data.message);
 		}
 	}
 
