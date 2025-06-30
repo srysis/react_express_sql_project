@@ -4,25 +4,35 @@ section#posts {
 	article.post {
 		display: flex;
 		justify-content: space-between;
-		width: 50%;
+		align-items: center;
+		width: 65%;
 		margin: 10px auto;
 		border: 2px solid black;
-		padding-inline: 10px;
 
 		div {
-			margin-block: 10px;
-			border: 1px solid black;
 			padding: 5px 15px;
 		}
 
-		div.post_title {
-			width: 90%;
-			border-right: 0;
-			text-align: left;
+		div.link_container {
+			width: 100%;
+			position: relative;
+
+			div.overlay > a {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				z-index: 2;
+			}
 		}
 
-		div.post_author {
-			width: 10%;
+		div.link_container:hover {
+			background-color: #ddd;
+		}
+
+		div.post_content {
+			text-align: left;
 		}
 	}
 }
