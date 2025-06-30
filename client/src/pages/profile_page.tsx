@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom'
 
 import axios from '../api/axios'
 
+import PostByUser from "../components/posts/PostByUser"
+
+import "../style/profile_page/posts.css"
+
 function ProfilePage({isLoggedIn, isAdmin}) {
 	const { id } = useParams();
 
@@ -96,7 +100,10 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 				<br />
 				{ 
 					arePostsRetrieved && (user_posts != undefined) && 
-					user_posts.map((post, index) => <h1 key={index}>{post.post_title}</h1>) 
+					<section id="posts_by_user">
+						<h2>{`Recent posts from ${userData.name}`}</h2>
+						{user_posts.map((post, index) => <PostByUser key={index} content={post} />)}
+					</section> 
 				}
 			</div>
 		)
