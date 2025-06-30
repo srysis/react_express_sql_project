@@ -31,18 +31,28 @@ app.post('/register', (request, response) => {
 	const username = request.body.username;
 	const password = request.body.password;
 
-	const sql_query = "INSERT INTO `users` (`id`, `username`, `password`) VALUES (LAST_INSERT_ID(), '" + username + "', '" + password + "');"
+	const check_username_query = "SELECT * FROM `users` WHERE `username` = '" + username + "'";
 
-	database.query(sql_query, (error, data) => {
+	database.query(check_username_query, (error, data) => {
 		if (error) return response.json(error);
-		return response.json({success: true, message: data});
+
+		if (!data.length) {
+			const register_query = "INSERT INTO `users` (`username`, `password`) VALUES ('" + username + "', '" + password + "');"
+
+			database.query(register_query, (error, data) => {
+				if (error) return response.json(error);
+				return response.json({success: true, message: data});
+			})
+		} else {
+			response.status(409).json({success: false, message: "Username is already taken."});
+		}
 	})
 });
 
 app.post('/set_default_user_info', (request, response) => {
 	const username = request.body.username;
 
-	const sql_query = "INSERT INTO `users_info` (`user_id`, `name`) VALUES (LAST_INSERT_ID(), '" + username + "');"
+	const sql_query = "INSERT INTO `users_info` (`name`) VALUES ('" + username + "');"
 
 	database.query(sql_query, (error, data) => {
 		if (error) return response.json(error);
