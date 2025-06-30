@@ -147,9 +147,10 @@ app.get('/user/:id', (request, response) => {
 
 app.patch('/user/:id/edit', authenticator, (request, response) => {
 	const requested_id = request.params.id;
-	const user_data = request.body.new_user_data;
+	const username = request.body.username;
+	const description = request.body.description;
 
-	const sql_query = "UPDATE `users_info` SET `name` = '" + user_data.name + "', `description` = '" + user_data.description + "' WHERE `users_info`.`user_id` = " + requested_id; 
+	const sql_query = "UPDATE `users_info` SET `name` = '" + username + "', `description` = '" + description + "' WHERE `users_info`.`user_id` = " + requested_id; 
 
 	database.query(sql_query, (error, data) => {
 		if (error) return response.json(error);
