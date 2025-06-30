@@ -1,10 +1,23 @@
-import { useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
 import axios from '../api/axios'
 
+const USER_REGEX = /^[a-zA-Z][a-zA-Z-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
+
 function RegistrationPage({isLoggedIn}) {
-	const [user_credentials, setUserCredentials] = useState({});
+	const userRef = useRef();
+	const errorRef = useRef();
+
+	const [username, setUsername] = useState("");
+	const [isUsernameValid, setIsUsernameValid] = useState(false);
+
+	const [password, setPassword] = useState("");
+	const [isPasswordValid, setIsPasswordValid] = useState(false);
+
+	const [matchingPassword, setMatchingPassword] = useState("");
+	const [doPasswordsMatch, setDoPasswordsMatch] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -13,38 +26,68 @@ function RegistrationPage({isLoggedIn}) {
 	}
 
 	useEffect(() => {
+		userRef.current.focus();
+
 		if (isLoggedIn) navigate('/');
-	}, [])
+	}, []);
+
+	useEffect(() => {
+		setIsUsernameValid(USER_REGEX.test(username));
+	}, [username]);
+
+	useEffect(() => {
+		setIsPasswordValid(PWD_REGEX.test(password));
+		setDoPasswordsMatch(password === matchingPassword);
+	}, [password, matchingPassword]);
 
 	function onChangeHandler(event) {
-		setUserCredentials({
-			...user_credentials,
-			[event.target.name]: event.target.value
-		})
+		switch (event.target.id) {
+			case "username":
+				setUsername(event.target.value);
+				break;
+			case "password":
+				setPassword(event.target.value);
+				break;
+			case "match_password":
+				setMatchingPassword(event.target.value);
+				break;
+			default:
+				console.error("Unexpected error.");
+				break;
+		}
 	}
 
-	function onSubmitHandler(event) {
+	async function onSubmitHandler(event) {
 		event.preventDefault();
 
-		axios.post('/register', user_credentials, { headers: REQUEST_HEADERS })
-		.then(response => {
-			if (response.data.success) {
+		if (!USER_REGEX.test(username) || !PWD_REGEX.test(password)) {
+			console.error("Missing credentials.");
+			return;
+		}
 
-				axios.post('/set_default_user_info', { username: user_credentials.username }, { headers: REQUEST_HEADERS })
-				.then(response => {
-					if (response.data.success) {
-						navigate('/login');
-					} else {
-						navigate('/register');
-					}
-				})
-				.catch(error => console.error(error.response.data))
+		try {
+			const register_response = await axios.post('/register', { username: username, password: password } , { headers: REQUEST_HEADERS });
 
-			} else {
-				navigate('/register');
+			console.log(register_response)
+
+			if (register_response.data.success) {
+				const set_default_info_response = await axios.post('/set_default_user_info', { username: username }, { headers: REQUEST_HEADERS });
+
+				if (set_default_info_response.data.success) {
+					navigate('/login');
+				} else {
+					navigate('/register');
+				}
 			}
-		})
-		.catch(error => console.error(error.response.data));
+		} catch (error) {
+			if (error.response?.status === 409) {
+				console.error("Username was taken")
+			} else if (error?.response) {
+				console.error("No response");
+			} else {
+				console.error("Registration failed");
+			}
+		}
 	}
 
 	return(
@@ -53,9 +96,16 @@ function RegistrationPage({isLoggedIn}) {
 				<div id="registration_form">
 					<h1>Register</h1>
 					<form onSubmit={onSubmitHandler}>
-						<input type="text" name="username" autoComplete="off" onChange={onChangeHandler} />
-						<input type="password" name="password" onChange={onChangeHandler} />
-						<button>Register!</button>
+						<label htmlFor="username">Username:</label>
+						<input type="text" id="username" ref={userRef} autoComplete="off" onChange={onChangeHandler} required />
+						<br />
+						<label htmlFor="password">Password:</label>
+						<input type="password" id="password" onChange={onChangeHandler} required />
+						<br />
+						<label htmlFor="match_password">Confirm password:</label>
+						<input type="password" id="match_password" onChange={onChangeHandler} required />
+						<br />
+						<button disabled={!isUsernameValid || !isPasswordValid || !doPasswordsMatch ? true : false}>Register!</button>
 					</form>
 				</div>
 			}
