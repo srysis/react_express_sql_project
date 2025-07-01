@@ -5,17 +5,25 @@ section#posts {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		width: 65%;
-		margin: 10px auto;
-		border: 2px solid black;
+		margin: auto;
+		border-bottom: 1px solid white;
 
 		div {
-			padding: 5px 15px;
+			padding: 10px 20px;
+		}
+
+		div.overlay {
+			padding: 0;
+		}
+
+		div.post_author {
+			width: 7%;
 		}
 
 		div.link_container {
-			width: 100%;
+			width: 93%;
 			position: relative;
+			border-left: 1px solid white;
 
 			div.overlay > a {
 				position: absolute;
@@ -28,7 +36,11 @@ section#posts {
 		}
 
 		div.link_container:hover {
-			background-color: #ddd;
+			background-color: #333;
+		}
+
+		div.link_container:active {
+			background-color: #222;
 		}
 
 		div.post_content {
