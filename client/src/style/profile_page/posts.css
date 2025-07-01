@@ -1,15 +1,16 @@
 section#posts_by_user {
-	margin-top: 20px;
+	margin-top: 30px;
+	background-color: rgb(14, 15, 16);
 
 	h2 {
-		margin-bottom: 20px;
+		padding-block: 20px;
 	}
 
 	article.post {
 		display: flex;
 
 		div {
-			padding: 10px 20px;
+			padding: 10px 1vw;
 		}
 
 		div.overlay {
