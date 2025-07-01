@@ -6,6 +6,7 @@ import axios from '../api/axios'
 
 import PostByUser from "../components/profile_page/PostByUser"
 
+import "../style/profile_page/profile_page.css"
 import "../style/profile_page/posts.css"
 
 function ProfilePage({isLoggedIn, isAdmin}) {
@@ -97,9 +98,9 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 					<div id="options">
 						{ 
 							ownership && 
-							<>
+							<div>
 								<Link to={`/user/${id}/edit`}>Edit profile</Link>
-							</>
+							</div>
 						}
 					</div>
 				</div>
