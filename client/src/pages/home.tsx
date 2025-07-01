@@ -20,14 +20,11 @@ function Home() {
 
 	if (arePostsRetrieved) {
 		return(
-			<div>
-				<h1>Home page</h1>
-				<p>Welcome to home page</p>
+			<section id="home">
 				<section id="posts">
-					<h2>Recent posts</h2>
 					{retrieved_posts.map((post, index) => <Post key={index} content={post} />)}
 				</section>
-			</div>
+			</section>
 		)
 	}
 	
