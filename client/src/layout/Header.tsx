@@ -33,6 +33,7 @@ function Header({isLoggedIn, setLoggedIn}) {
 				{isLoggedIn && 
 					<> 
 						<Link to={`/user/${stored_user_id}`}>Profile</Link>
+						<Link to={`/user/${stored_user_id}/create_post`}>Create a post</Link>
 						<button id="log_off_button" onClick={logOff}>Log Off</button>
 					</>
 				}
