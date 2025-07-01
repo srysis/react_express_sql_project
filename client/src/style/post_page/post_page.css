@@ -1,0 +1,32 @@
+div#post {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	div.post_author {
+		width: 9%;
+
+		p {
+			margin-bottom: 10px;
+		}
+
+		a {
+			font-weight: bold;
+		}
+	}
+
+	div.post_content {
+		width: 91%;
+		padding: 45px 3vw;
+		text-align: left;
+		background-color: rgb(30, 31, 32);
+
+		div.title {
+			margin-bottom: 30px;
+		}
+
+		div.content {
+			text-indent: 1em;
+		}
+	}
+}
