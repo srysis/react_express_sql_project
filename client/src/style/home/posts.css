@@ -1,5 +1,6 @@
 section#posts {
 	margin-top: 20px;
+	background-color: rgb(14, 15, 16);
 
 	article.post {
 		display: flex;
