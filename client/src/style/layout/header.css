@@ -2,18 +2,18 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 15px 2vw;
-	background-color: #111;
+	padding: 15px 3vw;
+	background-color: rgb(14, 15, 16);
 
 	div#logo_container {
-		width: 10%;
+		width: 8%;
 	}
 
 	button#log_off_button {
 		border: none;
 		border-radius: 15px;
 		padding: 10px 3vw;
-		background-color: #222;
+		background-color: rgb(26, 27, 28);
 		color: #fff;
 		font-size: 1.4em;
 		font-weight: bold;
@@ -42,7 +42,7 @@ header {
 		a#log_in_button {
 			padding: 10px 3vw;
 			font-size: 1.5em;
-			background-color: #222;
+			background-color: rgb(26, 27, 28);
 		}
 	}
 }
