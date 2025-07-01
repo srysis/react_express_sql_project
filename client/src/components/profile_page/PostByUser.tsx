@@ -8,10 +8,10 @@ function PostByUser({content}) {
 					<Link to={`/post/${content.post_id}`}></Link>
 				</div>
 				<div className="post_content">
-					<div className="post_title">
-						<h1>{content.post_title}</h1>
+					<div className="title">
+						<h3>{content.post_title}</h3>
 					</div>
-					<div className="post_content">
+					<div className="content">
 						<p>{content.post_content}</p>
 					</div>
 				</div>
