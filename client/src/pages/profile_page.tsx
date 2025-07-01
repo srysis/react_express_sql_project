@@ -84,28 +84,33 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 
 	if (hasUserData) {
 		return(
-			<div>
-				<h1>{`${userData.name}'s profile`}</h1>
-				<h3>{userData.description}</h3>
-				{ 
-					ownership && 
-					<>
-						<p>this is your profile</p>
-						<Link to={`/user/${id}/edit`}>Edit profile</Link>
-						<br />
-						<Link to={`/user/${id}/create_post`}>Create a post</Link>
-					</>
-				}
-				{ ownership && isAdmin && <p>You are an admin. Rejoice.</p> }
-				<br />
+			<section id="profile_page">
+				<div className="flex_wrapper">
+					<div id="profile_info">
+						<div id="name">
+							<h1>{userData.name}</h1>
+						</div>
+						<div id="description">
+							<p>{userData.description}</p>
+						</div>
+					</div>
+					<div id="options">
+						{ 
+							ownership && 
+							<>
+								<Link to={`/user/${id}/edit`}>Edit profile</Link>
+							</>
+						}
+					</div>
+				</div>
 				{ 
 					arePostsRetrieved && (user_posts != undefined) && 
 					<section id="posts_by_user">
-						<h2>{`Recent posts from ${userData.name}`}</h2>
+						<h2>Recent posts</h2>
 						{user_posts.map((post, index) => <PostByUser key={index} content={post} />)}
 					</section> 
 				}
-			</div>
+			</section>
 		)
 	}
 	
