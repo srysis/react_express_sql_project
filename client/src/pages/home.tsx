@@ -1,7 +1,7 @@
 import axios from '../api/axios'
 import { useState, useEffect } from 'react'
 
-import Post from "../components/posts/Post"
+import Post from "../components/home/Post"
 
 import "../style/home/posts.css"
 

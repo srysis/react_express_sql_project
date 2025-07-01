@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import axios from '../api/axios'
 
-import PostByUser from "../components/posts/PostByUser"
+import PostByUser from "../components/profile_page/PostByUser"
 
 import "../style/profile_page/posts.css"
 
