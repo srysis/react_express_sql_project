@@ -1,0 +1,44 @@
+section#profile_page {
+	div.flex_wrapper {
+		display: flex;
+		padding: 30px;
+		background-color: rgb(14, 15, 16);
+	}
+
+	div#profile_info {
+		width: 87%;
+		padding: 30px 1vw;
+		text-align: left;
+
+		div#name {
+			margin-bottom: 30px;
+		}
+	}
+
+	div#options {
+		width: 13%;
+		padding: 2vh;
+		display: flex;
+		align-items: flex-end;
+		
+		div {
+			width: 100%;
+
+			a {
+				border-radius: 15px;
+				padding: 10px 2vw;
+				font-size: 1em;
+				background-color: rgb(35, 36, 37);
+			}
+
+			a:hover {
+				background-color: rgb(25, 26, 27);
+				color: #fff;
+			}
+
+			a:active {
+				background-color: rgb(35, 36, 37);
+			}
+		}
+	}
+}
