@@ -1,16 +1,19 @@
 section#posts_by_user {
 	margin-top: 20px;
 
+	h2 {
+		margin-bottom: 20px;
+	}
+
 	article.post {
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		width: 65%;
-		margin: 10px auto;
-		border: 2px solid black;
 
 		div {
-			padding: 5px 15px;
+			padding: 10px 20px;
+		}
+
+		div.overlay {
+			padding: 0;
 		}
 
 		div.link_container {
@@ -28,7 +31,11 @@ section#posts_by_user {
 		}
 
 		div.link_container:hover {
-			background-color: #ddd;
+			background-color: #333;
+		}
+
+		div.link_container:active {
+			background-color: #222;
 		}
 
 		div.post_content {
