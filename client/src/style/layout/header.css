@@ -12,20 +12,20 @@ header {
 	button#log_off_button {
 		border: none;
 		border-radius: 15px;
-		padding: 10px 3vw;
-		background-color: rgb(26, 27, 28);
+		padding: 10px 2.5vw;
+		background-color: rgb(35, 36, 37);
 		color: #fff;
 		font-size: 1.4em;
 		font-weight: bold;
 	}
 
 	button#log_off_button:hover {
-		background-color: #333;
+		background-color: rgb(25, 26, 27);
 	}
 
 	nav {
 		display: flex;
-		justify-content: space-evenly;
+		justify-content: space-between;
 		align-items: center;
 		width: 20%;
 
@@ -42,7 +42,11 @@ header {
 		a#log_in_button {
 			padding: 10px 3vw;
 			font-size: 1.5em;
-			background-color: rgb(26, 27, 28);
+			background-color: rgb(35, 36, 37);
+		}
+
+		a#log_in_button:hover {
+			background-color: rgb(25, 26, 27);
 		}
 	}
 }
