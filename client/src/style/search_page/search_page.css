@@ -1,0 +1,42 @@
+section#search {
+	div.container {
+		padding: 30px 0;
+		background-color: rgb(14, 15, 16);
+
+		form {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-block: 20px;
+			padding: 0 1.5vw;
+
+			input, button {
+				width: 100%;
+				border: none;
+				box-shadow: inset 0px 0px 8px 2px #222;
+				padding: 20px 2vw;
+				background-color: #000;
+				color: #fff;
+				font-size: 1.1em;
+			}
+
+			div.input_container {
+				width: 85%;
+			}
+
+			div.button_container {
+				width: 12%;
+
+				button {
+					font-weight: bold;
+					letter-spacing: .03em;
+				}
+			}
+		}
+
+		section#search_results {
+			margin-top: 20px;
+			padding-inline: 1.5vw;
+		}
+	}
+}

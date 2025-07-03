@@ -1,0 +1,28 @@
+div.search_result {
+	background-color: rgb(24, 25, 26);
+
+	div.link_container {
+		position: relative;
+		margin-block: 10px;
+		padding: 20px 2vw;
+
+		div.overlay > a {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			z-index: 2;
+		}
+
+		div.user {
+			p {
+				text-align: left;
+			}
+		}
+	}
+
+	div.link_container:hover {
+		background-color: #333;
+	}
+}
