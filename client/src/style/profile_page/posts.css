@@ -1,5 +1,6 @@
 section#posts_by_user {
 	margin-top: 30px;
+	padding-block: 15px;
 	background-color: rgb(14, 15, 16);
 
 	h2 {
