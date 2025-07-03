@@ -5,6 +5,8 @@ div#post {
 
 	div.post_author {
 		width: 9%;
+		padding-block: 65px;
+		background-color: rgb(14, 15, 16);
 
 		p {
 			margin-bottom: 10px;
@@ -17,7 +19,7 @@ div#post {
 
 	div.post_content {
 		width: 91%;
-		padding: 45px 3vw;
+		padding: 45px 2vw;
 		text-align: left;
 		background-color: rgb(30, 31, 32);
 
