@@ -17,7 +17,8 @@ body {
 	font-family: "Open Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: #000;
+	background: #232427 url(../assets/background.png) bottom center no-repeat fixed;
+	background-size: cover;
 	color: #fff;
 
 	a {
