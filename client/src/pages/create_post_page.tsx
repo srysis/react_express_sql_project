@@ -33,7 +33,7 @@ function CreatePostPage({isLoggedIn, USER_ID, setLoggedIn, setHasAdminRights}) {
 				const create_post_response = await axios.post(`/user/${USER_ID}/create_post`, { post: post_content });
 
 				if (create_post_response.data.success) {
-					navigate('/');
+					navigate(`/post/${create_post_response.data.post_id}`);
 				}
 			}
 		} catch (error) {
