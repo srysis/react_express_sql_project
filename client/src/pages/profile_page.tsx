@@ -111,6 +111,13 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 						{user_posts.map((post, index) => <PostByUser key={index} content={post} />)}
 					</section> 
 				}
+				{
+					user_posts == undefined &&
+					<section id="posts_by_user">
+						<h2>Recent posts</h2>
+						<p style={{'padding': '20px 2vw', 'textAlign': 'left'}}>Seems like this user is not very active here...</p>
+					</section> 
+				}
 			</section>
 		)
 	}
