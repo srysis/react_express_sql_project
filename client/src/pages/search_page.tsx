@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom'
 
 import axios from '../api/axios'
 
+import SearchResult from "../components/search_page/SearchResult"
+
+import "../style/search_page/search_page.css"
+import "../style/search_page/search_result.css"
+
 function SearchPage() {
 	const [search_queue, setSearchQueue] = useState("");
 	const [search_results, setSearchResults] = useState([]);
@@ -26,25 +31,33 @@ function SearchPage() {
 	}
 
 	return(
-		<div>
-			<h1>Search</h1>
-			<form onSubmit={onSubmitHandler}>
-				<input type="search" name="search_queue" placeholder="Enter a name" autoComplete="off" onChange={onChangeHandler} />
-				<button>Search</button>
-			</form>
-
+		<section id="search">
+			<div className="container">
+				<h1>Search</h1>
+				<form onSubmit={onSubmitHandler}>
+					<div className="input_container">
+						<input type="search" name="search_field" placeholder="Enter a name" autoComplete="off" onChange={onChangeHandler} />
+					</div>
+					<div className="button_container">
+						<button>Search</button>
+					</div>
+				</form>
+		
 			{ isSearchFinished && 
-				<div>
-					{search_results.map((user, index) => {
-						return <>
-							<Link to={`/user/${user.user_id}`} key={index}>{user.name}</Link>
-							<br />
+				<section id="search_results">
+					{search_results.length > 0 && 
+						<> 
+							<h3>{`Results for ${search_queue}`}</h3>
+							<p style={ {'textAlign': 'left'} }>{`${search_results.length} entries found.`}</p>
 						</>
-					})}
-					{!search_results.length && <div>No results.</div>}
-				</div>
+					}
+					{search_results?.map((user, index) => <SearchResult key={index} item={user} />)}
+					{!search_results.length && <h3>No users found.</h3>}
+				</section>
 			}
-		</div>
+
+			</div>
+		</section>
 	)
 }
 
