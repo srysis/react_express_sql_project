@@ -255,7 +255,7 @@ app.post('/user/:id/create_post', authenticator, (request, response) => {
 	database.query(sql_query, (error, data) => {
 		if (error) return response.json(error);
 
-		response.json({success: true, message: "Posted.", post_content: post})
+		response.json({success: true, message: "Posted.", post_content: post, post_id: data.insertId});
 	})
 })
 
