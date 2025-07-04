@@ -3,9 +3,15 @@ div#post {
 	justify-content: space-between;
 	align-items: center;
 
+	div.post_author, div.post_content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 200px;
+	}
+
 	div.post_author {
 		width: 9%;
-		padding-block: 65px;
 		background-color: rgb(14, 15, 16);
 
 		p {
@@ -19,16 +25,12 @@ div#post {
 
 	div.post_content {
 		width: 91%;
-		padding: 45px 2vw;
+		padding-inline: 2vw;
 		text-align: left;
 		background-color: rgb(30, 31, 32);
 
 		div.title {
 			margin-bottom: 30px;
-		}
-
-		div.content {
-			text-indent: 1em;
 		}
 	}
 }
