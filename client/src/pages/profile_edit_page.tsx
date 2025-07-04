@@ -4,6 +4,8 @@ import { useParams, Link } from 'react-router-dom'
 
 import axios from '../api/axios'
 
+import "../style/profile_edit_page/profile_edit_page.css"
+
 function ProfileEditPage({isLoggedIn}) {
 	const navigate = useNavigate();
 
@@ -73,19 +75,21 @@ function ProfileEditPage({isLoggedIn}) {
 
 	if (hasUserData) {
 		return(
-			<form onSubmit={onSubmitHandler}>
-				<div className="input_container">
-					<label htmlFor="username">Username:</label>
-					<input type="text" id="username" defaultValue={userData.name} placeholder="New name" autoComplete="off" onChange={onChangeHandler} />
-				</div>
-				<div className="input_container">
-					<label htmlFor="description">Description</label>
-					<textarea id="description" defaultValue={userData.description} rows="4" cols="50" placeholder="Content" onChange={onChangeHandler}></textarea>
-				</div>
-				<div className="input_container">
-					<button disabled={!wasUserDataChanged}>Apply changes</button>
-				</div>
-			</form>
+			<section id="profile_edit">
+				<form onSubmit={onSubmitHandler}>
+					<div className="input_container">
+						<label htmlFor="username"><span>Username</span></label>
+						<input type="text" id="username" defaultValue={userData.name} placeholder="New name" autoComplete="off" onChange={onChangeHandler} />
+					</div>
+					<div className="textarea_container">
+						<label htmlFor="description"><span>Description</span></label>
+						<textarea id="description" defaultValue={userData.description} rows="4" cols="50" placeholder="Content" onChange={onChangeHandler}></textarea>
+					</div>
+					<div className="button_container">
+						<button disabled={!wasUserDataChanged}>Apply changes</button>
+					</div>
+				</form>
+			</section>
 		)
 	}
 
