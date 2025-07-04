@@ -1,0 +1,28 @@
+section#create_post {
+	background-color: rgb(14, 15, 16);
+
+	form {
+		padding-block: 20px;
+
+		input, textarea, button {
+			margin-block: 15px;
+			border: none;
+			box-shadow: inset 0px 0px 8px 2px #222;
+			padding: 20px 2vw;
+			background-color: #000;
+			color: #fff;
+			font-family: "Open Sans", sans-serif;
+			font-size: 1.1em;
+		}
+
+		input, textarea {
+			width: 92%;
+		}
+
+		button {
+			position: relative;
+			right: -41.6%;
+			padding-inline: 3vw;
+		}
+	}
+}
