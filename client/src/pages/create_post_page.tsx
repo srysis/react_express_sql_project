@@ -5,6 +5,8 @@ import { useParams, Link } from 'react-router-dom'
 import axios from '../api/axios'
 import { setAuthorizationHeader } from '../tools/setHeaders'
 
+import "../style/create_post_page/create_post_page.css"
+
 function CreatePostPage({isLoggedIn, USER_ID, setLoggedIn, setHasAdminRights}) {
 	const navigate = useNavigate();
 
@@ -59,19 +61,19 @@ function CreatePostPage({isLoggedIn, USER_ID, setLoggedIn, setHasAdminRights}) {
 	}
 
 	return (
-		<form onSubmit={onSubmitHandler}>
-			<div className="input_container">
-				<label htmlFor="post_title">Title:</label>
-				<input type="text" id="post_title" placeholder="Title" onChange={onChangeHandler} />
-			</div>
-			<div className="input_container">
-				<label htmlFor="post_content">Content:</label>
-				<textarea id="post_content" rows="4" cols="50" placeholder="Share your opinions..." onChange={onChangeHandler}></textarea>
-			</div>
-			<div className="input_container">
-				<button>Post</button>
-			</div>
-		</form>
+		<section id="create_post">
+			<form onSubmit={onSubmitHandler}>
+				<div className="input_container">
+					<input type="text" id="post_title" placeholder="Title" onChange={onChangeHandler} required />
+				</div>
+				<div className="textarea_container">
+					<textarea id="post_content" rows="4" cols="50" placeholder="Share your opinions..." onChange={onChangeHandler} required></textarea>
+				</div>
+				<div className="button_container">
+					<button>Post</button>
+				</div>
+			</form>
+		</section>
 	)
 }
 
