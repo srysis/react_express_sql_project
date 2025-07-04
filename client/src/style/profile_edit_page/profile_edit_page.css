@@ -1,0 +1,65 @@
+section#profile_edit {
+	background-color: rgb(14, 15, 16);
+
+	form {
+		padding-block: 20px;
+
+		div.input_container {
+			margin-block: 20px;
+		}
+
+		div.textarea_container {
+			margin-top: 40px;
+
+			textarea {
+				margin-bottom: 0;
+			}
+		}
+
+		label {
+			display: block;
+			width: 91.5%;
+			margin: 10px auto;
+			border-bottom: 1px solid #fff;
+			line-height: 0.1em;
+			text-align: left;
+
+			span {
+				padding-right: 5px;
+				background-color: rgb(14, 15, 16);
+			}
+		}
+
+		input, textarea, button {
+			margin-block: 15px;
+			border: none;
+			box-shadow: inset 0px 0px 8px 1px #222;
+			padding: 20px 2vw;
+			background-color: #000;
+			color: #fff;
+			font-family: "Open Sans", sans-serif;
+			font-size: 1.1em;
+		}
+
+		input, textarea {
+			width: 92%;
+		}
+
+		div.button_container {
+			padding-inline: 3.8vw;
+			text-align: right;	
+
+			button {
+				padding-inline: 3vw;
+				transition: all .1s;
+			}
+
+			button[disabled] {
+				box-shadow: inset 0px 0px 8px 1px #111;
+				background-color: rgb(19, 20, 21);
+				cursor: not-allowed;
+			}
+		}
+		
+	}
+}
