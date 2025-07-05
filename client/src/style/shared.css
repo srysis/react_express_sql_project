@@ -1,0 +1,83 @@
+section {
+	background-color: rgb(14, 15, 16);
+}
+
+
+form {
+	padding-block: 20px;
+
+	div.input_container {
+		margin-block: 20px;
+	}
+
+	div.textarea_container {
+		margin-top: 40px;
+
+		textarea {
+			margin-bottom: 0;
+		}
+	}
+
+	label {
+		display: block;
+		width: 91.5%;
+		margin: 10px auto;
+		border-bottom: 1px solid #aaa;
+		line-height: 0.1em;
+		text-align: left;
+
+		span {
+			padding-right: 5px;
+			background-color: rgb(14, 15, 16);
+			color: #aaa;
+		}
+	}
+
+	input, textarea, button {
+		margin-block: 15px;
+		border: none;
+		box-shadow: inset 0px 0px 8px 2px #222;
+		padding: 20px 2vw;
+		background-color: #000;
+		color: #fff;
+		font-family: "Open Sans", sans-serif;
+		font-size: 1.1em;
+	}
+
+	input, textarea {
+		width: 92%;
+	}
+
+	button {
+		padding-inline: 3vw;
+	}
+}
+
+div.button_container {
+	padding-inline: 3.7vw;
+	text-align: right;
+}
+
+
+
+div.link_container {
+	width: 93%;
+	position: relative;
+
+	div.overlay > a {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 2;
+	}
+}
+
+div.link_container:hover {
+	background-color: #333;
+}
+
+div.link_container:active {
+	background-color: #222;
+}
