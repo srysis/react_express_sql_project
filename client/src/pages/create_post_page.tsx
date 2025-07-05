@@ -64,9 +64,11 @@ function CreatePostPage({isLoggedIn, USER_ID, setLoggedIn, setHasAdminRights}) {
 		<section id="create_post">
 			<form onSubmit={onSubmitHandler}>
 				<div className="input_container">
+					<label htmlFor="post_title"><span>Title</span></label>
 					<input type="text" id="post_title" placeholder="Title" onChange={onChangeHandler} required />
 				</div>
 				<div className="textarea_container">
+					<label htmlFor="post_content"><span>Content</span></label>
 					<textarea id="post_content" rows="4" cols="50" placeholder="Share your opinions..." onChange={onChangeHandler} required></textarea>
 				</div>
 				<div className="button_container">
