@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router'
 
 import axios from '../api/axios'
 
+import "../style/auth_pages/registration_page.css"
+
 const USER_REGEX = /^[a-zA-Z][a-zA-Z-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
 
@@ -93,21 +95,24 @@ function RegistrationPage({isLoggedIn}) {
 	return(
 		<>
 			{ !isLoggedIn && 
-				<div id="registration_form">
+				<section id="registration">
 					<h1>Register</h1>
 					<form onSubmit={onSubmitHandler}>
-						<label htmlFor="username">Username:</label>
-						<input type="text" id="username" ref={userRef} autoComplete="off" onChange={onChangeHandler} required />
-						<br />
-						<label htmlFor="password">Password:</label>
-						<input type="password" id="password" onChange={onChangeHandler} required />
-						<br />
-						<label htmlFor="match_password">Confirm password:</label>
-						<input type="password" id="match_password" onChange={onChangeHandler} required />
-						<br />
+						<div className="input_container">
+							<label htmlFor="username"><span>Username</span></label>
+							<input type="text" id="username" ref={userRef} autoComplete="off" onChange={onChangeHandler} required />
+						</div>
+						<div className="input_container">
+							<label htmlFor="password"><span>Password</span></label>
+							<input type="password" id="password" onChange={onChangeHandler} required />
+						</div>
+						<div className="input_container">
+							<label htmlFor="match_password"><span>Confirm password</span></label>
+							<input type="password" id="match_password" onChange={onChangeHandler} required />
+						</div>
 						<button disabled={!isUsernameValid || !isPasswordValid || !doPasswordsMatch ? true : false}>Register!</button>
 					</form>
-				</div>
+				</section>
 			}
 		</>
 	)
