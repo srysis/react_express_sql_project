@@ -1,4 +1,6 @@
 section#profile_page {
+	background-color: transparent;
+
 	div.flex_wrapper {
 		display: flex;
 		padding: 30px;

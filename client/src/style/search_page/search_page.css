@@ -1,7 +1,6 @@
 section#search {
 	div.container {
 		padding: 30px 0;
-		background-color: rgb(14, 15, 16);
 
 		form {
 			display: flex;
@@ -12,12 +11,6 @@ section#search {
 
 			input, button {
 				width: 100%;
-				border: none;
-				box-shadow: inset 0px 0px 8px 2px #222;
-				padding: 20px 2vw;
-				background-color: #000;
-				color: #fff;
-				font-size: 1.1em;
 			}
 
 			div.input_container {
@@ -26,6 +19,7 @@ section#search {
 
 			div.button_container {
 				width: 12%;
+				padding: 0;
 
 				button {
 					font-weight: bold;
