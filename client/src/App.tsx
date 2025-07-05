@@ -16,6 +16,8 @@ import PostPage from './pages/post_page'
 import CreatePostPage from './pages/create_post_page'
 import SearchPage from './pages/search_page'
 
+import "./style/shared.css"
+
 function App() {
 	const stored_web_token = window.localStorage.getItem('t');
 	const stored_user_ID = window.localStorage.getItem('id');
