@@ -88,7 +88,6 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 							</div>
 						</div>
 					}
-					
 					<form onSubmit={onSubmitHandler}>
 						<div className="input_container">
 							<label htmlFor="username"><span>Username</span></label>
