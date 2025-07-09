@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router'
 
 import axios from '../api/axios'
 
+import error_icon from "../assets/exclamation-mark-2.png"
+
 import "../style/auth_pages/registration_page.css"
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z-_]{3,23}$/;
@@ -12,14 +14,21 @@ function RegistrationPage({isLoggedIn}) {
 	const userRef = useRef();
 	const errorRef = useRef();
 
+	const [registration_failed, setRegistrationFailed] = useState(false);
+
 	const [username, setUsername] = useState("");
 	const [isUsernameValid, setIsUsernameValid] = useState(false);
+	const [username_focus, setUsernameFocus] = useState(false);
 
 	const [password, setPassword] = useState("");
 	const [isPasswordValid, setIsPasswordValid] = useState(false);
+	const [password_focus, setPasswordFocus] = useState(false);
 
-	const [matchingPassword, setMatchingPassword] = useState("");
+	const [matching_password, setMatchingPassword] = useState("");
 	const [doPasswordsMatch, setDoPasswordsMatch] = useState(false);
+	const [matching_password_focus, setMatchingPasswordFocus] = useState(false);
+
+	const [error_message, setErrorMessage] = useState("");
 
 	const navigate = useNavigate();
 
@@ -39,8 +48,12 @@ function RegistrationPage({isLoggedIn}) {
 
 	useEffect(() => {
 		setIsPasswordValid(PWD_REGEX.test(password));
-		setDoPasswordsMatch(password === matchingPassword);
-	}, [password, matchingPassword]);
+		setDoPasswordsMatch(password === matching_password);
+	}, [password, matching_password]);
+
+	useEffect(() => {
+		setErrorMessage("");
+	}, [username, password, matching_password])
 
 	function onChangeHandler(event) {
 		switch (event.target.id) {
@@ -83,12 +96,14 @@ function RegistrationPage({isLoggedIn}) {
 			}
 		} catch (error) {
 			if (error.response?.status === 409) {
-				console.error("Username was taken")
+				setErrorMessage("Username was taken");
 			} else if (error?.response) {
-				console.error("No response");
+				setErrorMessage("No response");
 			} else {
-				console.error("Registration failed");
+				setErrorMessage("Registration failed");
 			}
+
+			setRegistrationFailed(true);
 		}
 	}
 
@@ -97,18 +112,64 @@ function RegistrationPage({isLoggedIn}) {
 			{ !isLoggedIn && 
 				<section id="registration">
 					<h1>Register</h1>
+					{ registration_failed && 
+						<div id="error_container">
+							<div className="image_container">
+								<img src={error_icon} />
+							</div>
+							<div className="text_container">
+								<p>{error_message}</p>
+							</div>
+						</div>
+					}
 					<form onSubmit={onSubmitHandler}>
 						<div className="input_container">
 							<label htmlFor="username"><span>Username</span></label>
-							<input type="text" id="username" ref={userRef} autoComplete="off" onChange={onChangeHandler} required />
+							<input 
+								type="text" 
+								id="username" 
+								ref={userRef} 
+								autoComplete="off" 
+								onChange={onChangeHandler} 
+								onFocus={() => setUsernameFocus(true)} 
+								onBlur={() => setUsernameFocus(false)} 
+								required 
+							/>
+							<div id="username_note" className={username_focus && !isUsernameValid ? "visible" : ""}>
+								<h3>Password must:</h3>
+								<p>Be 4 to 24 characters long</p>
+								<p>Start with a letter(regardless of case)</p>
+							</div>
 						</div>
 						<div className="input_container">
 							<label htmlFor="password"><span>Password</span></label>
-							<input type="password" id="password" onChange={onChangeHandler} required />
+							<input 
+								type="password" 
+								id="password" 
+								onChange={onChangeHandler} 
+								onFocus={() => setPasswordFocus(true)} 
+								onBlur={() => setPasswordFocus(false)} 
+								required 
+							/>
+							<div id="password_note" className={password_focus && !isPasswordValid ? "visible" : ""}>
+								<h3>Password must:</h3>
+								<p>Be 8 to 24 characters long</p>
+								<p>Contain one uppercase and one lowercase letters and a number</p>
+							</div>
 						</div>
 						<div className="input_container">
 							<label htmlFor="match_password"><span>Confirm password</span></label>
-							<input type="password" id="match_password" onChange={onChangeHandler} required />
+							<input 
+								type="password" 
+								id="match_password" 
+								onChange={onChangeHandler} 
+								onFocus={() => setMatchingPasswordFocus(true)} 
+								onBlur={() => setMatchingPasswordFocus(false)} 
+								required 
+							/>
+							<div id="matching_password_note" className={matching_password_focus && password && !doPasswordsMatch ? "visible" : ""}>
+								<p>Must match the password in the "Password" field</p>
+							</div>
 						</div>
 						<div className="submit_container">
 							<button disabled={!isUsernameValid || !isPasswordValid || !doPasswordsMatch ? true : false}>Register!</button>
