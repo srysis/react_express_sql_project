@@ -110,7 +110,9 @@ function RegistrationPage({isLoggedIn}) {
 							<label htmlFor="match_password"><span>Confirm password</span></label>
 							<input type="password" id="match_password" onChange={onChangeHandler} required />
 						</div>
-						<button disabled={!isUsernameValid || !isPasswordValid || !doPasswordsMatch ? true : false}>Register!</button>
+						<div className="submit_container">
+							<button disabled={!isUsernameValid || !isPasswordValid || !doPasswordsMatch ? true : false}>Register!</button>
+						</div>
 					</form>
 				</section>
 			}
