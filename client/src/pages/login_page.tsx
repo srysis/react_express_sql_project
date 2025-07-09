@@ -1,14 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import axios from '../api/axios'
 import { setAuthorizationHeader } from '../tools/setHeaders'
 
+import error_icon from "../assets/exclamation-mark-2.png"
+
 import "../style/auth_pages/login_page.css"
 
 function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
+	const userRef = useRef();
+	const errorRef = useRef();
+
 	const [user_credentials, setUserCredentials] = useState({});
+
+	const [login_failed, setLoginFailed] = useState(false);
+	const [error_message, setErrorMessage] = useState("");
 
 	const navigate = useNavigate();
 
@@ -17,6 +25,8 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 	}
 
 	useEffect(() => {
+		userRef.current.focus();
+
 		if (isLoggedIn) navigate('/');
 	}, [])
 
@@ -25,6 +35,11 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 			...user_credentials,
 			[event.target.name]: event.target.value
 		})
+	}
+
+	function onFocusHandler(event) {
+		setLoginFailed(false);
+		setErrorMessage("");
 	}
 
 	function onSubmitHandler(event) {
@@ -50,7 +65,12 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 				navigate('/');
 			}
 		})
-		.catch(error => console.error(error.response.data.message));
+		.catch(error => {
+			if (error.response.status === 404) {
+				setLoginFailed(true);
+				setErrorMessage("Invalid username or password.");
+			}
+		});
 	}
 
 	return(
@@ -58,14 +78,25 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 			{ !isLoggedIn && 
 				<section id="login">
 					<h1>Login</h1>
+					{ login_failed && 
+						<div id="error_container">
+							<div className="image_container">
+								<img src={error_icon} />
+							</div>
+							<div className="text_container">
+								<p>{error_message}</p>
+							</div>
+						</div>
+					}
+					
 					<form onSubmit={onSubmitHandler}>
 						<div className="input_container">
 							<label htmlFor="username"><span>Username</span></label>
-							<input type="text" id="username" name="username" autoComplete="off" onChange={onChangeHandler} />
+							<input type="text" id="username" name="username" autoComplete="off" onChange={onChangeHandler} onFocus={onFocusHandler} ref={userRef} required />
 						</div>
 						<div className="input_container">
 							<label htmlFor="password"><span>Password</span></label>
-							<input type="password" id="password" name="password" onChange={onChangeHandler} />
+							<input type="password" id="password" name="password" onChange={onChangeHandler} onFocus={onFocusHandler} required />
 						</div>
 						<div className="submit_container">
 							<button>Login</button>
