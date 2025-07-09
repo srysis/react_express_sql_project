@@ -1,4 +1,6 @@
 section#registration {
+	width: 50%;
+	margin: auto;
 	padding-block: 30px;
 
 	h1 {
@@ -12,14 +14,21 @@ section#registration {
 
 		div.submit_container {
 			button {
-				width: 15%;
 				margin-inline: 25px;
+				margin-bottom: 0;
 				padding: 20px 3vw;
 				background-color: #000;
 				color: #fff;
 				font-family: "Open Sans", sans-serif;
 				font-size: 1.2em;
 				font-weight: bold;
+				transition: all .1s;
+			}
+
+			button[disabled] {
+				box-shadow: inset 0px 0px 8px 1px #111;
+				background-color: rgb(19, 20, 21);
+				cursor: not-allowed;
 			}
 		}
 	}
