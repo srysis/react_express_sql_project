@@ -7,6 +7,26 @@ section#login {
 		font-size: 2em;
 	}
 
+	div#error_container {
+		display: flex;
+		align-items: center;
+		width: 92%;
+		margin: 20px auto 0;
+		border: 2px solid #660000;
+		padding: 10px 1vw;
+		background-color: rgba(143, 0, 0, 0.3);
+
+		div.image_container {
+			margin-right: 20px;
+		}
+
+		div.text_container {
+			color: #fdd;
+			font-weight: bold;
+			font-size: 1.3em;
+		}
+	}
+
 	form {
 		div.input_container:nth-child(even) {
 			margin-bottom: 0;
