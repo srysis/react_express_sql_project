@@ -29,7 +29,12 @@ function PostPage({isLoggedIn}) {
 			<div id="post">
 				<div className="post_author">
 					<p>Author:</p>
-					<Link to={`/user/${post_content.post_author}`}>{post_content.post_author_name}</Link>
+					{post_content.post_author_name !== null &&
+						<Link to={`/user/${post_content.post_author}`}>{post_content.post_author_name}</Link>
+					}
+					{post_content.post_author_name === null &&
+						<p style={{"fontStyle": "italic"}}>deleted</p>
+					}
 				</div>
 				<div className="post_content">
 					<div className="title">
