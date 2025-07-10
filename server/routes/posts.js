@@ -18,7 +18,7 @@ router.get('/posts', (request, response) => {
 	})
 });
 
-router.get('/post/:post_id', (request, response) => {
+router.get('/post/:post_id', checkPostOwner, (request, response) => {
 	const requested_post_id = request.params.post_id;
 
 	const select_post_query = "SELECT * FROM `user_posts` WHERE `post_id` = " + requested_post_id;
@@ -41,7 +41,7 @@ router.get('/post/:post_id', (request, response) => {
 						if (error) return response.json(error);
 
 						if (data.length) {
-							response.json({post: data[0]})
+							response.json({post: data[0], post_ownership: response.locals.post_ownership})
 						} else {
 							response.json({message: "Post does not exist or was deleted by it's author.", post: null})
 						}
@@ -56,7 +56,7 @@ router.get('/post/:post_id', (request, response) => {
 						if (error) return response.json(error);
 
 						if (data.length) {
-							response.json({post: data[0]})
+							response.json({post: data[0], post_ownership: response.locals.post_ownership})
 						} else {
 							response.json({message: "Post does not exist or was deleted by it's author.", post: null})
 						}
@@ -70,16 +70,19 @@ router.get('/post/:post_id', (request, response) => {
 });
 
 router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
-	const token = request.headers['authorization'];
 	const requested_post_id = request.params.post_id;
 
-	const delete_post_query = "DELETE FROM `user_posts` WHERE `post_id` = " + requested_post_id;
+	if (response.locals.post_ownership) {
+		const delete_post_query = "DELETE FROM `user_posts` WHERE `post_id` = " + requested_post_id;
 
-	database.query(delete_post_query, (error, data) => {
-		if (error) return response.json(error);
+		database.query(delete_post_query, (error, data) => {
+			if (error) return response.json(error);
 
-		response.json({success: true, message: "Post was deleted."});
-	});
+			response.json({success: true, message: "Post was deleted."});
+		});
+	} else {
+		response.status(403).json({success: false, message: "Client does not own this post."});
+	}
 });
 
 module.exports = router;
