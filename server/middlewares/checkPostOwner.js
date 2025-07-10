@@ -16,15 +16,19 @@ function checkPostOwner(request, response, next) {
 				const decoded_token = jwt.verify(token, jwt_key);
 
 				if (decoded_token.id === data[0].post_author) {
+					response.locals.post_ownership = true;
 					next();
 				} else {
-					response.status(403).json({success: false, message: "Client does not own this post.", post_ownership: false});
+					response.locals.post_ownership = false;
+					next();
 				}
 			} catch (error) {
-				response.status(401).json({success: false, message: "Client must be logged in.", post_ownership: false});
+				response.locals.post_ownership = false;
+				next();
 			}
 		} else {
-			response.json({success: false, message: "Nothing to delete.", post_ownership: false});
+			response.locals.post_ownership = false;
+			next();
 		}
 	});
 }
