@@ -17,19 +17,17 @@ function checkPostOwner(request, response, next) {
 
 				if (decoded_token.id === data[0].post_author) {
 					response.locals.post_ownership = true;
-					next();
 				} else {
 					response.locals.post_ownership = false;
-					next();
 				}
 			} catch (error) {
 				response.locals.post_ownership = false;
-				next();
 			}
 		} else {
 			response.locals.post_ownership = false;
-			next();
 		}
+
+		next();
 	});
 }
 
