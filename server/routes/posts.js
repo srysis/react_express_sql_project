@@ -1,7 +1,9 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 
-const database = require('../database.js')
+const database = require('../database.js');
+
+const checkPostOwner = require('../middlewares/checkPostOwner.js');
 
 const router = express.Router();
 
@@ -65,6 +67,19 @@ router.get('/post/:post_id', (request, response) => {
 			response.json({message: "Post does not exist or was deleted by it's author.", post: null})
 		}
 	})
+});
+
+router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
+	const token = request.headers['authorization'];
+	const requested_post_id = request.params.post_id;
+
+	const delete_post_query = "DELETE FROM `user_posts` WHERE `post_id` = " + requested_post_id;
+
+	database.query(delete_post_query, (error, data) => {
+		if (error) return response.json(error);
+
+		response.json({success: true, message: "Post was deleted."});
+	});
 });
 
 module.exports = router;
