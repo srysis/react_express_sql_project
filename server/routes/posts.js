@@ -69,6 +69,24 @@ router.get('/post/:post_id', checkPostOwner, (request, response) => {
 	})
 });
 
+router.patch('/post/:post_id/edit', checkPostOwner, (request, response) => {
+	const requested_post_id = request.params.post_id;
+
+	if (response.locals.post_ownership) {
+		const new_post_content = request.body.new_post_content;
+
+		const update_post_query = "UPDATE `user_posts` SET `post_content` = '" + new_post_content + "' WHERE `user_posts`.`post_id` = " + requested_post_id;
+
+		database.query(update_post_query, (error, data) => {
+			if (error) return response.json(error);
+
+			response.json({success: true, message: "Post was updated successfully."});
+		});
+	} else {
+		response.status(403).json({success: false, message: "Client does not own this post."});
+	}
+});
+
 router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
 	const requested_post_id = request.params.post_id;
 
