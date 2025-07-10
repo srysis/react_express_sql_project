@@ -61,6 +61,8 @@ router.get('/post/:post_id', (request, response) => {
 					})
 				}
 			})
+		} else {
+			response.json({message: "Post does not exist or was deleted by it's author.", post: null})
 		}
 	})
 });
