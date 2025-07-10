@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const dot_env = require('dotenv');
 
-const authenticator = require('./middlewares/auth');
-
 const database = require('./database.js');
 
 const userRoutes = require('./routes/user.js');
