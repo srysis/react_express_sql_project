@@ -1,0 +1,105 @@
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
+import { useParams, Link } from 'react-router-dom'
+
+import axios from '../api/axios'
+import { setAuthorizationHeader } from '../tools/setHeaders'
+
+function ProfileDeletePage({isLoggedIn, setLoggedIn, setHasAdminRights}) {
+	const REQUEST_HEADERS = {
+		'Content-Type': 'application/json'
+	}
+
+	const navigate = useNavigate();
+
+	const { id } = useParams();
+
+	const [confirm_delete_action, setConfirmDeleteAction] = useState(false);
+
+	const [user_credentials, setUserCredentials] = useState({});
+
+	useEffect(() => {
+		if (window.localStorage.getItem('id') !== id) {
+			navigate(`/`);
+		}
+	}, []);
+
+	function onConfirmDeleteClickHandler(event) {
+		switch (event.target.value) {
+			case "Y":
+				setConfirmDeleteAction(true);
+				break;
+			case "N":
+				setConfirmDeleteAction(false);
+				navigate(`/user/${id}`);
+				break;
+		}
+	}
+
+	function onChangeHandler(event) {
+		setUserCredentials({
+			...user_credentials,
+			[event.target.id]: event.target.value
+		})
+	}
+
+	async function onSubmitHandler(event) {
+		event.preventDefault();
+
+		try {
+			const response = await axios.delete(`/user/${id}/delete`, {
+				headers: REQUEST_HEADERS,
+				data: user_credentials
+			});
+
+			if (response.data.success) {
+				setLoggedIn(false);
+				setHasAdminRights(false);
+
+				setAuthorizationHeader(null);
+
+				window.localStorage.removeItem('t');
+				window.localStorage.removeItem('id');
+
+				navigate('/');
+			} else if (!response.data.success) {
+				navigate(`/user/${id}`);
+			}
+		} catch (error) {
+			console.error(error.response.data);
+		}
+	}
+
+	return(
+		<section id="authorize_delete">
+			<h1>Warning!</h1>
+			{/*<h2>You about to delete "!PROFILE NAME HERE!"</h2>*/}
+			<p>This is an irreverseable action. Deleting your account will make it inaccessible. Any posts made by you, will still be viewable through search.</p>
+			<p style={{"fontWeight": "bold"}}>Are you sure?</p>
+			<div id="confirm_delete">
+				<button type="button" onClick={onConfirmDeleteClickHandler} value="Y">Yes</button>
+				<button type="button" onClick={onConfirmDeleteClickHandler} value="N">No</button>
+			</div>
+			{confirm_delete_action && 
+				<>
+					<h2>Enter your credentials to confirm your identity.</h2>
+					<form onSubmit={onSubmitHandler}>
+						<div className="input_container">
+							<label htmlFor="username"><span>Username</span></label>
+							<input type="text" id="username" name="username" autoComplete="off" onChange={onChangeHandler} required />
+						</div>
+						<div className="input_container">
+							<label htmlFor="password"><span>Password</span></label>
+							<input type="password" id="password" name="password" onChange={onChangeHandler} required />
+						</div>
+						<div className="submit_container">
+							<button>Confirm</button>
+						</div>
+					</form>
+				</>
+			}
+		</section>
+	)
+}
+
+export default ProfileDeletePage;
