@@ -16,8 +16,12 @@ section#options {
 			}
 		}
 	}
+	
+	div.delete {
+		margin-top: 30px;
 
-	div.edit {
-		margin-bottom: 30px;
+		div {
+			background-color: rgb(45, 6, 7);
+		}
 	}
 }
