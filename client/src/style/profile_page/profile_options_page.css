@@ -1,0 +1,23 @@
+section#options {
+	padding: 30px 1.5vw;
+
+	div.edit, div.delete {
+		text-align: left;
+
+		div {
+			width: 11%;
+			border-radius: 10px;
+			padding: 15px 1vw;
+			background-color: rgb(35, 36, 37);
+			text-align: center;
+
+			a {
+				font-size: 1.2em;
+			}
+		}
+	}
+
+	div.edit {
+		margin-bottom: 30px;
+	}
+}
