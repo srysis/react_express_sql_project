@@ -6,6 +6,8 @@ import axios from '../api/axios'
 
 import PostByUser from "../components/profile_page/PostByUser"
 
+import options_icon from "../assets/gear-icon.png"
+
 import "../style/profile_page/profile_page.css"
 import "../style/profile_page/posts.css"
 
@@ -98,8 +100,8 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 					<div id="options">
 						{ 
 							ownership && 
-							<div>
-								<Link to={`/user/${id}/edit`}>Edit profile</Link>
+							<div title="Profile options">
+								<Link to={`/user/${id}/options`}><img src={options_icon} /></Link>
 							</div>
 						}
 					</div>
