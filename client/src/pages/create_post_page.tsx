@@ -16,7 +16,7 @@ function CreatePostPage({isLoggedIn, USER_ID, setLoggedIn, setHasAdminRights}) {
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
-			navigate('/');
+			navigate(`/user/${window.localStorage.getItem('id')}/create_post`);
 		}
 	}, [])
 
