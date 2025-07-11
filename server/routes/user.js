@@ -89,21 +89,31 @@ router.patch('/:id/edit', authenticator, (request, response) => {
 
 router.delete('/:id/delete', authenticator, (request, response) => {
 	const requested_id = request.params.id;
+	const username = request.body.username;
+	const password = request.body.password;
 
-	const delete_user_info_query = "DELETE FROM users_info WHERE `users_info`.`user_id` = " + requested_id;
-	const delete_user_query = "DELETE FROM `users` WHERE `users`.`id` = " + requested_id;
+	const verify_user_query = "SELECT * FROM `users` WHERE `username` = '" + username + "' AND `password` = '" + password + "' AND `id` = " + requested_id;
 
-	database.query(delete_user_info_query, (error, data) => {
+	database.query(verify_user_query, (error, data) => {
 		if (error) return response.json(error);
 
-		database.query(delete_user_query, (error, data) => {
-			if (error) return response.json(error);
+		if (data.length) {
+			const delete_user_info_query = "DELETE FROM users_info WHERE `users_info`.`user_id` = " + requested_id;
+			const delete_user_query = "DELETE FROM `users` WHERE `users`.`id` = " + requested_id;
 
-			response.json({success: true, message: "User record was deleted."});
-		})
+			database.query(delete_user_info_query, (error, data) => {
+				if (error) return response.json(error);
+
+				database.query(delete_user_query, (error, data) => {
+					if (error) return response.json(error);
+
+					response.json({success: true, message: "User record was deleted."});
+				})
+			})
+		} else {
+			response.status(403).json({success: false, message: "Client attempted to delete a user that is not owned by the client."});
+		}
 	})
-
-	response.status(500).json({success: false, message: "Unidentified error in '/user/:id/delete' request."});
 });
 
 module.exports = router;
