@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 
 import "../style/profile_page/profile_options_page.css"
 
-function OptionsPage() {
+function OptionsPage({isLoggedIn, isAdmin}) {
 	const { id } = useParams();
 
 	const navigate = useNavigate();
@@ -18,9 +18,11 @@ function OptionsPage() {
 			<div className="edit">
 				<div><Link to={`/user/${id}/edit`}>Edit profile</Link></div>
 			</div>
-			<div className="delete">
-				<div><a href="">Delete profile</a></div>
-			</div>
+			{!isAdmin && 
+				<div className="delete">
+					<div><Link to={`/user/${id}/delete`}>Delete profile</Link></div>
+				</div>
+			}
 		</section>
 	)
 }
