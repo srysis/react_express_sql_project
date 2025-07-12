@@ -5,6 +5,8 @@ import { useParams, Link } from 'react-router-dom'
 import axios from '../api/axios'
 import { setAuthorizationHeader } from '../tools/setHeaders'
 
+import "../style/profile_page/delete_page.css"
+
 function ProfileDeletePage({isLoggedIn, setLoggedIn, setHasAdminRights}) {
 	const REQUEST_HEADERS = {
 		'Content-Type': 'application/json'
@@ -72,16 +74,18 @@ function ProfileDeletePage({isLoggedIn, setLoggedIn, setHasAdminRights}) {
 
 	return(
 		<section id="authorize_delete">
-			<h1>Warning!</h1>
-			{/*<h2>You about to delete "!PROFILE NAME HERE!"</h2>*/}
-			<p>This is an irreverseable action. Deleting your account will make it inaccessible. Any posts made by you, will still be viewable through search.</p>
-			<p style={{"fontWeight": "bold"}}>Are you sure?</p>
-			<div id="confirm_delete">
-				<button type="button" onClick={onConfirmDeleteClickHandler} value="Y">Yes</button>
-				<button type="button" onClick={onConfirmDeleteClickHandler} value="N">No</button>
-			</div>
+			<section id="first_check">
+				<h1>Warning!</h1>
+				{/*<h2>You about to delete "!PROFILE NAME HERE!"</h2>*/}
+				<p>This is an irreverseable action. Deleting your account will make it inaccessible. Any posts made by you, will still be viewable through search.</p>
+				<p id="question">Are you sure?</p>
+				<div id="confirm_delete">
+					<button type="button" onClick={onConfirmDeleteClickHandler} value="Y" disabled={confirm_delete_action}>Yes</button>
+					<button type="button" onClick={onConfirmDeleteClickHandler} value="N" disabled={confirm_delete_action}>No</button>
+				</div>
+			</section>
 			{confirm_delete_action && 
-				<>
+				<section id="second_check">
 					<h2>Enter your credentials to confirm your identity.</h2>
 					<form onSubmit={onSubmitHandler}>
 						<div className="input_container">
@@ -96,7 +100,7 @@ function ProfileDeletePage({isLoggedIn, setLoggedIn, setHasAdminRights}) {
 							<button>Confirm</button>
 						</div>
 					</form>
-				</>
+				</section>
 			}
 		</section>
 	)
