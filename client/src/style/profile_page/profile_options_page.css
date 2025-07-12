@@ -7,11 +7,12 @@ section#options {
 		div {
 			width: 11%;
 			border-radius: 10px;
-			padding: 15px 1vw;
 			background-color: rgb(35, 36, 37);
 			text-align: center;
 
 			a {
+				display: block;
+				padding: 15px 1vw;
 				font-size: 1.2em;
 			}
 		}
@@ -21,7 +22,7 @@ section#options {
 		margin-top: 30px;
 
 		div {
-			background-color: rgb(45, 6, 7);
+			background-color: rgb(70, 6, 7);
 		}
 	}
 }
