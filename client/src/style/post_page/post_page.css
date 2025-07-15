@@ -1,6 +1,5 @@
-div#post {
+section#post {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 
 	div.post_author, div.post_content {
@@ -23,14 +22,70 @@ div#post {
 		}
 	}
 
-	div.post_content {
+	div.wrapper {
+		display: flex;
 		width: 91%;
 		padding-inline: 2vw;
 		text-align: left;
 		background-color: rgb(30, 31, 32);
 
-		div.title {
-			margin-bottom: 30px;
+		div.post_content {
+			width: 99%;
+
+			div.title {
+				margin-bottom: 20px;
+				font-size: 1.6em;
+			}
+		}
+
+		div.options_container {
+			position: relative;
+			margin-top: 20px;
+
+			div.icon_container {
+				border-radius: 30px;
+				padding: 10px;
+				cursor: pointer;
+
+				img {
+					width: 8px;
+					filter: invert(100%);
+					user-select: none;
+				}
+			}
+
+			div.icon_container:hover {
+				background-color: rgb(80, 81, 82);
+			}
+			
+			div.icon_container:active {
+				background-color: rgb(60, 61, 62);
+			}
+
+			div.list_container {
+				position: absolute;
+				right: .5vw;
+				display: none;
+				width: 8vw;
+				box-shadow: 0 0 10px #000;
+				background-color: rgb(2, 3, 4);
+				transition: opacity 0.5s;
+
+				a {
+					display: block;
+					padding: 10px 2vw;
+					color: #fff;
+				}
+
+				a:hover {
+					background-color: rgb(80, 81, 82);
+					cursor: pointer;
+				}
+			}
+
+			div.list_container.active {
+				display: block;
+			}
 		}
 	}
 }
