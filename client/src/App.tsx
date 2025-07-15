@@ -21,6 +21,7 @@ import ProfileDeletePage from './pages/profile_delete_page'
 import PostPage from './pages/post_page'
 import CreatePostPage from './pages/create_post_page'
 import PostEditPage from './pages/post_edit_page'
+import PostDeletePage from './pages/post_delete_page'
 
 import SearchPage from './pages/search_page'
 
@@ -104,7 +105,9 @@ function App() {
 						<Route path="/user/:id/edit" element={<ProfileEditPage isLoggedIn={isLoggedIn} />} />
 						<Route path="/user/:id/delete" element={<ProfileDeletePage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
 						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
+						
 						<Route path="/post/:post_id/edit" element={<PostEditPage />} />
+						<Route path="/post/:post_id/delete" element={<PostDeletePage USER_ID={stored_user_ID} />} />
 					</Route>
 
 				</Route>
