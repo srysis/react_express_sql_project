@@ -1,0 +1,72 @@
+section#delete_post {
+	section {
+		padding-block: 20px;
+	}
+
+	section#first_check {
+		p#question {
+			padding-block: 10px;
+			font-size: 1.8em;
+			font-weight: bold;
+		}
+
+		div#confirm_delete {
+			display: flex;
+			justify-content: space-evenly;
+			width: 92%;
+			margin: 10px auto 0;
+
+			button {
+				width: 30%;
+				box-shadow: inset 0px 0px 8px 2px #111;
+				border: none;
+				padding: 20px 2vw;
+				color: #fff;
+				font-family: "Open Sans", sans-serif;
+				font-size: 1.1em;
+				transition: background-color .05s;
+			}
+
+			button[value="Y"] {
+				background-color: rgb(70, 6, 7);
+			}
+
+			button[value="Y"]:hover {
+				background-color: rgb(45, 6, 7);
+			}
+
+			button[value="N"] {
+				background-color: rgb(35, 36, 37);
+			}
+
+			button[value="N"]:hover {
+				background-color: rgb(20, 21, 22);
+			}
+
+			button[disabled] {
+				box-shadow: none;
+				cursor: not-allowed;
+			}
+
+			button[value="Y"][disabled] {
+				background-color: rgb(25, 6, 7);
+			}
+
+			button[value="N"][disabled] {
+				background-color: rgb(10, 11, 12);
+			}
+		}
+	}
+
+	section#second_check {
+		h2 {
+			font-size: 1.8em;
+		}
+
+		form {
+			button {
+				margin-top: 0;
+			}
+		}
+	}
+}
