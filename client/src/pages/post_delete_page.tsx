@@ -4,6 +4,8 @@ import { useParams, Link } from 'react-router-dom'
 
 import axios from '../api/axios'
 
+import "../style/post_page/post_delete_page.css"
+
 function PostDeletePage({USER_ID}) {
 	const REQUEST_HEADERS = {
 		'Content-Type': 'application/json'
