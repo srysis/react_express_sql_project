@@ -2,10 +2,15 @@ import { Outlet } from 'react-router-dom'
 
 import Header from "./Header"
 
-function Base({isLoggedIn, setLoggedIn}) {
+import Notification from "../components/NotificationMessage"
+
+function Base({isLoggedIn, setLoggedIn, notification_visible, notification_message}) {
 	return(
 		<>
 			<Header isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+			{notification_visible && 
+				<Notification message={notification_message} />
+			}
 			<main>
 				<Outlet />
 			</main>
