@@ -1,5 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const database = require('../database.js')
 
@@ -15,11 +16,17 @@ router.post('/register', (request, response) => {
 		if (error) return response.json(error);
 
 		if (!data.length) {
-			const register_query = "INSERT INTO `users` (`username`, `password`) VALUES ('" + username + "', '" + password + "');"
+			bcrypt.hash(password, 13)
+			.then((hash) => {
+				const register_query = "INSERT INTO `users` (`username`, `password`) VALUES ('" + username + "', '" + hash + "');"
 
-			database.query(register_query, (error, data) => {
-				if (error) return response.json(error);
-				return response.json({success: true, message: data});
+				database.query(register_query, (error, data) => {
+					if (error) return response.json(error);
+					return response.json({success: true, message: data});
+				})
+			})
+			.catch(error => {
+				console.error(error)
 			})
 		} else {
 			response.status(409).json({success: false, message: "Username is already taken."});
@@ -42,16 +49,21 @@ router.post('/login', (request, response) => {
 	const username = request.body.username;
 	const password = request.body.password;
 
-	const sql_query = "SELECT * FROM `users` WHERE `username` = '" + username + "' AND `password` = '" + password + "';"
+	const find_username_query = "SELECT * FROM `users` WHERE `username` = '" + username + "'";
 
-	database.query(sql_query, (error, data) => {
+	database.query(find_username_query, (error, data) => {
 		if (error) return response.json(error);
 
 		if (data.length) {
-			const signed_token = jwt.sign({ id: data[0].id }, jwt_key);
-			response.json({success: true, token: signed_token, admin: data[0].admin, user_id: data[0].id});
-		} else {
-			response.status(404).json({success: false, message: 'No user found.'});
+			bcrypt.compare(password, data[0].password)
+			.then((result) => {
+				if (result) {
+					const signed_token = jwt.sign({ id: data[0].id }, jwt_key);
+					response.json({success: true, token: signed_token, admin: data[0].admin, user_id: data[0].id});
+				} else {
+					response.status(404).json({success: false, message: 'Invaild credentials.'});
+				}
+			})
 		}
 	})
 });
