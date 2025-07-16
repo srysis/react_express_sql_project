@@ -10,18 +10,19 @@ import BaseLayout from './layout/Base'
 
 import Home from './pages/home'
 
-import RegistrationPage from './pages/registration_page'
-import LoginPage from './pages/login_page'
+import RegistrationPage from './pages/auth/registration_page'
+import LoginPage from './pages/auth/login_page'
 
-import ProfilePage from './pages/profile_page'
-import ProfileOptionsPage from './pages/options_page'
-import ProfileEditPage from './pages/profile_edit_page'
-import ProfileDeletePage from './pages/profile_delete_page'
+import ProfilePage from './pages/profile/profile_page'
+import ProfileOptionsPage from './pages/profile/profile_options_page'
+import ProfileEditPage from './pages/profile/profile_edit_page'
+import ProfileDeletePage from './pages/profile/profile_delete_page'
 
-import PostPage from './pages/post_page'
 import CreatePostPage from './pages/create_post_page'
-import PostEditPage from './pages/post_edit_page'
-import PostDeletePage from './pages/post_delete_page'
+
+import PostPage from './pages/posts/post_page'
+import PostEditPage from './pages/posts/post_edit_page'
+import PostDeletePage from './pages/posts/post_delete_page'
 
 import SearchPage from './pages/search_page'
 
