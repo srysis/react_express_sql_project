@@ -1,5 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const database = require('../database.js');
 
@@ -90,41 +91,54 @@ router.patch('/post/:post_id/edit', checkPostOwner, (request, response) => {
 router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
 	const token = request.headers['authorization'];
 	const requested_post_id = request.params.post_id;
-	const username = request.body.username;
-	const password = request.body.password;
+	const username = request.body.user_credentials.username;
+	const password = request.body.user_credentials.password;
 	const user_id = request.body.user_id;
 
-	if (response.locals.post_ownership) {
+	const select_user_query = "SELECT * FROM `users` WHERE `username` = '" + username + "' AND `id` = " + user_id;
 
-		if (token) {
-			try {
-				const decoded_token = jwt.verify(token, jwt_key);
+	database.query(select_user_query, (error, data) => {
+		if (error) return response.json(error);
 
-				if (decoded_token) {
-					if (decoded_token.id == user_id) {
-						const delete_post_query = "DELETE FROM `user_posts` WHERE `post_id` = " + requested_post_id;
+		if (data.length) {
+			bcrypt.compare(password, data[0].password)
+			.then(result => {
+				if (result) {
+					if (response.locals.post_ownership) {
+						if (token) {
+							try {
+								const decoded_token = jwt.verify(token, jwt_key);
 
-						database.query(delete_post_query, (error, data) => {
-							if (error) return response.json(error);
+								if (decoded_token.id == user_id) {
+									const delete_post_query = "DELETE FROM `user_posts` WHERE `post_id` = " + requested_post_id;
 
-							response.json({success: true, message: "Post was deleted."});
-						});
+									database.query(delete_post_query, (error, data) => {
+										if (error) return response.json(error);
+
+										response.json({success: true, message: "Post was deleted."});
+									});
+								} else {
+									response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID."});
+								}
+							} catch (error) {
+								console.log(error)
+								response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
+							}
+						} else {
+							response.status(401).json({success: false, message: "No authorization header passed."});
+						}
 					} else {
-						response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID."})
+						response.status(403).json({success: false, message: "Client does not own this post."});
 					}
 				}
-			} catch (error) {
-				console.log(error)
-				response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."})
-			}
-			
+			})
+			.catch(error => {
+				response.status(401).json({success: false, message: "Invalid credentials supplied."});
+			})
 		} else {
-			response.status(401).json({success: false, message: "No authorization header passed."})
+			response.status(404).json({success: false, message: "Invalid credentials supplied."});
 		}
-
-	} else {
-		response.status(403).json({success: false, message: "Client does not own this post."});
-	}
+	})
 });
 
 module.exports = router;
