@@ -9,7 +9,7 @@ section#posts {
 		border-bottom: 1px solid #333;
 
 		div {
-			padding: 10px 20px;
+			padding-block: 10px;
 		}
 
 		div.overlay {
@@ -17,10 +17,12 @@ section#posts {
 		}
 
 		div.post_author {
-			width: 7%;
+			width: 8%;
+			padding-inline: 20px;
 		}
 
 		div.post_content {
+			padding-inline: 2vw;
 			text-align: left;
 		}
 	}
