@@ -64,6 +64,8 @@ router.post('/login', (request, response) => {
 					response.status(404).json({success: false, message: 'Invaild credentials.'});
 				}
 			})
+		} else {
+			response.status(404).json({success: false, message: 'Invaild credentials.'});
 		}
 	})
 });
