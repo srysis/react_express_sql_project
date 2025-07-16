@@ -18,9 +18,14 @@ section#posts_by_user {
 			padding: 0;
 		}
 
-		div.post_content {
-			text-align: left;
+		div.link_container {
+			width: 100%;
+
+			div.post_content {
+				text-align: left;
+			}
 		}
+		
 	}
 }
 
