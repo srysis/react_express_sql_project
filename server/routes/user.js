@@ -1,5 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const database = require('../database.js')
 const authenticator = require('../middlewares/auth.js');
@@ -92,23 +93,32 @@ router.delete('/:id/delete', authenticator, (request, response) => {
 	const username = request.body.username;
 	const password = request.body.password;
 
-	const verify_user_query = "SELECT * FROM `users` WHERE `username` = '" + username + "' AND `password` = '" + password + "' AND `id` = " + requested_id;
+	const select_user_query = "SELECT * FROM `users` WHERE `username` = '" + username + "' AND `id` = " + requested_id;
 
-	database.query(verify_user_query, (error, data) => {
+	database.query(select_user_query, (error, data) => {
 		if (error) return response.json(error);
 
 		if (data.length) {
-			const delete_user_info_query = "DELETE FROM users_info WHERE `users_info`.`user_id` = " + requested_id;
-			const delete_user_query = "DELETE FROM `users` WHERE `users`.`id` = " + requested_id;
+			bcrypt.compare(password, data[0].password)
+			.then((result) => {
+				if (result) {
 
-			database.query(delete_user_info_query, (error, data) => {
-				if (error) return response.json(error);
+					const delete_user_info_query = "DELETE FROM users_info WHERE `users_info`.`user_id` = " + requested_id;
+					const delete_user_query = "DELETE FROM `users` WHERE `users`.`id` = " + requested_id;
 
-				database.query(delete_user_query, (error, data) => {
-					if (error) return response.json(error);
+					database.query(delete_user_info_query, (error, data) => {
+						if (error) return response.json(error);
 
-					response.json({success: true, message: "User record was deleted."});
-				})
+						database.query(delete_user_query, (error, data) => {
+							if (error) return response.json(error);
+
+							response.json({success: true, message: "User record was deleted."});
+						})
+					})
+
+				} else {
+					response.status(404).json({success: false, message: 'Invaild credentials.'});
+				}
 			})
 		} else {
 			response.status(403).json({success: false, message: "Client attempted to delete a user that is not owned by the client."});
