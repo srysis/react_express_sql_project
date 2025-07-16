@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useParams, Link } from 'react-router-dom'
 
-import axios from '../api/axios'
+import axios from '../../api/axios'
 
-import "../style/profile_edit_page/profile_edit_page.css"
+import "../../style/profile/profile_edit_page.css"
 
 function ProfileEditPage({isLoggedIn}) {
 	const navigate = useNavigate();
@@ -21,7 +21,9 @@ function ProfileEditPage({isLoggedIn}) {
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
-			navigate('/');
+			setHasUserData(false);
+			setUserData({});
+			navigate(`/user/${window.localStorage.getItem('id')}/edit`);
 		}
 
 		if (!hasUserData) {

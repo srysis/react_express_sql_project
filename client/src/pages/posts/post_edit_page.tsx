@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useParams, Link } from 'react-router-dom'
 
-import axios from '../api/axios'
+import axios from '../../api/axios'
 
 function PostEditPage() {
 	const navigate = useNavigate();

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
-import axios from '../api/axios'
+import axios from '../../api/axios'
 
-import dots_icon from "../assets/v_dots-icon.png"
+import dots_icon from "../../assets/v_dots-icon.png"
 
-import "../style/post_page/post_page.css"
+import "../../style/post_page/post_page.css"
 
 function PostPage({isLoggedIn}) {
 	const { post_id } = useParams();

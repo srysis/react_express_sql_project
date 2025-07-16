@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useParams, Link } from 'react-router-dom'
 
-import axios from '../api/axios'
-import { setAuthorizationHeader } from '../tools/setHeaders'
+import axios from '../../api/axios'
+import { setAuthorizationHeader } from '../../tools/setHeaders'
 
-import "../style/profile_page/delete_page.css"
+import "../../style/profile/profile_delete_page.css"
 
 function ProfileDeletePage({isLoggedIn, setLoggedIn, setHasAdminRights}) {
 	const REQUEST_HEADERS = {

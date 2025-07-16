@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
-import axios from '../api/axios'
+import axios from '../../api/axios'
 
-import PostByUser from "../components/profile_page/PostByUser"
+import PostByUser from "../../components/profile_page/PostByUser"
 
-import options_icon from "../assets/gear-icon.png"
+import options_icon from "../../assets/gear-icon.png"
 
-import "../style/profile_page/profile_page.css"
-import "../style/profile_page/posts.css"
+import "../../style/profile/profile_page.css"
+import "../../style/profile/posts.css"
 
 function ProfilePage({isLoggedIn, isAdmin}) {
 	const { id } = useParams();

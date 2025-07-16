@@ -2,12 +2,12 @@ import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import axios from '../api/axios'
-import { setAuthorizationHeader } from '../tools/setHeaders'
+import axios from '../../api/axios'
+import { setAuthorizationHeader } from '../../tools/setHeaders'
 
-import error_icon from "../assets/exclamation-mark-2.png"
+import error_icon from "../../assets/exclamation-mark-2.png"
 
-import "../style/auth_pages/login_page.css"
+import "../../style/auth_pages/login_page.css"
 
 function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 	const userRef = useRef();

@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
-import axios from '../api/axios'
+import axios from '../../api/axios'
 
-import error_icon from "../assets/exclamation-mark-2.png"
+import error_icon from "../../assets/exclamation-mark-2.png"
 
-import "../style/auth_pages/registration_page.css"
+import "../../style/auth_pages/registration_page.css"
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;

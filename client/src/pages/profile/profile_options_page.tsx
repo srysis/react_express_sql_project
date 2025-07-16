@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { Link, useParams } from 'react-router-dom'
 
-import "../style/profile_page/profile_options_page.css"
+import "../../style/profile/profile_options_page.css"
 
-function OptionsPage({isLoggedIn, isAdmin}) {
+function ProfileOptionsPage({isLoggedIn, isAdmin}) {
 	const { id } = useParams();
 
 	const navigate = useNavigate();
@@ -27,4 +27,4 @@ function OptionsPage({isLoggedIn, isAdmin}) {
 	)
 }
 
-export default OptionsPage;
+export default ProfileOptionsPage;
