@@ -6,7 +6,7 @@ import axios from '../../api/axios'
 
 import "../../style/profile/profile_edit_page.css"
 
-function ProfileEditPage({isLoggedIn}) {
+function ProfileEditPage({setNotificationMessage}) {
 	const navigate = useNavigate();
 
 	const { id } = useParams();
@@ -21,9 +21,7 @@ function ProfileEditPage({isLoggedIn}) {
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
-			setHasUserData(false);
-			setUserData({});
-			navigate(`/user/${window.localStorage.getItem('id')}/edit`);
+			navigate(`/`);
 		}
 
 		if (!hasUserData) {
@@ -68,6 +66,8 @@ function ProfileEditPage({isLoggedIn}) {
 			const response = await axios.patch(`/user/${id}/edit`, {username: newUsername, description: newDescription});
 
 			if (response.data.success) {
+				setNotificationMessage("Changes have been applied.")
+
 				navigate(`/user/${id}`);
 			}
 		} catch (error) {
