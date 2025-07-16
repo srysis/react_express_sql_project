@@ -45,6 +45,8 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 	function onSubmitHandler(event) {
 		event.preventDefault();
 
+		document.querySelector("button").setAttribute("disabled", true);
+
 		axios.post('/login', user_credentials, { headers: REQUEST_HEADERS })
 		.then(response => {
 			const result = response.data;
@@ -68,6 +70,7 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 		.catch(error => {
 			if (error.response.status === 404) {
 				setLoginFailed(true);
+				document.querySelector("button").setAttribute("disabled", false);
 				setErrorMessage("Invalid username or password.");
 			}
 		});
