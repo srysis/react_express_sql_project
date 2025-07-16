@@ -43,6 +43,9 @@ function App() {
 	const [isLoggedIn, setLoggedInState] = useState(logged_in);
 	const [hasAdminRights, setHasAdminRights] = useState(false);
 
+	const [notification_visible, setNotificationVisible] = useState(false);
+	const [notification_message, setNotificationMessage] = useState("");
+
 	useEffect(() => {
 		if (stored_web_token && stored_user_ID) {
 			setAuthorizationHeader(stored_web_token);
@@ -81,6 +84,19 @@ function App() {
 		}
 	}, [isLoggedIn])
 
+	useEffect(() => {
+		if (notification_message !== "") {
+			setNotificationVisible(true);
+
+			setTimeout(() => {
+				setNotificationVisible(false);
+				setNotificationMessage("");
+			}, 3000);
+		}
+
+		return () => { setNotificationVisible(false); }
+	}, [notification_message])
+
 
 	function setLoggedInStateWrapper(value) {
 		setLoggedInState(value);
@@ -90,10 +106,14 @@ function App() {
 		setHasAdminRights(value);
 	}
 
+	function setNotificationMessageWrapper(message) {
+		setNotificationMessage(message)
+	}
+
 	return (
 		<BrowserRouter basename="/">
 			<Routes>
-				<Route element={<BaseLayout isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} />} >
+				<Route element={<BaseLayout isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} notification_visible={notification_visible} notification_message={notification_message} />} >
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
@@ -103,7 +123,7 @@ function App() {
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/options" element={<ProfileOptionsPage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
-						<Route path="/user/:id/edit" element={<ProfileEditPage isLoggedIn={isLoggedIn} />} />
+						<Route path="/user/:id/edit" element={<ProfileEditPage setNotificationMessage={setNotificationMessageWrapper} />} />
 						<Route path="/user/:id/delete" element={<ProfileDeletePage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
 						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
 						
