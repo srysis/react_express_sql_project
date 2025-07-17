@@ -8,6 +8,7 @@ const database = require('./database.js');
 const userRoutes = require('./routes/user.js');
 const authRoutes = require('./routes/auth.js');
 const postsRoutes = require('./routes/posts.js');
+const commentsRoutes = require('./routes/comments.js');
 
 const app = express();
 app.use(express.json());
@@ -19,14 +20,13 @@ global.port = process.env.PORT;
 global.jwt_key = process.env.SECRET_KEY;
 
 
-// import endpoints related to 'logging in' and 'registration'
 app.use('/', authRoutes);
 
-// import user-related endpoints
 app.use('/user', userRoutes);
 
-// import posts-related endpoints
 app.use('/', postsRoutes);
+
+app.use('/post', commentsRoutes);
 
 // root
 app.get('/', (request, response) => {
