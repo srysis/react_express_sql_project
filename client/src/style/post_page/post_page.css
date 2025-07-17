@@ -1,6 +1,7 @@
 section#post {
 	display: flex;
 	align-items: center;
+	margin-bottom: 40px;
 
 	div.post_author, div.post_content {
 		display: flex;
