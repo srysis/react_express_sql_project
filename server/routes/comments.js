@@ -1,6 +1,9 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 
 const database = require('../database.js');
+
+const authenticator = require('../middlewares/auth.js');
 
 const router = express.Router();
 
@@ -17,6 +20,36 @@ router.get('/:post_id/comments', (request, response) => {
 
 		response.json({comments: data});
 	})
+});
+
+router.post('/:post_id/comments/add', (request, response) => {
+	const token = request.headers['authorization'];
+	const requested_post_id = request.params.post_id;
+	const user_id = request.body.user_id;
+	const comment = request.body.comment;
+
+	if (token) {
+		try {
+			const decoded_token = jwt.verify(token, jwt_key);
+
+			if (decoded_token.id == user_id) {
+				const add_comment_query = "INSERT INTO `comments` (`content`, `post_id`, `comment_author`) VALUES ('" + comment + "', '" + requested_post_id + "', ' " + user_id + "')";
+
+				database.query(add_comment_query, (error, data) => {
+					if (error) return response.json(error);
+
+					response.json({success: true, message: "Comment added."});
+				})
+			} else {
+				response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID."});
+			}
+		} catch (error) {
+			console.log(error)
+			response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
+		}
+	} else {
+		response.status(401).json({success: false, message: "No authorization header passed."});
+	}
 })
 
 module.exports = router;
