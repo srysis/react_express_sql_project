@@ -1,0 +1,31 @@
+section#comments {
+	background-color: transparent;
+
+	article.comment {
+		margin-block: 20px;
+		padding: 10px 1vw;
+		text-align: left;
+		background-color: rgb(14, 15, 16);
+
+		div {
+			padding-block: 10px;
+		}
+
+		div.comment_info {
+			p {
+				font-size: 0.8em;
+
+				span {
+					font-weight: bold;
+				}
+			}
+		}
+
+		div.comment_content {
+			p {
+				font-size: 1.6em;
+			}
+		}
+	}
+}
+
