@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import AddCommentField from "../../components/post_page/AddCommentField"
 import CommentsSection from "../../components/post_page/CommentsSection"
 
 import dots_icon from "../../assets/v_dots-icon.png"
@@ -78,6 +79,7 @@ function PostPage({isLoggedIn}) {
 						}
 					</div>
 				</section>
+				{isLoggedIn && <AddCommentField post_id={post_id} />}
 				{areCommentsRetrieved && <CommentsSection comments={comments} />}
 			</>
 		)
