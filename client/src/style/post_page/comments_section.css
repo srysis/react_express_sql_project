@@ -1,11 +1,13 @@
 section#comments {
-	background-color: transparent;
+	padding: 1px 0;
+	background-color: rgb(14, 15, 16);
 
 	article.comment {
-		margin-block: 20px;
+		margin-block: 15px;
+		border: 1px solid #111;
 		padding: 10px 1vw;
 		text-align: left;
-		background-color: rgb(14, 15, 16);
+		background-color: rgb(24, 25, 26);
 
 		div {
 			padding-block: 10px;
@@ -29,3 +31,12 @@ section#comments {
 	}
 }
 
+section#comments.empty {
+	padding: 40px 2.5vw;
+	background-color: rgb(14, 15, 16);
+
+	p {
+		text-align: left;
+		font-size: 1.6em;
+	}
+}
