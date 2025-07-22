@@ -42,18 +42,17 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 		setErrorMessage("");
 	}
 
-	function onSubmitHandler(event) {
+	async function onSubmitHandler(event) {
 		event.preventDefault();
 
 		document.querySelector("button").setAttribute("disabled", true);
 
-		axios.post('/login', user_credentials, { headers: REQUEST_HEADERS })
-		.then(response => {
-			const result = response.data;
+		try {
+			const response = await axios.post('/login', user_credentials, { headers: REQUEST_HEADERS });
 
-			if (result.success) {
-				const token = result.token;
-				const user_id = result.user_id;
+			if (response.data.success) {
+				const token = response.data.token;
+				const user_id = response.data.user_id;
 
 				window.localStorage.setItem('t', token);
 				window.localStorage.setItem('id', user_id);
@@ -62,18 +61,17 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 
 				setLoggedIn(true);
 
-				if (result.admin) setHasAdminRights(true);
+				if (response.data.admin) setHasAdminRights(true);
 
 				navigate('/');
 			}
-		})
-		.catch(error => {
+		} catch (error) {
 			if (error.response.status === 404) {
 				setLoginFailed(true);
-				document.querySelector("button").setAttribute("disabled", false);
+				document.querySelector("button").removeAttribute("disabled");
 				setErrorMessage("Invalid username or password.");
 			}
-		});
+		}
 	}
 
 	return(
