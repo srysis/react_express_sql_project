@@ -136,7 +136,7 @@ function RegistrationPage({isLoggedIn}) {
 								required 
 							/>
 							<div id="username_note" className={username_focus && !isUsernameValid ? "visible" : ""}>
-								<h3>Password must:</h3>
+								<h3>Username must:</h3>
 								<p>Be 4 to 24 characters long</p>
 								<p>Start with a letter(regardless of case)</p>
 							</div>
