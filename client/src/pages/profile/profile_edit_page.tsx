@@ -4,6 +4,8 @@ import { useParams, Link } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import ChangeUserInfoForm from "../../components/profile_page/ChangeUserInfoForm"
+
 import "../../style/profile/profile_edit_page.css"
 
 function ProfileEditPage({setNotificationMessage}) {
@@ -13,11 +15,6 @@ function ProfileEditPage({setNotificationMessage}) {
 
 	const [userData, setUserData] = useState({});
 	const [hasUserData, setHasUserData] = useState(false);
-
-	const [wasUserDataChanged, setWasNewUserDataChanged] = useState(false);
-
-	const [newUsername, setNewUsername] = useState("");
-	const [newDescription, setNewDescription] = useState("");
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
@@ -32,8 +29,6 @@ function ProfileEditPage({setNotificationMessage}) {
 				let data = response.data.user_info;
 
 				setUserData(data);
-				setNewUsername(data.name);
-				setNewDescription(data.description);
 			})
 			.catch(error => {
 				console.error(error)
@@ -43,55 +38,11 @@ function ProfileEditPage({setNotificationMessage}) {
 		}
 	}, []);
 
-	function onChangeHandler(event) {
-		switch (event.target.id) {
-			case "username":
-				setNewUsername(event.target.value);
-				break;
-			case "description":
-				setNewDescription(event.target.value);
-				break;
-			default:
-				console.error("Unexpected error")
-				break;
-		}
-
-		setWasNewUserDataChanged(true);
-	}
-
-	async function onSubmitHandler(event) {
-		event.preventDefault();
-
-		try {
-			const response = await axios.patch(`/user/${id}/edit`, {username: newUsername, description: newDescription});
-
-			if (response.data.success) {
-				setNotificationMessage("Changes have been applied.")
-
-				navigate(`/user/${id}`);
-			}
-		} catch (error) {
-			console.error(error.response.data.message);
-		}
-	}
+	
 
 	if (hasUserData) {
 		return(
-			<section id="profile_edit">
-				<form onSubmit={onSubmitHandler}>
-					<div className="input_container">
-						<label htmlFor="username"><span>Username</span></label>
-						<input type="text" id="username" defaultValue={userData.name} placeholder="New name" autoComplete="off" onChange={onChangeHandler} />
-					</div>
-					<div className="textarea_container">
-						<label htmlFor="description"><span>Description</span></label>
-						<textarea id="description" defaultValue={userData.description} rows="4" cols="50" placeholder="Content" onChange={onChangeHandler}></textarea>
-					</div>
-					<div className="button_container">
-						<button disabled={!wasUserDataChanged}>Apply changes</button>
-					</div>
-				</form>
-			</section>
+			<ChangeUserInfoForm USER_ID={id} defaultUserData={userData} setNotificationMessage={setNotificationMessage} />
 		)
 	}
 
