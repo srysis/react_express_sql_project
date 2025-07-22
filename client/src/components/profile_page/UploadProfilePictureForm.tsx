@@ -29,10 +29,16 @@ function UploadProfilePictureForm({USER_ID}) {
 	}
 
 	return(
-		<form encType="multipart/form-data" onSubmit={onSubmitHandler}>
-			<input type="file" accept=".jpg" name="profile_picture" onChange={onChangeHandler} />
-			<button>Submit</button>
-		</form>
+		<section id="upload_profile_picture">
+			<form encType="multipart/form-data" onSubmit={onSubmitHandler}>
+				<div className="input_container">
+					<input type="file" accept=".jpg" name="profile_picture" onChange={onChangeHandler} />
+				</div>
+				<div className="button_container">
+					<button disabled={!image}>Apply changes</button>
+				</div>
+			</form>
+		</section>
 	)
 }
 
