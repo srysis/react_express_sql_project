@@ -1,12 +1,25 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
 
 const database = require('../database.js')
 const authenticator = require('../middlewares/auth.js');
 
-const router = express.Router();
+const storage = multer.diskStorage({
+	destination: function(request, file, cb) {
+		// supposedly, multer considers root directory to be the one that contains a file from which the server is being run ('server.js' in this case)
+		// that's why putting '../public' as destination would create a 'public' folder one level above 'root' directory
+		cb(null, './public') 
+	},
+	filename: function(request, file, cb) {
+		cb(null, `${file.originalname}`)
+	}
+})
 
+const imageUpload = multer({storage: storage})
+
+const router = express.Router();
 
 router.get('/:id', (request, response) => {
 	const token = request.headers['authorization'];
@@ -73,6 +86,18 @@ router.post('/:id/create_post', authenticator, (request, response) => {
 		response.json({success: true, message: "Posted.", post_content: post, post_id: data.insertId});
 	})
 });
+
+router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("image-name")], (request, response) => {
+	const requested_id = request.params.id;
+
+	const set_image_path_query = "UPDATE `users_info` SET `profile_picture` = '" + request.file.originalname + "' WHERE `users_info`.`user_id` = " + requested_id;
+
+	database.query(set_image_path_query, (error, data) => {
+		if (error) return response.json({success: false, error: error});
+
+		response.json({success: true, message: "Profile picture has been updated"})
+	})
+})
 
 router.patch('/:id/edit', authenticator, (request, response) => {
 	const requested_id = request.params.id;
