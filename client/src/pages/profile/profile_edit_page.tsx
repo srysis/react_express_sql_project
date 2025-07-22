@@ -5,6 +5,7 @@ import { useParams, Link } from 'react-router-dom'
 import axios from '../../api/axios'
 
 import ChangeUserInfoForm from "../../components/profile_page/ChangeUserInfoForm"
+import UploadProfilePictureForm from "../../components/profile_page/UploadProfilePictureForm"
 
 import "../../style/profile/profile_edit_page.css"
 
@@ -42,7 +43,10 @@ function ProfileEditPage({setNotificationMessage}) {
 
 	if (hasUserData) {
 		return(
-			<ChangeUserInfoForm USER_ID={id} defaultUserData={userData} setNotificationMessage={setNotificationMessage} />
+			<>
+				<ChangeUserInfoForm USER_ID={id} defaultUserData={userData} setNotificationMessage={setNotificationMessage} />
+				<UploadProfilePictureForm USER_ID={id} />
+			</>
 		)
 	}
 
