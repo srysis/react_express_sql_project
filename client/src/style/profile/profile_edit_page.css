@@ -1,4 +1,8 @@
-section#change_user_info {
+section {
+	input[type="file"] {
+		margin-bottom: 0;
+	}
+
 	div.button_container {
 		button {
 			transition: all .1s;
