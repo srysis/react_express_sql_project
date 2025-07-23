@@ -3,21 +3,27 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
 
+const SharpMulter = require('sharp-multer')
+
 const database = require('../database.js')
 const authenticator = require('../middlewares/auth.js');
 
-const storage = multer.diskStorage({
+const storage = SharpMulter({
 	destination: function(request, file, cb) {
 		// supposedly, multer considers root directory to be the one that contains a file from which the server is being run ('server.js' in this case)
 		// that's why putting '../public' as destination would create a 'public' folder one level above 'root' directory
 		cb(null, './public') 
 	},
-	filename: function(request, file, cb) {
-		cb(null, `${file.originalname}`)
+	imageOptions: {
+		fileFormat: "png",
+		quality: 80,
+		resize: { width: 200, height: 200 }
 	}
 })
 
-const imageUpload = multer({storage: storage})
+
+
+const imageUpload = multer({storage})
 
 const router = express.Router();
 
