@@ -89,6 +89,9 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 		return(
 			<section id="profile_page">
 				<div className="flex_wrapper">
+					<div id="profile_picture">
+						<img src={`http://localhost:8081/${userData.profile_picture}`} />
+					</div>
 					<div id="profile_info">
 						<div id="name">
 							<h1>{userData.name}</h1>
