@@ -17,7 +17,7 @@ const storage = SharpMulter({
 	imageOptions: {
 		fileFormat: "png",
 		quality: 80,
-		resize: { width: 200, height: 200 }
+		resize: { width: 200, height: 200, resizeMode: "outside", withoutEnlargement: true }
 	}
 })
 
@@ -96,7 +96,9 @@ router.post('/:id/create_post', authenticator, (request, response) => {
 router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("image-name")], (request, response) => {
 	const requested_id = request.params.id;
 
-	const set_image_path_query = "UPDATE `users_info` SET `profile_picture` = '" + request.file.originalname + "' WHERE `users_info`.`user_id` = " + requested_id;
+	const new_file_name = request.file.originalname.split(".")[0] + ".png";
+
+	const set_image_path_query = "UPDATE `users_info` SET `profile_picture` = '" + new_file_name + "' WHERE `users_info`.`user_id` = " + requested_id;
 
 	database.query(set_image_path_query, (error, data) => {
 		if (error) return response.json({success: false, error: error});
