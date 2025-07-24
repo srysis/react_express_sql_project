@@ -32,6 +32,15 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage}) 
 		setWasNewUserDataChanged(true);
 	}
 
+	function discardChanges(event) {
+		setNewUsername(defaultUserData.name);
+		setNewDescription(defaultUserData.description);
+		setWasNewUserDataChanged(false);
+
+		document.querySelector("input[id='username']").value = defaultUserData.name;
+		document.querySelector("input[id='description']").value = defaultUserData.description;
+	}
+
 	async function onSubmitHandler(event) {
 		event.preventDefault();
 
@@ -60,7 +69,8 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage}) 
 					<textarea id="description" defaultValue={defaultUserData.description} rows="4" cols="50" placeholder="Content" onChange={onChangeHandler}></textarea>
 				</div>
 				<div className="button_container">
-					<button disabled={!wasUserDataChanged}>Apply changes</button>
+					<button type="button" disabled={!wasUserDataChanged} onClick={discardChanges}>Discard changes</button>
+					<button type="submit" disabled={!wasUserDataChanged}>Apply changes</button>
 				</div>
 			</form>
 		</section>
