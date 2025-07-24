@@ -12,22 +12,28 @@ section#post {
 
 	div.post_author {
 		width: 14%;
-		padding-block: 15px;
+		padding-block: 20px;
 		background-color: rgb(14, 15, 16);
 
 		div.image_container {
-			width: 100%;
-			padding-block: 15px;
+			width: 18vh;
+			height: 18vh;
+			margin: 20px auto;
 
 			img {
 				display: block;
-				width: auto;
-				height: auto;
-				max-width: 95%;
-				max-height: 95%;
+				width: inherit;
+				height: inherit;
+				max-width: inherit;
+				max-height: inherit;
+				border: 5px solid black;
 				object-fit: cover;
-				margin: auto;
+				object-position: 0% 0%;
 			}
+		}
+
+		p.header {
+			font-size: 1.6em;
 		}
 
 		a {
