@@ -45,7 +45,7 @@ function ProfileEditPage({setNotificationMessage}) {
 		return(
 			<>
 				<ChangeUserInfoForm USER_ID={id} defaultUserData={userData} setNotificationMessage={setNotificationMessage} />
-				<UploadProfilePictureForm USER_ID={id} defaultUserData={userData} />
+				<UploadProfilePictureForm USER_ID={id} defaultUserData={userData} setNotificationMessage={setNotificationMessage} />
 			</>
 		)
 	}
