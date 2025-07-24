@@ -43,6 +43,11 @@ function UploadProfilePictureForm({USER_ID, defaultUserData}) {
 			const response = await axios.post(`/user/${USER_ID}/upload_profile_picture`, image_data);
 
 			console.log(response);
+
+			if (response.data.success) {
+				document.querySelector("button").setAttribute("disabled", "true");
+				setImageData(null);
+			}
 		} catch (error) {
 			console.error(error);
 		}
