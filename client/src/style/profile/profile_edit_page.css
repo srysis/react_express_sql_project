@@ -8,6 +8,10 @@ section {
 			transition: all .1s;
 		}
 
+		button[type="button"] {
+			margin-right: 2vw;
+		}
+
 		button[disabled] {
 			box-shadow: inset 0px 0px 8px 1px #111;
 			background-color: rgb(19, 20, 21);
@@ -74,12 +78,6 @@ section#upload_profile_picture {
 
 			input[type='file'] {
 				display: none;
-			}
-		}
-
-		div.button_container {
-			button[type="button"] {
-				margin-right: 2vw;
 			}
 		}
 	}
