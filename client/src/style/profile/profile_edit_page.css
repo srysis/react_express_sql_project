@@ -76,5 +76,11 @@ section#upload_profile_picture {
 				display: none;
 			}
 		}
+
+		div.button_container {
+			button[type="button"] {
+				margin-right: 2vw;
+			}
+		}
 	}
 }
