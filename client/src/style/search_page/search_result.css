@@ -2,6 +2,8 @@ div.search_result {
 	background-color: rgb(24, 25, 26);
 
 	div.link_container {
+		display: flex;
+		align-items: center;
 		position: relative;
 		width: 100%;
 		margin-block: 10px;
@@ -16,9 +18,32 @@ div.search_result {
 			z-index: 2;
 		}
 
-		div.user {
+		div.profile_picture {
+			width: 12vh;
+			height: 12vh;
+
+			img {
+				display: block;
+				width: inherit;
+				height: inherit;
+				max-width: inherit;
+				max-height: inherit;
+				border: 5px solid black;
+				object-fit: cover;
+				object-position: 0% 0%;
+			}
+		}
+
+		div.user_info {
+			width: 100%;
+			padding-inline: 2vw;
+
 			p {
 				text-align: left;
+			}
+
+			p:first-child {
+				margin-bottom: 10px;
 			}
 		}
 	}
