@@ -97,7 +97,7 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 							<h1>{userData.name}</h1>
 						</div>
 						<div id="description">
-							<p>{userData.description}</p>
+							<p>{userData.description ? userData.description : "No description."}</p>
 						</div>
 					</div>
 					<div id="options">
