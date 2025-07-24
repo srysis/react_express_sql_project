@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import axios from '../api/axios'
@@ -13,30 +13,40 @@ function SearchPage() {
 	const [search_results, setSearchResults] = useState([]);
 	const [isSearchFinished, setSearchFinished] = useState(false);
 
-	function onChangeHandler(event) {
+	useEffect(() => {
+		document.querySelector("input[type='search']").addEventListener("blur", onBlurHandler, {once: true});
+	}, [])
+
+	function onBlurHandler(event) {
 		setSearchQueue(event.target.value);
 	}
 
-	function onSubmitHandler(event) {
+	async function onSubmitHandler(event) {
 		event.preventDefault();
 
-		axios.get(`/search/${search_queue}`,)
-		.then(response => {
-			setSearchResults(response.data.results);
-			setSearchFinished(true);
-		})
-		.catch(error => {
-			console.error(error.response.data)
-		})
+		setSearchQueue(() => {
+			const new_search_queue = event.target.elements[0].value;
+
+			axios.get(`/search/${new_search_queue}`)
+			.then(response => {
+				setSearchResults(response.data.results);
+				setSearchFinished(true);
+			})
+			.catch(error => {
+				console.error(error.response)
+			});
+
+			return new_search_queue;
+		});
 	}
 
 	return(
 		<section id="search">
 			<div className="container">
-				<h1>Search</h1>
+				<h1>Search users</h1>
 				<form onSubmit={onSubmitHandler}>
 					<div className="input_container">
-						<input type="search" name="search_field" placeholder="Enter a name" autoComplete="off" onChange={onChangeHandler} />
+						<input type="search" name="search_field" placeholder="Search for user" autoComplete="off" />
 					</div>
 					<div className="button_container">
 						<button>Search</button>
@@ -47,11 +57,11 @@ function SearchPage() {
 				<section id="search_results">
 					{search_results.length > 0 && 
 						<> 
-							<h3>{`Results for ${search_queue}`}</h3>
+							<h3>{`Results for "${search_queue}"`}</h3>
 							<p style={ {'textAlign': 'left'} }>{`${search_results.length} entries found.`}</p>
 						</>
 					}
-					{search_results?.map((user, index) => <SearchResult key={index} item={user} />)}
+					{search_results?.map((user, index) => <SearchResult key={index} user={user} />)}
 					{!search_results.length && <h3>No users found.</h3>}
 				</section>
 			}
