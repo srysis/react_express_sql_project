@@ -35,22 +35,46 @@ section#upload_profile_picture {
 	}
 
 	div#profile_picture {
-		width: 11%;
-		height: 100%;
+		width: 16vh;
+		height: 16vh;
 		margin-top: 40px;
 		margin-left: 3.9vw;
 
 		img {
 			display: block;
-			width: auto;
-			height: auto;
-			max-width: 100%;
-			max-height: 100%;
+			width: inherit;
+			height: inherit;
+			max-width: inherit;
+			max-height: inherit;
 			object-fit: cover;
+			object-position: 0% 0%;
 		}
 	}
 
 	form {
 		padding-block: 10px;
+
+		div.input_container {
+			margin-inline: 3.8vw;
+			text-align: left;
+
+			label {
+				display: inline;
+				box-shadow: inset 0px 0px 8px 2px #222;
+				border: none;
+				padding: 15px 3vw;
+				line-height: 1em;
+				background-color: #000;
+				cursor: pointer;
+			}
+
+			label:hover {
+				background-color: rgb(5, 6, 7);
+			}
+
+			input[type='file'] {
+				display: none;
+			}
+		}
 	}
 }
