@@ -49,7 +49,7 @@ function PostPage({isLoggedIn}) {
 			<>
 				<section id="post">
 					<div className="post_author">
-						<p>Author:</p>
+						<p className="header">Author:</p>
 						<div className="image_container">
 							<img src={`http://localhost:8081/${post_content.post_author_avatar}`} />
 						</div>
@@ -59,7 +59,7 @@ function PostPage({isLoggedIn}) {
 						{post_content.post_author_name === null &&
 							<p style={{"fontStyle": "italic"}}>[deleted]</p>
 						}
-						<p>Posted: {post_content.post_date.split("T")[0]}</p>
+						<p className="date">Posted: {post_content.post_date.split("T")[0]}</p>
 					</div>
 					<div className="wrapper">
 						<div className="post_content">
