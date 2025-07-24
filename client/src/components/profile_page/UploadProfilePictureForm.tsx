@@ -36,6 +36,11 @@ function UploadProfilePictureForm({USER_ID, defaultUserData}) {
 		}
 	}
 
+	function discardChanges(event) {
+		setImageData(null);
+		setSelectedImage(null);
+	}
+
 	async function onSubmitHandler(event) {
 		event.preventDefault();
 
@@ -65,7 +70,8 @@ function UploadProfilePictureForm({USER_ID, defaultUserData}) {
 					<input type="file" accept=".jpg, .png" id="image" name="profile_picture" onChange={onChangeHandler} />
 				</div>
 				<div className="button_container">
-					<button disabled={!image_data}>Apply changes</button>
+					<button type="button" disabled={!image_data} onClick={discardChanges}>Discard changes</button>
+					<button type="submit" disabled={!image_data}>Apply changes</button>
 				</div>
 			</form>
 		</section>
