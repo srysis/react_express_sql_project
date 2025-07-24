@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import axios from '../../api/axios'
 
-function UploadProfilePictureForm({USER_ID, defaultUserData}) {
+function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMessage}) {
 	const [image_data, setImageData] = useState(null);
 
 	const [selected_image, setSelectedImage] = useState(null);
@@ -52,6 +52,8 @@ function UploadProfilePictureForm({USER_ID, defaultUserData}) {
 			if (response.data.success) {
 				document.querySelector("button").setAttribute("disabled", "true");
 				setImageData(null);
+
+				setNotificationMessage("Your avatar has been changed.")
 			}
 		} catch (error) {
 			console.error(error);
