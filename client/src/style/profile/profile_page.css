@@ -29,7 +29,7 @@ section#profile_page {
 			text-align: left;
 
 			div#name {
-				margin-bottom: 30px;
+				margin-bottom: 20px;
 			}
 		}
 
@@ -68,6 +68,4 @@ section#profile_page {
 
 		}
 	}
-
-	
 }
