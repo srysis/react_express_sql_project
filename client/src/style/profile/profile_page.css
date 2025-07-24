@@ -3,21 +3,22 @@ section#profile_page {
 
 	div.flex_wrapper {
 		display: flex;
-		padding: 30px;
+		padding: 30px 2.5vw;
 		background-color: rgb(14, 15, 16);
 
 		div#profile_picture {
-			width: 11%;
-			height: 100%;
-			border: 5px solid black;
+			width: 16vh;
+			height: 16vh;
 
 			img {
 				display: block;
-				width: auto;
-				height: auto;
-				max-width: 100%;
-				max-height: 100%;
+				width: inherit;
+				height: inherit;
+				max-width: inherit;
+				max-height: inherit;
+				border: 5px solid black;
 				object-fit: cover;
+				object-position: 0% 0%;
 			}
 		}
 
@@ -33,7 +34,7 @@ section#profile_page {
 		}
 
 		div#options {
-			width: 14%;
+			width: 16%;
 			display: flex;
 			justify-content: flex-end;
 			align-items: flex-start;
