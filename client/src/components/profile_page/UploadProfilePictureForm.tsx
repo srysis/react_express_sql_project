@@ -56,7 +56,8 @@ function UploadProfilePictureForm({USER_ID, defaultUserData}) {
 			</div>
 			<form encType="multipart/form-data" onSubmit={onSubmitHandler}>
 				<div className="input_container">
-					<input type="file" accept=".jpg" name="profile_picture" onChange={onChangeHandler} />
+					<label htmlFor="image">Upload your avatar</label>
+					<input type="file" accept=".jpg, .png" id="image" name="profile_picture" onChange={onChangeHandler} />
 				</div>
 				<div className="button_container">
 					<button disabled={!image_data}>Apply changes</button>
