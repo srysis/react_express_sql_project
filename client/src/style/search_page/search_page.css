@@ -6,8 +6,7 @@ section#search {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			margin-block: 20px;
-			padding: 0 1.5vw;
+			padding: 0 2vw;
 
 			input, button {
 				width: 100%;
@@ -15,6 +14,7 @@ section#search {
 
 			div.input_container {
 				width: 85%;
+				margin-block: 10px;
 			}
 
 			div.button_container {
@@ -30,7 +30,7 @@ section#search {
 
 		section#search_results {
 			margin-top: 20px;
-			padding-inline: 1.5vw;
+			padding-inline: 2vw;
 		}
 	}
 }
