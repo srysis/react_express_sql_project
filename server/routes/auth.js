@@ -58,9 +58,9 @@ router.post('/login', (request, response) => {
 			bcrypt.compare(password, data[0].password)
 			.then((result) => {
 				if (result) {
-					const access_token = jwt.sign({ id: data[0].id }, access_key, { expiresIn: '5m' });
+					const access_token = jwt.sign({ id: data[0].id }, access_key, { expiresIn: '1m' });
 
-					const refresh_token = jwt.sign({ id: data[0].username }, refresh_key, { expiresIn: '15m' });
+					const refresh_token = jwt.sign({ id: data[0].username }, refresh_key, { expiresIn: '5m' });
 
 					response.cookie('refresh_token', refresh_token, {
 						httpOnly: false,
@@ -68,7 +68,7 @@ router.post('/login', (request, response) => {
 						domain: "localhost",
 						secure: false,
 						sameSite: "lax",
-						maxAge: 60000
+						maxAge: 300000
 					});
 
 					response.json({success: true, token: access_token, admin: data[0].admin, user_id: data[0].id});
@@ -114,5 +114,25 @@ router.get('/verify/:id', (request, response) => {
 		response.status(401).json({success: false, message: "User is not logged in."})
 	}
 });
+
+router.post('/refresh/:id', (request, response) => {
+	const user_id = request.params.id;
+
+	if (request.cookies?.refresh_token) {
+		const refresh_token = request.cookies.refresh_token;
+
+		try {
+			const decoded_refresh_token = jwt.verify(refresh_token, refresh_key);
+
+			const access_token = jwt.sign({ id: user_id }, access_key, { expiresIn: '1m' });
+
+			response.json({success: true, token: access_token});
+		} catch (error) {
+			response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
+		}
+	} else {
+		response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
+	}
+})
 
 module.exports = router;
