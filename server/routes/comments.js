@@ -30,7 +30,7 @@ router.post('/:post_id/comments/add', (request, response) => {
 
 	if (token) {
 		try {
-			const decoded_token = jwt.verify(token, jwt_key);
+			const decoded_token = jwt.verify(token, access_key);
 
 			if (decoded_token.id == user_id) {
 				const add_comment_query = "INSERT INTO `comments` (`content`, `post_id`, `comment_author`) VALUES ('" + comment + "', '" + requested_post_id + "', ' " + user_id + "')";

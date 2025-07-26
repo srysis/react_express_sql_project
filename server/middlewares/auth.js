@@ -6,7 +6,7 @@ function authenticator(request, response, next) {
 	
 	if (token) {
 		try {
-			const decoded_token = jwt.verify(token, jwt_key);
+			const decoded_token = jwt.verify(token, access_key);
 
 			if (decoded_token) {
 				if (decoded_token.id == user_id) {

@@ -40,7 +40,7 @@ router.get('/:id', (request, response) => {
 
 			if (data.length) {
 				try {
-					const decoded_token = jwt.verify(token, jwt_key);
+					const decoded_token = jwt.verify(token, access_key);
 
 					if (decoded_token.id === data[0].user_id) {
 						response.json({success: true, message: "User found and client owns this user.", ownership: true, user_info: data[0]});

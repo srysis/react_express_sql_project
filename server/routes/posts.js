@@ -107,7 +107,7 @@ router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
 					if (response.locals.post_ownership) {
 						if (token) {
 							try {
-								const decoded_token = jwt.verify(token, jwt_key);
+								const decoded_token = jwt.verify(token, access_key);
 
 								if (decoded_token.id == user_id) {
 									const delete_post_query = "DELETE FROM `user_posts` WHERE `post_id` = " + requested_post_id;
