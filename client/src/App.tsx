@@ -46,45 +46,39 @@ function App() {
 	const [notification_visible, setNotificationVisible] = useState(false);
 	const [notification_message, setNotificationMessage] = useState("");
 
+
 	useEffect(() => {
 		if (stored_web_token && stored_user_ID) {
 			setAuthorizationHeader(stored_web_token);
 
 			axios.get(`/verify/${stored_user_ID}`)
 			.then(response => {
-				if (response.data.success) {
-					setLoggedInState(true);
-
-					if (response.data.admin) setHasAdminRights(true);
-				} else {
-					setLoggedInState(false);
+				if (!response.data.success) {
+					logOff();
 				}
 			})
 			.catch(error => {
 				if (!error.response.data.success) {
-					setLoggedInState(false);
-					setHasAdminRights(false);
+					axios.post(`/refresh/${stored_user_ID}`)
+					.then(response => {
+						if (response.data.success) {
+							const token = response.data.token;
 
-					setAuthorizationHeader(null);
+							window.localStorage.setItem('t', token);
 
-					window.localStorage.removeItem('t');
-					window.localStorage.removeItem('id');
-
-					console.error(error.response.data.message);
+							setAuthorizationHeader(token);
+						} else {
+							logOff();
+						}
+					})
+					.catch(error => { logOff(); })
 				}
 			});
 		} else {
-			setLoggedInState(false);
-			setHasAdminRights(false);
-
-			setAuthorizationHeader(null);
-
-			window.localStorage.removeItem('t');
-			window.localStorage.removeItem('id');
-
-			document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+			logOff();
 		}
 	}, [isLoggedIn])
+
 
 	useEffect(() => {
 		if (notification_message !== "") {
@@ -112,12 +106,38 @@ function App() {
 		setNotificationMessage(message)
 	}
 
+	function logIn(login_data) {
+		const token = login_data.token;
+		const user_id = login_data.user_id;
+
+		window.localStorage.setItem('t', token);
+		window.localStorage.setItem('id', user_id);
+
+		setAuthorizationHeader(token);
+
+		setLoggedInState(true);
+
+		if (login_data.admin) setHasAdminRights(true);
+	}
+
+	function logOff() {
+		setLoggedInState(false);
+		setHasAdminRights(false);
+
+		setAuthorizationHeader(null);
+
+		window.localStorage.removeItem('t');
+		window.localStorage.removeItem('id');
+
+		document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+	}
+
 	return (
 		<BrowserRouter basename="/">
 			<Routes>
-				<Route element={<BaseLayout isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} notification_visible={notification_visible} notification_message={notification_message} />} >
+				<Route element={<BaseLayout isLoggedIn={isLoggedIn} logOff={logOff} notification_visible={notification_visible} notification_message={notification_message} />} >
 					<Route path="/" element={<Home />} />
-					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
+					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} logIn={logIn} />} />
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
 					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
@@ -126,8 +146,8 @@ function App() {
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/options" element={<ProfileOptionsPage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
 						<Route path="/user/:id/edit" element={<ProfileEditPage setNotificationMessage={setNotificationMessageWrapper} />} />
-						<Route path="/user/:id/delete" element={<ProfileDeletePage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
-						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} setLoggedIn={setLoggedInStateWrapper} setHasAdminRights={setHasAdminRightsWrapper} />} />
+						<Route path="/user/:id/delete" element={<ProfileDeletePage isLoggedIn={isLoggedIn} logOff={logOff} setHasAdminRights={setHasAdminRightsWrapper} />} />
+						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} logOff={logOff} setHasAdminRights={setHasAdminRightsWrapper} />} />
 						
 						<Route path="/post/:post_id/edit" element={<PostEditPage />} />
 						<Route path="/post/:post_id/delete" element={<PostDeletePage USER_ID={stored_user_ID} />} />
