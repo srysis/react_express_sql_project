@@ -9,7 +9,7 @@ import error_icon from "../../assets/exclamation-mark-2.png"
 
 import "../../style/auth_pages/login_page.css"
 
-function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
+function LoginPage({ isLoggedIn, logIn }) {
 	const userRef = useRef();
 	const errorRef = useRef();
 
@@ -51,17 +51,7 @@ function LoginPage({ isLoggedIn, setLoggedIn, setHasAdminRights }) {
 			const response = await axios.post('/login', user_credentials, { headers: REQUEST_HEADERS });
 
 			if (response.data.success) {
-				const token = response.data.token;
-				const user_id = response.data.user_id;
-
-				window.localStorage.setItem('t', token);
-				window.localStorage.setItem('id', user_id);
-
-				setAuthorizationHeader(token);
-
-				setLoggedIn(true);
-
-				if (response.data.admin) setHasAdminRights(true);
+				logIn(response.data);
 
 				navigate('/');
 			}
