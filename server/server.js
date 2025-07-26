@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const cookieparser = require('cookie-parser');
 const dot_env = require('dotenv');
 
 const database = require('./database.js');
@@ -12,13 +13,15 @@ const commentsRoutes = require('./routes/comments.js');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.static("./public"));
+app.use(cookieparser());
 
 dot_env.config();
 
 global.port = process.env.PORT;
-global.jwt_key = process.env.SECRET_KEY;
+global.access_key = process.env.ACCESS_KEY;
+global.refresh_key = process.env.REFRESH_KEY;
 
 
 app.use('/', authRoutes);
