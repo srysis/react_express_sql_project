@@ -7,7 +7,7 @@ import { setAuthorizationHeader } from '../../tools/setHeaders'
 
 import "../../style/profile/profile_delete_page.css"
 
-function ProfileDeletePage({isLoggedIn, setLoggedIn, setHasAdminRights}) {
+function ProfileDeletePage({isLoggedIn, logOff}) {
 	const REQUEST_HEADERS = {
 		'Content-Type': 'application/json'
 	}
@@ -55,13 +55,7 @@ function ProfileDeletePage({isLoggedIn, setLoggedIn, setHasAdminRights}) {
 			});
 
 			if (response.data.success) {
-				setLoggedIn(false);
-				setHasAdminRights(false);
-
-				setAuthorizationHeader(null);
-
-				window.localStorage.removeItem('t');
-				window.localStorage.removeItem('id');
+				logOff();
 
 				navigate('/');
 			} else if (!response.data.success) {

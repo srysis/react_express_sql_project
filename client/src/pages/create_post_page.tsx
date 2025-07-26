@@ -7,7 +7,7 @@ import { setAuthorizationHeader } from '../tools/setHeaders'
 
 import "../style/create_post_page/create_post_page.css"
 
-function CreatePostPage({isLoggedIn, USER_ID, setLoggedIn, setHasAdminRights}) {
+function CreatePostPage({isLoggedIn, USER_ID, logOff}) {
 	const navigate = useNavigate();
 
 	const { id } = useParams();
@@ -40,13 +40,7 @@ function CreatePostPage({isLoggedIn, USER_ID, setLoggedIn, setHasAdminRights}) {
 			}
 		} catch (error) {
 			if (!error.response.data.success) {
-				setLoggedIn(false);
-				setHasAdminRights(false);
-
-				setAuthorizationHeader(null);
-
-				window.localStorage.removeItem('t');
-				window.localStorage.removeItem('id');
+				logOff();
 
 				console.error(error.response.data.message);
 			}

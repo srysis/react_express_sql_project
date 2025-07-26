@@ -4,19 +4,8 @@ import { setAuthorizationHeader } from '../tools/setHeaders'
 
 import "../style/layout/header.css"
 
-function Header({isLoggedIn, setLoggedIn}) {
+function Header({isLoggedIn, logOff}) {
 	const stored_user_id = window.localStorage.getItem('id');
-
-	function logOff() {
-		setAuthorizationHeader(null);
-
-		window.localStorage.removeItem('t');
-		window.localStorage.removeItem('id');
-
-		document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-
-		setLoggedIn(false);
-	}
 
 	return(
 		<header>
@@ -36,7 +25,7 @@ function Header({isLoggedIn, setLoggedIn}) {
 					<> 
 						<Link to={`/user/${stored_user_id}`}>Profile</Link>
 						<Link to={`/user/${stored_user_id}/create_post`}>Create a post</Link>
-						<button id="log_off_button" onClick={logOff}>Log Off</button>
+						<button id="log_off_button" onClick={() => { logOff(); }}>Log Off</button>
 					</>
 				}
 
