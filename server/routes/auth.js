@@ -58,8 +58,20 @@ router.post('/login', (request, response) => {
 			bcrypt.compare(password, data[0].password)
 			.then((result) => {
 				if (result) {
-					const signed_token = jwt.sign({ id: data[0].id }, jwt_key);
-					response.json({success: true, token: signed_token, admin: data[0].admin, user_id: data[0].id});
+					const access_token = jwt.sign({ id: data[0].id }, access_key, { expiresIn: '5m' });
+
+					const refresh_token = jwt.sign({ id: data[0].username }, refresh_key, { expiresIn: '15m' });
+
+					response.cookie('refresh_token', refresh_token, {
+						httpOnly: false,
+						path: '/',
+						domain: "localhost",
+						secure: false,
+						sameSite: "lax",
+						maxAge: 60000
+					});
+
+					response.json({success: true, token: access_token, admin: data[0].admin, user_id: data[0].id});
 				} else {
 					response.status(404).json({success: false, message: 'Invaild credentials.'});
 				}
@@ -76,7 +88,7 @@ router.get('/verify/:id', (request, response) => {
 
 	if (token) {
 		try {
-			const decoded_token = jwt.verify(token, jwt_key);
+			const decoded_token = jwt.verify(token, access_key);
 
 			if (decoded_token.id == user_id) { 
 				let isAdmin;
