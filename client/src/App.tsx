@@ -94,14 +94,6 @@ function App() {
 	}, [notification_message])
 
 
-	function setLoggedInStateWrapper(value) {
-		setLoggedInState(value);
-	}
-
-	function setHasAdminRightsWrapper(value) {
-		setHasAdminRights(value);
-	}
-
 	function setNotificationMessageWrapper(message) {
 		setNotificationMessage(message)
 	}
@@ -146,8 +138,8 @@ function App() {
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/options" element={<ProfileOptionsPage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
 						<Route path="/user/:id/edit" element={<ProfileEditPage setNotificationMessage={setNotificationMessageWrapper} />} />
-						<Route path="/user/:id/delete" element={<ProfileDeletePage isLoggedIn={isLoggedIn} logOff={logOff} setHasAdminRights={setHasAdminRightsWrapper} />} />
-						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} logOff={logOff} setHasAdminRights={setHasAdminRightsWrapper} />} />
+						<Route path="/user/:id/delete" element={<ProfileDeletePage isLoggedIn={isLoggedIn} logOff={logOff} />} />
+						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} logOff={logOff} />} />
 						
 						<Route path="/post/:post_id/edit" element={<PostEditPage />} />
 						<Route path="/post/:post_id/delete" element={<PostDeletePage USER_ID={stored_user_ID} />} />
