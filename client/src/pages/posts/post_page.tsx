@@ -21,6 +21,8 @@ function PostPage({isLoggedIn}) {
 	const [comments, setComments] = useState([]);
 	const [areCommentsRetrieved, setAreCommentsRetrieved] = useState(false);
 
+	const [date_difference, setDateDifference] = useState();
+
 	useEffect(() => {
 		axios.get(`/post/${post_id}`)
 		.then(response => {
@@ -30,6 +32,8 @@ function PostPage({isLoggedIn}) {
 				setIsPostRetrieved(true);
 
 				setPostOwnership(response.data.post_ownership);
+
+				setDateDifference(response.data.date_difference);
 
 				axios.get(`/post/${post_id}/comments`)
 				.then(response => {
@@ -59,7 +63,7 @@ function PostPage({isLoggedIn}) {
 						{post_content.post_author_name === null &&
 							<p style={{"fontStyle": "italic"}}>[deleted]</p>
 						}
-						<p className="date">Posted: {post_content.post_date.split("T")[0]}</p>
+						<p className="date" title={post_content.post_date.split("T")[0]}>Posted: {date_difference}</p>
 					</div>
 					<div className="wrapper">
 						<div className="post_content">
