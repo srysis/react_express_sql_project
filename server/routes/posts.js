@@ -8,6 +8,51 @@ const checkPostOwner = require('../middlewares/checkPostOwner.js');
 
 const router = express.Router();
 
+function findDifferenceInDays(post_date, current_date) {
+	const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+	const post_date_UTC = Date.UTC(post_date.getFullYear(), post_date.getMonth(), post_date.getDate());
+	const current_date_UTC = Date.UTC(current_date.getFullYear(), current_date.getMonth(), current_date.getDate());
+
+	return Math.abs(Math.floor((current_date_UTC - post_date_UTC) / MS_PER_DAY));
+}
+
+function findDifferenceInMonths(post_date, current_date) {
+	let ms_difference = (current_date.getTime() - post_date.getTime()) / 1000;
+	ms_difference /= (60 * 60 * 24 * 7 * 4);
+
+	return Math.abs(Math.floor(ms_difference));
+}
+
+function findDifferenceInYears(post_date, current_date) {
+	let ms_difference = (current_date.getTime() - post_date.getTime()) / 1000;
+	ms_difference /= (60 * 60 * 24);
+
+	return Math.abs(Math.floor(ms_difference / 365.25));
+}
+
+function findDifferenceBetweenDates(post_date, current_date) {
+	let date_difference = undefined;
+
+	let difference_days = findDifferenceInDays(post_date, current_date);
+
+	if (difference_days > 31) {
+		let difference_months = findDifferenceInMonths(post_date, current_date);
+
+		if (difference_months > 12) {
+			let difference_years = findDifferenceInYears(post_date, current_date);
+
+			date_difference = difference_years == 1 ? `${difference_years} year ago` : `${difference_years} years ago`;
+		} else {
+			date_difference = difference_months == 1 ? `${difference_months} month ago` : `${difference_months} months ago`;
+		}
+	} else {
+		date_difference = difference_days == 1 ? `${difference_days} day ago` : `${difference_days} days ago`;
+	}
+
+	return date_difference;
+}
+
 router.get('/posts', (request, response) => {
 	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author` " +
 								"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` ORDER BY `user_posts`.`post_date` DESC;"
@@ -42,7 +87,10 @@ router.get('/post/:post_id', checkPostOwner, (request, response) => {
 						if (error) return response.json(error);
 
 						if (data.length) {
-							response.json({post: data[0], post_ownership: response.locals.post_ownership})
+							const post_date = new Date(data[0].post_date);
+							const current_date = new Date(Date.now());
+
+							response.json({post: data[0], date_difference: findDifferenceBetweenDates(post_date, current_date), post_ownership: response.locals.post_ownership})
 						} else {
 							response.json({message: "Post does not exist or was deleted by it's author.", post: null})
 						}
@@ -57,7 +105,10 @@ router.get('/post/:post_id', checkPostOwner, (request, response) => {
 						if (error) return response.json(error);
 
 						if (data.length) {
-							response.json({post: data[0], post_ownership: response.locals.post_ownership})
+							const post_date = new Date(data[0].post_date);
+							const current_date = new Date(Date.now());
+
+							response.json({post: data[0], date_difference: findDifferenceBetweenDates(post_date, current_date), post_ownership: response.locals.post_ownership})
 						} else {
 							response.json({message: "Post does not exist or was deleted by it's author.", post: null})
 						}
