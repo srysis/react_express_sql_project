@@ -1,21 +1,50 @@
 section#comments {
 	margin-top: 40px;
-	padding: 1px 0;
-	background-color: rgb(14, 15, 16);
 
 	article.comment {
-		margin-block: 15px;
-		border: 1px solid #111;
-		padding: 10px 1vw;
+		display: flex;
+		border: 2px solid #000;
 		text-align: left;
-		background-color: rgb(24, 25, 26);
+		background-color: #111;
 
-		div {
-			padding-block: 10px;
+		div.comment_info, div.comment_content {
+			align-self: stretch;
 		}
 
 		div.comment_info {
+			width: 9%;
+			padding-block: 10px;
+			background-color: rgb(14, 15, 16);
+
+			div.image_container {
+				width: 8vh;
+				height: 8vh;
+				min-width: 60px;
+				min-height: 60px;
+				margin: 10px auto;
+
+				img {
+					display: block;
+					width: inherit;
+					height: inherit;
+					min-width: inherit;
+					min-height: inherit;
+					max-width: inherit;
+					max-height: inherit;
+					border: 5px solid black;
+					object-fit: cover;
+					object-position: 0% 0%;
+				}
+			}
+
+			div.author {
+				p {
+					margin-bottom: 5px;
+				}
+			}
+
 			p {
+				text-align: center;
 				font-size: 0.8em;
 
 				span {
@@ -25,8 +54,12 @@ section#comments {
 		}
 
 		div.comment_content {
+			width: 91%;
+			padding: 20px 1vw;
+			background-color: rgb(30, 31, 32);
+
 			p {
-				font-size: 1.6em;
+				font-size: 1.2em;
 			}
 		}
 	}
