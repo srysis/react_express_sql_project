@@ -58,17 +58,17 @@ router.post('/login', (request, response) => {
 			bcrypt.compare(password, data[0].password)
 			.then((result) => {
 				if (result) {
-					const access_token = jwt.sign({ id: data[0].id }, access_key, { expiresIn: '1m' });
+					const access_token = jwt.sign({ id: data[0].id }, access_key, { expiresIn: '1h' });
 
-					const refresh_token = jwt.sign({ id: data[0].username }, refresh_key, { expiresIn: '5m' });
+					const refresh_token = jwt.sign({ id: data[0].username }, refresh_key, { expiresIn: '1d' });
 
 					response.cookie('refresh_token', refresh_token, {
-						httpOnly: false,
+						httpOnly: true,
 						path: '/',
 						domain: "localhost",
 						secure: false,
 						sameSite: "lax",
-						maxAge: 300000
+						maxAge: 86400000
 					});
 
 					response.json({success: true, token: access_token, admin: data[0].admin, user_id: data[0].id});
