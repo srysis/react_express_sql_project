@@ -124,7 +124,7 @@ router.post('/refresh/:id', (request, response) => {
 		try {
 			const decoded_refresh_token = jwt.verify(refresh_token, refresh_key);
 
-			const access_token = jwt.sign({ id: user_id }, access_key, { expiresIn: '1m' });
+			const access_token = jwt.sign({ id: user_id }, access_key, { expiresIn: '1h' });
 
 			response.json({success: true, token: access_token});
 		} catch (error) {
