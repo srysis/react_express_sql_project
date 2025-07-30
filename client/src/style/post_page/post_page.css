@@ -1,6 +1,7 @@
 section#post {
 	display: flex;
 	align-items: center;
+	max-height: 400px;
 	margin-bottom: 40px;
 	background-color: transparent;
 
@@ -56,15 +57,21 @@ section#post {
 
 		div.post_content {
 			width: 99%;
+			padding-block: 20px;
 
 			div.title {
-				margin-block: 20px;
+				margin-bottom: 10px;
 				font-size: 1.6em;
 
 				h1 {
 					margin-block-start: 0;
 					margin-block-end: 0;
 				}
+			}
+
+			div.content.expandable:hover {
+				color: #ddd;
+				cursor: pointer;
 			}
 		}
 
