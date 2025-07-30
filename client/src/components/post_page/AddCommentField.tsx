@@ -26,14 +26,16 @@ function AddCommentField({post_id}) {
 	}
 
 	return(
-		<form id="add_comment_form" onSubmit={onSubmitHandler}>
-			<div className="input_container">
-				<textarea id="description" placeholder="Comment on this post" onChange={onChangeHandler}></textarea>
-			</div>
-			<div className="button_container">
-				<button disabled={!comment}>Comment</button>
-			</div>
-		</form>
+		<section id="add_comment">
+			<form onSubmit={onSubmitHandler}>
+				<div className="input_container">
+					<textarea id="description" placeholder="Comment on this post" onChange={onChangeHandler}></textarea>
+				</div>
+				<div className="button_container">
+					<button disabled={!comment}>Comment</button>
+				</div>
+			</form>
+		</section>
 	)
 }
 
