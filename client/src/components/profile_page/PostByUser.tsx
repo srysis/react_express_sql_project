@@ -8,8 +8,9 @@ function PostByUser({content}) {
 					<Link to={`/post/${content.post_id}`}></Link>
 				</div>
 				<div className="post_content">
-					<div className="title">
+					<div className="title_and_date">
 						<h3>{content.post_title}</h3>
+						<span title={content.post_date.split("T")[0]}>{content.date_difference}</span>
 					</div>
 					<div className="content">
 						<p>{content.post_content}</p>
