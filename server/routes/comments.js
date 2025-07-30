@@ -5,6 +5,8 @@ const database = require('../database.js');
 
 const authenticator = require('../middlewares/auth.js');
 
+const findDifferenceBetweenDates = require('../modules/date.js');
+
 const router = express.Router();
 
 router.get('/:post_id/comments', (request, response) => {
@@ -17,6 +19,16 @@ router.get('/:post_id/comments', (request, response) => {
 
 	database.query(select_comments_of_post_query, (error, data) => {
 		if (error) return response.json(error);
+
+		const current_date = new Date(Date.now());
+
+		for (let row of data) {
+			let comment_date = new Date(row.comment_date);
+
+			row.date_difference = findDifferenceBetweenDates(comment_date, current_date);
+		}
+
+		console.log(data);
 
 		response.json({comments: data});
 	})
