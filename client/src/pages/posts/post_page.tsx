@@ -48,6 +48,31 @@ function PostPage({isLoggedIn}) {
 		.catch(error => console.error(error.response.data))
 	}, [post_id])
 
+	useEffect(() => {
+		if (isPostRetrieved) {
+			const post_container = document.querySelector("div.post_content");
+			const post_content_element = document.querySelector("div.post_content > div.content");
+
+			if (post_content_element.offsetHeight > post_container.offsetHeight) {
+				const initial_content = post_content.post_content;
+
+				const modified_content = initial_content.slice(0, 1800) + "...";
+
+				post_content_element.innerHTML = modified_content;
+				post_content_element.classList.add("expandable");
+				post_content_element.addEventListener("click", expandContent);
+			}
+		}
+	}, [isPostRetrieved]);
+
+	function expandContent(event) {
+		event.target.innerHTML = post_content.post_content;
+
+		document.querySelector('section#post').style.maxHeight = 'none';
+		
+		event.target.classList.remove("expandable");
+	}
+
 	if (isPostRetrieved) {
 		return(
 			<>
