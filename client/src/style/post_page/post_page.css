@@ -58,7 +58,7 @@ section#post {
 			width: 99%;
 
 			div.title {
-				margin-bottom: 20px;
+				margin-block: 20px;
 				font-size: 1.6em;
 
 				h1 {
