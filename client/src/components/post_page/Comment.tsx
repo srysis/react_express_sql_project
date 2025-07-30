@@ -4,7 +4,16 @@ function Comment({comment}) {
 	return(
 		<article className="comment">
 			<div className="comment_info">
-				<p><Link to={`/user/${comment.comment_author}`}><span>{comment.comment_author_name}</span></Link> - <span title={comment.comment_date}>{comment.date_difference}</span></p>
+				<div className="image_container">
+					<img src={`http://localhost:8081/${comment.comment_author_profile_picture}`} />
+				</div>
+				<div className="author">
+					<p><Link to={`/user/${comment.comment_author}`}><span>{comment.comment_author_name}</span></Link></p>
+				</div>
+				<div className="date">
+					<p title={comment.comment_date.split("T")[0]}>{comment.date_difference}</p>
+				</div>
+				
 			</div>
 			<div className="comment_content">
 				<p>{comment.content}</p>
