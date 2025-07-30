@@ -8,6 +8,8 @@ const SharpMulter = require('sharp-multer')
 const database = require('../database.js')
 const authenticator = require('../middlewares/auth.js');
 
+const findDifferenceBetweenDates = require('../modules/date.js');
+
 const storage = SharpMulter({
 	destination: function(request, file, cb) {
 		// supposedly, multer considers root directory to be the one that contains a file from which the server is being run ('server.js' in this case)
@@ -64,14 +66,22 @@ router.get('/:id', (request, response) => {
 router.get('/:id/posts', (request, response) => {
 	const requested_id = request.params.id;
 
-	const get_posts_of_one_user_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author` " +
+	const get_posts_of_one_user_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`*` " +
 										"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " +
-										"WHERE `user_posts`.`post_author` = " + requested_id + ";";
+										"WHERE `user_posts`.`post_author` = " + requested_id;
 
 	database.query(get_posts_of_one_user_query, (error, data) => {
 		if (error) return response.json(error);
 
 		if (data.length) {
+			const current_date = new Date(Date.now());
+
+			for (let row of data) {
+				let post_date = new Date(row.post_date);
+
+				row.date_difference = findDifferenceBetweenDates(post_date, current_date);
+			}
+
 			response.json({results: data})
 		} else {
 			response.json({message: "User has no posts."})
