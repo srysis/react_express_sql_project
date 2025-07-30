@@ -11,7 +11,7 @@ section#posts_by_user {
 		display: flex;
 
 		div {
-			padding: 10px 1vw;
+			padding: 5px 1vw;
 		}
 
 		div.overlay {
@@ -23,6 +23,19 @@ section#posts_by_user {
 
 			div.post_content {
 				text-align: left;
+
+				div.title_and_date {
+					span {
+						position: relative;
+						z-index: 3;
+						font-style: italic;
+						color: #bbb;
+					}
+				}
+
+				div.content {
+					padding-block: 20px;
+				}
 			}
 		}
 		
