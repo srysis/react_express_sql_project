@@ -131,7 +131,13 @@ router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
 									database.query(delete_post_query, (error, data) => {
 										if (error) return response.json(error);
 
-										response.json({success: true, message: "Post was deleted."});
+										const delete_related_comments_query = "DELETE FROM `comments` WHERE `post_id` = " + requested_post_id;
+
+										database.query(delete_related_comments_query, (error, data) => {
+											if (error) return response.json(error);
+
+											response.json({success: true, message: "Post was deleted."});
+										})
 									});
 								} else {
 									response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID."});
