@@ -3,28 +3,86 @@ section#posts {
 
 	article.post {
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
 		margin: auto;
 		border-bottom: 1px solid #333;
 
-		div {
-			padding-block: 10px;
+		div.link_container {
+			width: 100%;
+			padding-inline: 1vw;
+
+			div.overlay {
+				padding: 0;
+			}
+
+			div.post_author {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				padding-inline: 20px;
+
+				div.image_container {
+					width: 5vh;
+					height: 5vh;
+					min-width: 40px;
+					min-height: 40px;
+					margin: 10px auto;
+
+					a {
+						position: relative;
+						z-index: 4;
+
+						img {
+							display: block;
+							width: 5vh;
+							height: 5vh;
+							min-width: 40px;
+							min-height: 40px;
+							border: 3px solid black;
+							object-fit: cover;
+							object-position: 0% 0%;
+						}
+					}
+				}
+
+				div.name_and_date {
+					display: flex;
+					align-items: center;
+					width: 100%;
+					padding-inline: 15px;
+					text-align: left;
+
+					div.name {
+						position: relative;
+						z-index: 4;
+						
+						a {
+							font-weight: bold;
+						}
+					}
+
+					div.name:after {
+						content: '•';
+						margin-inline: 5px;
+					}
+
+					div.date {
+						color: #ddd;
+						font-size: 0.8em;
+					}
+				}
+			}
+
+			div.post_content {
+				padding: 5px 1.1vw 15px;
+				text-align: left;
+
+				div.post_title > h1 {
+					font-size: 1.4em;
+				}
+			}
 		}
 
-		div.overlay {
-			padding: 0;
-		}
-
-		div.post_author {
-			width: 8%;
-			padding-inline: 20px;
-		}
-
-		div.post_content {
-			padding-inline: 2vw;
-			text-align: left;
-		}
+		
 	}
 }
 
