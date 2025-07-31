@@ -1,14 +1,15 @@
 section#posts {
 	margin-top: 20px;
+	background-color: #000;
 
 	article.post {
 		display: flex;
-		margin: auto;
-		border-bottom: 1px solid #333;
+		margin: 5px 0;
+		background-color: rgb(14, 15, 16);
 
 		div.link_container {
 			width: 100%;
-			padding-inline: 1vw;
+			padding: 10px 1vw;
 
 			div.overlay {
 				padding: 0;
@@ -80,9 +81,15 @@ section#posts {
 					font-size: 1.4em;
 				}
 			}
-		}
+		}	
+	}
 
-		
+	article.post:first-child {
+		margin-top: 0;
+	}
+
+	article.post:last-child {
+		margin-bottom: 0;
 	}
 }
 
