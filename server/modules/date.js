@@ -1,3 +1,23 @@
+function findDifferenceInSeconds(content_date, current_date) {
+	let ms_difference = (current_date.getTime() - content_date.getTime()) / 1000;
+
+	return Math.abs(Math.floor(ms_difference));
+}
+
+function findDifferenceInMinutes(content_date, current_date) {
+	let ms_difference = (current_date.getTime() - content_date.getTime()) / 1000;
+	ms_difference /= 60;
+
+	return Math.abs(Math.floor(ms_difference));
+}
+
+function findDifferenceInHours(content_date, current_date) {
+	let ms_difference = (current_date.getTime() - content_date.getTime()) / 1000;
+	ms_difference /= (60 * 60);
+
+	return Math.abs(Math.floor(ms_difference));
+}
+
 function findDifferenceInDays(content_date, current_date) {
 	const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
@@ -35,6 +55,25 @@ function findDifferenceBetweenDates(content_date, current_date) {
 			date_difference = difference_years == 1 ? `${difference_years} year ago` : `${difference_years} years ago`;
 		} else {
 			date_difference = difference_months == 1 ? `${difference_months} month ago` : `${difference_months} months ago`;
+		}
+	} else if (difference_days <= 0) {
+		let difference_minutes = findDifferenceInMinutes(content_date, current_date);
+
+		if (difference_minutes >= 60) {
+			let difference_hours = findDifferenceInHours(content_date, current_date);
+
+			date_difference = difference_hours == 1 ? `${difference_hours} hour ago` : `${difference_hours} hours ago`;
+		} else if (difference_minutes <= 0) {
+			let difference_seconds = findDifferenceInSeconds(content_date, current_date);
+
+			if (difference_seconds != 0) {
+				date_difference = difference_seconds == 1 ? `${difference_seconds} second ago` : `${difference_seconds} seconds ago`;
+			} else {
+				date_difference = 'just now';
+			}
+			
+		} else {
+			date_difference = difference_minutes == 1 ? `${difference_minutes} minute ago` : `${difference_minutes} minutes ago`;
 		}
 	} else {
 		date_difference = difference_days == 1 ? `${difference_days} day ago` : `${difference_days} days ago`;
