@@ -51,13 +51,12 @@ section#post {
 		display: flex;
 		align-self: stretch;
 		width: 88%;
-		padding: 10px 2vw;
+		padding: 20px 2vw;
 		text-align: left;
 		background-color: rgb(30, 31, 32);
 
 		div.post_content {
 			width: 99%;
-			padding-block: 20px;
 
 			div.title {
 				margin-bottom: 10px;
