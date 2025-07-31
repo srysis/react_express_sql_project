@@ -3,28 +3,36 @@ section#profile_page {
 
 	div.flex_wrapper {
 		display: flex;
-		padding: 30px 2.5vw;
+		padding: 2vh 2.5vw;
 		background-color: rgb(14, 15, 16);
 
 		div#profile_picture {
-			width: 16vh;
-			height: 16vh;
+			width: 10%;
+			max-width: 15%;
 
-			img {
-				display: block;
-				width: inherit;
-				height: inherit;
-				max-width: inherit;
-				max-height: inherit;
-				border: 5px solid black;
-				object-fit: cover;
-				object-position: 0% 0%;
+			div.profile_picture_container {
+				width: 16vh;
+				height: 16vh;
+				min-width: 100px;
+				min-height: 100px;
+
+				img {
+					display: block;
+					width: inherit;
+					height: inherit;
+					min-width: inherit;
+					min-height: inherit;
+					border: 5px solid black;
+					object-fit: cover;
+					object-position: 0% 0%;
+				}
 			}
+			
 		}
 
 		div#profile_info {
-			width: 75%;
-			padding: 30px 2vw;
+			width: 90%;
+			padding: 2vh 2.5vw;
 			align-content: center;
 			text-align: left;
 
@@ -34,13 +42,12 @@ section#profile_page {
 		}
 
 		div#options {
-			width: 16%;
+			width: 5%;
 			display: flex;
-			justify-content: flex-end;
 			align-items: flex-start;
 			
 			div {
-				width: 30%;
+				width: 100%;
 				border-radius: 15px;
 				background-color: rgb(35, 36, 37);
 
