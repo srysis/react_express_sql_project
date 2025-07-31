@@ -28,8 +28,6 @@ router.get('/:post_id/comments', (request, response) => {
 			row.date_difference = findDifferenceBetweenDates(comment_date, current_date);
 		}
 
-		console.log(data);
-
 		response.json({comments: data});
 	})
 });
