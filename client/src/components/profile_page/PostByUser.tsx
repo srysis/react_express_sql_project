@@ -13,7 +13,7 @@ function PostByUser({content}) {
 						<span title={content.post_date.split("T")[0]}>{content.date_difference}</span>
 					</div>
 					<div className="content">
-						<p>{content.post_content}</p>
+						<p>{content.post_content.length > 1000 ? content.post_content.slice(0, 1000) + "..." : content.post_content}</p>
 					</div>
 				</div>
 			</div>
