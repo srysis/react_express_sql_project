@@ -1,0 +1,5 @@
+input[readonly] {
+	background-color: rgb(14, 15, 16);
+	cursor: not-allowed;
+	user-select: none;
+}
