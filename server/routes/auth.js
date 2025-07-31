@@ -62,7 +62,7 @@ router.post('/login', (request, response) => {
 
 					const refresh_token = jwt.sign({ id: data[0].username }, refresh_key, { expiresIn: '1d' });
 
-					response.cookie('refresh_token', refresh_token, {
+					response.cookie('t', refresh_token, {
 						httpOnly: true,
 						path: '/',
 						domain: "localhost",
