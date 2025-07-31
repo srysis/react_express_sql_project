@@ -4,6 +4,8 @@ import { useParams, Link } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import "../../style/post_page/post_edit_page.css"
+
 function PostEditPage() {
 	const navigate = useNavigate();
 
