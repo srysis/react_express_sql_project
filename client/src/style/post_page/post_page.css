@@ -12,7 +12,7 @@ section#post {
 	}
 
 	div.post_author {
-		width: 12%;
+		width: 13%;
 		padding-block: 20px;
 		background-color: rgb(14, 15, 16);
 
@@ -50,7 +50,7 @@ section#post {
 	div.wrapper {
 		display: flex;
 		align-self: stretch;
-		width: 88%;
+		width: 87%;
 		padding: 20px 2vw;
 		text-align: left;
 		background-color: rgb(30, 31, 32);
