@@ -2,6 +2,10 @@ section {
 	background-color: rgb(14, 15, 16);
 }
 
+p {
+	white-space: pre-wrap;
+}
+
 
 form {
 	padding-block: 20px;
