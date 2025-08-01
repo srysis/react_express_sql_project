@@ -94,7 +94,7 @@ router.post('/:id/create_post', authenticator, (request, response) => {
 	const post = request.body.post;
 
 	const sql_query = "INSERT INTO `user_posts` (`post_id`, `post_title`, `post_content`, `post_date`, `post_author`) VALUES (NULL, '" + 
-						post.post_title + "', '" + post.post_content + "', CURRENT_TIMESTAMP, '" + user_id + "');";
+						post.post_title.replace(/'/g, "\\'") + "', '" + post.post_content.replace(/'/g, "\\'") + "', CURRENT_TIMESTAMP, '" + user_id + "');";
 
 	database.query(sql_query, (error, data) => {
 		if (error) return response.json(error);
@@ -120,7 +120,7 @@ router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("i
 router.patch('/:id/edit', authenticator, (request, response) => {
 	const requested_id = request.params.id;
 	const username = request.body.username;
-	const description = request.body.description;
+	const description = request.body.description.replace(/'/g, "\\'");
 
 	const sql_query = "UPDATE `users_info` SET `name` = '" + username + "', `description` = '" + description + "' WHERE `users_info`.`user_id` = " + requested_id; 
 
