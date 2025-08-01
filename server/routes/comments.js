@@ -36,7 +36,7 @@ router.post('/:post_id/comments/add', (request, response) => {
 	const token = request.headers['authorization'];
 	const requested_post_id = request.params.post_id;
 	const user_id = request.body.user_id;
-	const comment = request.body.comment;
+	const comment = request.body.comment.replace(/'/g, "\\'");
 
 	if (token) {
 		try {
