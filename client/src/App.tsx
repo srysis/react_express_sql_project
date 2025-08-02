@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import axios from './api/axios'
+import axios from './api/axios.js'
 import { setAuthorizationHeader } from './tools/setHeaders'
 
 import ProtectedRoutes from './tools/ProtectedRoutes'
@@ -29,8 +29,8 @@ import SearchPage from './pages/search_page'
 import "./style/shared.css"
 
 function App() {
-	const stored_web_token = window.localStorage.getItem('t');
-	const stored_user_ID = window.localStorage.getItem('id');
+	const stored_web_token: string | number | null = window.localStorage.getItem('t');
+	const stored_user_ID: string | number | null = window.localStorage.getItem('id');
 
 	let logged_in = null;
 
@@ -40,11 +40,11 @@ function App() {
 		logged_in = false;
 	}
 
-	const [isLoggedIn, setLoggedInState] = useState(logged_in);
-	const [hasAdminRights, setHasAdminRights] = useState(false);
+	const [isLoggedIn, setLoggedInState] = useState<boolean>(logged_in);
+	const [hasAdminRights, setHasAdminRights] = useState<boolean>(false);
 
-	const [notification_visible, setNotificationVisible] = useState(false);
-	const [notification_message, setNotificationMessage] = useState("");
+	const [notification_visible, setNotificationVisible] = useState<boolean>(false);
+	const [notification_message, setNotificationMessage] = useState<string>("");
 
 
 	useEffect(() => {
@@ -52,15 +52,15 @@ function App() {
 			setAuthorizationHeader(stored_web_token);
 
 			axios.get(`/verify/${stored_user_ID}`)
-			.then(response => {
+			.then((response: any) => {
 				if (!response.data.success) {
 					logOff();
 				}
 			})
-			.catch(error => {
+			.catch((error: any) => {
 				if (!error.response.data.success) {
 					axios.post(`/refresh/${stored_user_ID}`)
-					.then(response => {
+					.then((response: any) => {
 						if (response.data.success) {
 							const token = response.data.token;
 
@@ -71,7 +71,7 @@ function App() {
 							logOff();
 						}
 					})
-					.catch(error => { logOff(); })
+					.catch((error: any) => { console.error(error); logOff(); })
 				}
 			});
 		} else {
@@ -94,11 +94,11 @@ function App() {
 	}, [notification_message])
 
 
-	function setNotificationMessageWrapper(message) {
+	function setNotificationMessageWrapper(message: string) {
 		setNotificationMessage(message)
 	}
 
-	function logIn(login_data) {
+	function logIn(login_data: any) {
 		const token = login_data.token;
 		const user_id = login_data.user_id;
 
@@ -132,14 +132,14 @@ function App() {
 					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} logIn={logIn} />} />
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
-					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
+					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} />} />
 					<Route path="/post/:post_id" element={<PostPage isLoggedIn={isLoggedIn} />} />
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
-						<Route path="/user/:id/options" element={<ProfileOptionsPage isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} />} />
+						<Route path="/user/:id/options" element={<ProfileOptionsPage isAdmin={hasAdminRights} />} />
 						<Route path="/user/:id/edit" element={<ProfileEditPage setNotificationMessage={setNotificationMessageWrapper} />} />
-						<Route path="/user/:id/delete" element={<ProfileDeletePage isLoggedIn={isLoggedIn} logOff={logOff} />} />
-						<Route path="/user/:id/create_post" element={<CreatePostPage isLoggedIn={isLoggedIn} USER_ID={stored_user_ID} logOff={logOff} />} />
+						<Route path="/user/:id/delete" element={<ProfileDeletePage logOff={logOff} />} />
+						<Route path="/user/:id/create_post" element={<CreatePostPage USER_ID={stored_user_ID} logOff={logOff} />} />
 						
 						<Route path="/post/:post_id/edit" element={<PostEditPage />} />
 						<Route path="/post/:post_id/delete" element={<PostDeletePage USER_ID={stored_user_ID} />} />

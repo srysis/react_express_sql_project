@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 
 import axios from '../api/axios'
 
@@ -8,31 +7,38 @@ import SearchResult from "../components/search_page/SearchResult"
 import "../style/search_page/search_page.css"
 import "../style/search_page/search_result.css"
 
+type User = {
+	description: string,
+	name: string,
+	profile_picture: string,
+	user_id: number
+}
+
 function SearchPage() {
-	const [search_queue, setSearchQueue] = useState("");
-	const [search_results, setSearchResults] = useState([]);
-	const [isSearchFinished, setSearchFinished] = useState(false);
+	const [search_queue, setSearchQueue] = useState<string>("");
+	const [search_results, setSearchResults] = useState<Array<User>>([]);
+	const [isSearchFinished, setSearchFinished] = useState<boolean>(false);
 
 	useEffect(() => {
-		document.querySelector("input[type='search']").addEventListener("blur", onBlurHandler, {once: true});
+		document.querySelector("input[type='search']")?.addEventListener("blur", onBlurHandler, {once: true});
 	}, [])
 
-	function onBlurHandler(event) {
+	function onBlurHandler(event: any) {
 		setSearchQueue(event.target.value);
 	}
 
-	async function onSubmitHandler(event) {
+	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
 		setSearchQueue(() => {
-			const new_search_queue = event.target.elements[0].value;
+			const new_search_queue : string = event.target.elements[0].value;
 
 			axios.get(`/search/${new_search_queue}`)
-			.then(response => {
+			.then((response: any) => {
 				setSearchResults(response.data.results);
 				setSearchFinished(true);
 			})
-			.catch(error => {
+			.catch((error: any) => {
 				console.error(error.response)
 			});
 
@@ -59,9 +65,9 @@ function SearchPage() {
 						<> 
 							<h3>{`Results for "${search_queue}"`}</h3>
 							<p style={ {'textAlign': 'left'} }>{`${search_results.length} entries found.`}</p>
+							{search_results.map((user, index) => <SearchResult key={index} user={user} />)}
 						</>
 					}
-					{search_results?.map((user, index) => <SearchResult key={index} user={user} />)}
 					{!search_results.length && <h3>No users found.</h3>}
 				</section>
 			}

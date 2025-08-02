@@ -7,37 +7,41 @@ import error_icon from "../../assets/exclamation-mark-2.png"
 
 import "../../style/auth_pages/registration_page.css"
 
-const USER_REGEX = /^[a-zA-Z][a-zA-Z-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
+const USER_REGEX : RegExp = /^[a-zA-Z][a-zA-Z-_]{3,23}$/;
+const PWD_REGEX : RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
 
-function RegistrationPage({isLoggedIn}) {
-	const userRef = useRef();
-	const errorRef = useRef();
+interface props {
+	isLoggedIn: boolean
+}
 
-	const [registration_failed, setRegistrationFailed] = useState(false);
 
-	const [username, setUsername] = useState("");
-	const [isUsernameValid, setIsUsernameValid] = useState(false);
-	const [username_focus, setUsernameFocus] = useState(false);
+function RegistrationPage({isLoggedIn}: props) {
+	const userRef = useRef<HTMLInputElement | null>(null);
 
-	const [password, setPassword] = useState("");
-	const [isPasswordValid, setIsPasswordValid] = useState(false);
-	const [password_focus, setPasswordFocus] = useState(false);
+	const [registration_failed, setRegistrationFailed] = useState<boolean>(false);
 
-	const [matching_password, setMatchingPassword] = useState("");
-	const [doPasswordsMatch, setDoPasswordsMatch] = useState(false);
-	const [matching_password_focus, setMatchingPasswordFocus] = useState(false);
+	const [username, setUsername] = useState<string>("");
+	const [isUsernameValid, setIsUsernameValid] = useState<boolean>(false);
+	const [username_focus, setUsernameFocus] = useState<boolean>(false);
 
-	const [error_message, setErrorMessage] = useState("");
+	const [password, setPassword] = useState<string>("");
+	const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
+	const [password_focus, setPasswordFocus] = useState<boolean>(false);
+
+	const [matching_password, setMatchingPassword] = useState<string>("");
+	const [doPasswordsMatch, setDoPasswordsMatch] = useState<boolean>(false);
+	const [matching_password_focus, setMatchingPasswordFocus] = useState<boolean>(false);
+
+	const [error_message, setErrorMessage] = useState<string>("");
 
 	const navigate = useNavigate();
 
-	const REQUEST_HEADERS = {
+	const REQUEST_HEADERS: any = {
 		'Content-Type': 'application/json'
 	}
 
 	useEffect(() => {
-		userRef.current.focus();
+		userRef.current?.focus();
 
 		if (isLoggedIn) navigate('/');
 	}, []);
@@ -55,7 +59,7 @@ function RegistrationPage({isLoggedIn}) {
 		setErrorMessage("");
 	}, [username, password, matching_password])
 
-	function onChangeHandler(event) {
+	function onChangeHandler(event: any) {
 		switch (event.target.id) {
 			case "username":
 				setUsername(event.target.value);
@@ -72,7 +76,7 @@ function RegistrationPage({isLoggedIn}) {
 		}
 	}
 
-	async function onSubmitHandler(event) {
+	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
 		if (!USER_REGEX.test(username) || !PWD_REGEX.test(password)) {
@@ -94,10 +98,10 @@ function RegistrationPage({isLoggedIn}) {
 					navigate('/register');
 				}
 			}
-		} catch (error) {
+		} catch (error: any) {
 			if (error.response?.status === 409) {
 				setErrorMessage("Username was taken");
-			} else if (error?.response) {
+			} else if (error.response) {
 				setErrorMessage("No response");
 			} else {
 				setErrorMessage("Registration failed");

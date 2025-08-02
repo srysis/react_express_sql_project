@@ -1,6 +1,10 @@
 import { Outlet, Navigate } from 'react-router-dom'
 
-function ProtectedRoutes({isLoggedIn}) {
+interface props {
+	isLoggedIn: boolean
+}
+
+function ProtectedRoutes({isLoggedIn}: props) {
 	return isLoggedIn ? <Outlet /> : <Navigate to="/" />
 }
 

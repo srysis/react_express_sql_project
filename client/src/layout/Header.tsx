@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom'
 
-import { setAuthorizationHeader } from '../tools/setHeaders'
-
 import "../style/layout/header.css"
 
-function Header({isLoggedIn, logOff}) {
-	const stored_user_id = window.localStorage.getItem('id');
+interface props {
+	isLoggedIn: boolean,
+	logOff: Function
+}
+
+function Header({isLoggedIn, logOff}: props) {
+	const stored_user_id : string | null = window.localStorage.getItem('id');
 
 	return(
 		<header>

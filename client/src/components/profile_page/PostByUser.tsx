@@ -1,6 +1,18 @@
 import { Link } from 'react-router-dom'
 
-function PostByUser({content}) {
+interface props {
+	content : {
+		date_difference: string,
+		post_author: number,
+		post_author_name: string,
+		post_content: string,
+		post_date: string,
+		post_id: number,
+		post_title: string
+	}
+}
+
+function PostByUser({content} : props) {
 	return (
 		<article className="post">
 			<div className="link_container">

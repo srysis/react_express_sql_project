@@ -1,10 +1,12 @@
-import React from "react"
-
 import acknowledge_icon from "../assets/success-icon.png"
 
 import "../style/notification.css"
 
-function NotificationMessage( {message} ) {
+interface props {
+	message: string
+}
+
+function NotificationMessage({message}: props) {
 	return (
 		<div id="notification">
 			<div className="icon_container">

@@ -4,7 +4,14 @@ import Header from "./Header"
 
 import Notification from "../components/NotificationMessage"
 
-function Base({isLoggedIn, logOff, notification_visible, notification_message}) {
+interface props {
+	isLoggedIn: boolean,
+	logOff: Function,
+	notification_visible: boolean,
+	notification_message: string
+}
+
+function Base({isLoggedIn, logOff, notification_visible, notification_message}: props) {
 	return(
 		<>
 			<Header isLoggedIn={isLoggedIn} logOff={logOff} />

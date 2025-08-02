@@ -10,22 +10,48 @@ import dots_icon from "../../assets/v_dots-icon.png"
 
 import "../../style/post_page/post_page.css"
 
-function PostPage({isLoggedIn}) {
+interface props {
+	isLoggedIn: boolean
+}
+
+type Post = {
+	post_author_name: string,
+	post_author_avatar: string,
+	post_id: number,
+	post_title: string,
+	post_content: string,
+	post_date: string,
+	post_author: number
+}
+
+type Comment = {
+	comment_id: number,
+	content: string,
+	comment_date: string,
+	post_id: number,
+	comment_author: number,
+	comment_author_name: string,
+	comment_author_profile_picture: string,
+	date_difference: string
+}
+
+
+function PostPage({isLoggedIn}: props) {
 	const { post_id } = useParams();
 
-	const [post_content, setPostContent] = useState(null);
-	const [isPostRetrieved, setIsPostRetrieved] = useState(false);
+	const [post_content, setPostContent] = useState<Post | null>(null);
+	const [isPostRetrieved, setIsPostRetrieved] = useState<boolean>(false);
 
-	const [post_ownership, setPostOwnership] = useState(false);
+	const [post_ownership, setPostOwnership] = useState<boolean>(false);
 
-	const [comments, setComments] = useState([]);
-	const [areCommentsRetrieved, setAreCommentsRetrieved] = useState(false);
+	const [comments, setComments] = useState<Comment[]>([]);
+	const [areCommentsRetrieved, setAreCommentsRetrieved] = useState<boolean>(false);
 
-	const [date_difference, setDateDifference] = useState();
+	const [date_difference, setDateDifference] = useState<string | null | undefined>();
 
 	useEffect(() => {
 		axios.get(`/post/${post_id}`)
-		.then(response => {
+		.then((response: any) => {
 
 			if (response.data.post != null) { 
 				setPostContent(response.data.post);
@@ -36,27 +62,27 @@ function PostPage({isLoggedIn}) {
 				setDateDifference(response.data.date_difference);
 
 				axios.get(`/post/${post_id}/comments`)
-				.then(response => {
+				.then((response: any) => {
 					setComments(response.data.comments);
 
 					setAreCommentsRetrieved(true);
 				})
-				.catch(error => console.error(error.response.data));
+				.catch((error: any) => console.error(error.response.data));
 			}
 
 		})
-		.catch(error => console.error(error.response.data))
+		.catch((error: any) => console.error(error.response.data))
 	}, [post_id])
 
 	useEffect(() => {
-		if (isPostRetrieved) {
-			const post_container = document.querySelector("div.post_content");
-			const post_content_element = document.querySelector("div.post_content > div.content");
+		if (isPostRetrieved && post_content) {
+			const post_container: any = document.querySelector("div.post_content");
+			const post_content_element: any = document.querySelector("div.post_content > div.content");
 
 			if (post_content_element.offsetHeight > post_container.offsetHeight) {
-				const initial_content = post_content.post_content;
+				const initial_content: string = post_content.post_content;
 
-				const modified_content = initial_content.slice(0, 1800) + "...";
+				const modified_content: string = initial_content.slice(0, 1800) + "...";
 
 				post_content_element.innerHTML = modified_content;
 				post_content_element.classList.add("expandable");
@@ -65,15 +91,18 @@ function PostPage({isLoggedIn}) {
 		}
 	}, [isPostRetrieved]);
 
-	function expandContent(event) {
-		event.target.innerHTML = post_content.post_content;
+	function expandContent(event: any) {
+		if (post_content) {
+			event.target.innerHTML = post_content.post_content;
 
-		document.querySelector('section#post').style.maxHeight = 'none';
-		
-		event.target.classList.remove("expandable");
+			const section_element : HTMLElement = document.querySelector('section#post') as HTMLElement;
+			if (section_element) section_element.style.maxHeight = 'none';
+			
+			event.target.classList.remove("expandable");
+		}
 	}
 
-	if (isPostRetrieved) {
+	if (isPostRetrieved && post_content) {
 		return(
 			<>
 				<section id="post">
@@ -101,7 +130,11 @@ function PostPage({isLoggedIn}) {
 						</div>
 						{post_ownership && 
 							<div className="options_container">
-								<div className="icon_container" title="Post options" onClick={(event) => {document.querySelector("div.list_container").classList.toggle("active")}}>
+								<div className="icon_container" title="Post options" 
+									 onClick={() => {
+									 	const element = document.querySelector("div.list_container");
+										if (element) element.classList.toggle("active");
+									 }}>
 									<img src={dots_icon} />
 								</div>
 								<div className="list_container">

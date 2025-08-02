@@ -1,26 +1,36 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
 import "../../style/post_page/post_edit_page.css"
+
+type Post = {
+	post_author_name: string,
+	post_author_avatar: string,
+	post_id: number,
+	post_title: string,
+	post_content: string,
+	post_date: string,
+	post_author: number
+}	
 
 function PostEditPage() {
 	const navigate = useNavigate();
 
 	const { post_id } = useParams();
 
-	const [post_data, setPostData] = useState(null);
-	const [isPostRetrieved, setIsPostRetrieved] = useState(false);
+	const [post_data, setPostData] = useState<Post | null>(null);
+	const [isPostRetrieved, setIsPostRetrieved] = useState<boolean>(false);
 
-	const [wasPostChanged, setWasPostChanged] = useState(false);
+	const [wasPostChanged, setWasPostChanged] = useState<boolean>(false);
 
-	const [new_post_content, setNewPostContent] = useState("");
+	const [new_post_content, setNewPostContent] = useState<string>("");
 
 	useEffect(() => {
 		axios.get(`/post/${post_id}`)
-		.then(response => {
+		.then((response: any) => {
 
 			if (response.data.post != null) { 
 				setPostData(response.data.post);
@@ -28,16 +38,16 @@ function PostEditPage() {
 			}
 
 		})
-		.catch(error => console.error(error.response.data))
+		.catch((error: any) => console.error(error.response.data))
 	}, [post_id]);
 
-	function onChangeHandler(event) {
+	function onChangeHandler(event: any) {
 		setNewPostContent(event.target.value);
 
 		setWasPostChanged(true);
 	}
 
-	async function onSubmitHandler(event) {
+	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
 		try {
@@ -46,12 +56,12 @@ function PostEditPage() {
 			if (response.data.success) {
 				navigate(`/post/${post_id}`);
 			}
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.response.data.message);
 		}
 	}
 
-	if (isPostRetrieved) {
+	if (isPostRetrieved && post_data) {
 		return(
 			<section id="edit_post">
 				<form onSubmit={onSubmitHandler}>
@@ -61,7 +71,7 @@ function PostEditPage() {
 					</div>
 					<div className="textarea_container">
 						<label htmlFor="post_content"><span>Content</span></label>
-						<textarea id="post_content" rows="4" cols="50" placeholder="Share your opinions..." defaultValue={post_data.post_content} onChange={onChangeHandler}></textarea>
+						<textarea id="post_content" rows={4} cols={50} placeholder="Share your opinions..." defaultValue={post_data.post_content} onChange={onChangeHandler}></textarea>
 					</div>
 					<div className="button_container">
 						<button disabled={!wasPostChanged}>Apply changes</button>

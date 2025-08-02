@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
@@ -9,13 +9,25 @@ import UploadProfilePictureForm from "../../components/profile_page/UploadProfil
 
 import "../../style/profile/profile_edit_page.css"
 
-function ProfileEditPage({setNotificationMessage}) {
+interface props {
+	setNotificationMessage: Function
+}
+
+type UserData = {
+	user_id: number,
+	name: string,
+	description: string,
+	profile_picture: string
+}
+
+
+function ProfileEditPage({setNotificationMessage} : props) {
 	const navigate = useNavigate();
 
 	const { id } = useParams();
 
-	const [userData, setUserData] = useState({});
-	const [hasUserData, setHasUserData] = useState(false);
+	const [userData, setUserData] = useState<UserData>({user_id: 0, name: '', description: '', profile_picture: ''});
+	const [hasUserData, setHasUserData] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
@@ -25,16 +37,13 @@ function ProfileEditPage({setNotificationMessage}) {
 		if (!hasUserData) {
 			axios.get(`/user/${id}`)
 			.then(response => {
+				setUserData(response.data.user_info);
 				setHasUserData(true);
-
-				let data = response.data.user_info;
-
-				setUserData(data);
 			})
 			.catch(error => {
-				console.error(error)
+				console.error(error);
+				setUserData({user_id: 0, name: '', description: '', profile_picture: ''});
 				setHasUserData(false);
-				setUserData({});
 			}) 
 		}
 	}, []);

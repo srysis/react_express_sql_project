@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
-import { setAuthorizationHeader } from '../../tools/setHeaders'
 
 import "../../style/profile/profile_delete_page.css"
 
-function ProfileDeletePage({isLoggedIn, logOff}) {
-	const REQUEST_HEADERS = {
+interface props {
+	logOff: Function
+}
+
+function ProfileDeletePage({logOff}: props) {
+	const REQUEST_HEADERS : any = {
 		'Content-Type': 'application/json'
 	}
 
@@ -16,9 +19,9 @@ function ProfileDeletePage({isLoggedIn, logOff}) {
 
 	const { id } = useParams();
 
-	const [confirm_delete_action, setConfirmDeleteAction] = useState(false);
+	const [confirm_delete_action, setConfirmDeleteAction] = useState<boolean>(false);
 
-	const [user_credentials, setUserCredentials] = useState({});
+	const [user_credentials, setUserCredentials] = useState<{username: string, password: string} | {}>({});
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
@@ -26,7 +29,7 @@ function ProfileDeletePage({isLoggedIn, logOff}) {
 		}
 	}, []);
 
-	function onConfirmDeleteClickHandler(event) {
+	function onConfirmDeleteClickHandler(event: any) {
 		switch (event.target.value) {
 			case "Y":
 				setConfirmDeleteAction(true);
@@ -38,14 +41,14 @@ function ProfileDeletePage({isLoggedIn, logOff}) {
 		}
 	}
 
-	function onChangeHandler(event) {
+	function onChangeHandler(event: any) {
 		setUserCredentials({
 			...user_credentials,
 			[event.target.id]: event.target.value
 		})
 	}
 
-	async function onSubmitHandler(event) {
+	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
 		try {
@@ -61,7 +64,7 @@ function ProfileDeletePage({isLoggedIn, logOff}) {
 			} else if (!response.data.success) {
 				navigate(`/user/${id}`);
 			}
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.response.data);
 		}
 	}

@@ -1,6 +1,15 @@
 import { Link } from 'react-router-dom'
 
-function SearchResult({user}) {
+interface props {
+	user : {
+		description : string,
+		name: string,
+		profile_picture: string,
+		user_id: number 
+	} 
+}
+
+function SearchResult({user} : props) {
 	return(
 		<div className="search_result">
 			<div className="link_container">

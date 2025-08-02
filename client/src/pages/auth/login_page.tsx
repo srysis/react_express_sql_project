@@ -3,20 +3,23 @@ import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import axios from '../../api/axios'
-import { setAuthorizationHeader } from '../../tools/setHeaders'
 
 import error_icon from "../../assets/exclamation-mark-2.png"
 
 import "../../style/auth_pages/login_page.css"
 
-function LoginPage({ isLoggedIn, logIn }) {
-	const userRef = useRef();
-	const errorRef = useRef();
+interface props {
+	isLoggedIn: boolean,
+	logIn: Function
+}
 
-	const [user_credentials, setUserCredentials] = useState({});
+function LoginPage({ isLoggedIn, logIn }: props) {
+	const userRef: any = useRef(null);
 
-	const [login_failed, setLoginFailed] = useState(false);
-	const [error_message, setErrorMessage] = useState("");
+	const [user_credentials, setUserCredentials] = useState<{username: string, password: string} | {}>({});
+
+	const [login_failed, setLoginFailed] = useState<boolean>(false);
+	const [error_message, setErrorMessage] = useState<string>("");
 
 	const navigate = useNavigate();
 
@@ -30,22 +33,23 @@ function LoginPage({ isLoggedIn, logIn }) {
 		if (isLoggedIn) navigate('/');
 	}, [])
 
-	function onChangeHandler(event) {
+	function onChangeHandler(event: any) {
 		setUserCredentials({
 			...user_credentials,
 			[event.target.name]: event.target.value
 		})
 	}
 
-	function onFocusHandler(event) {
+	function onFocusHandler() {
 		setLoginFailed(false);
 		setErrorMessage("");
 	}
 
-	async function onSubmitHandler(event) {
+	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
-		document.querySelector("button").setAttribute("disabled", true);
+		const button = document.querySelector("button");
+		if (button) button.setAttribute("disabled", true.toString());
 
 		try {
 			const response = await axios.post('/login', user_credentials, { headers: REQUEST_HEADERS });
@@ -55,10 +59,13 @@ function LoginPage({ isLoggedIn, logIn }) {
 
 				navigate('/');
 			}
-		} catch (error) {
+		} catch (error: any) {
 			if (error.response.status === 404) {
 				setLoginFailed(true);
-				document.querySelector("button").removeAttribute("disabled");
+
+				const button = document.querySelector("button");
+				if (button) button.removeAttribute("disabled");
+
 				setErrorMessage("Invalid username or password.");
 			}
 		}

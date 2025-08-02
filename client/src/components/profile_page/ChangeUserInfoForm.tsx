@@ -3,20 +3,33 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
-function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage}) {
+interface props {
+	USER_ID: string | undefined,
+	defaultUserData: UserData,
+	setNotificationMessage: Function
+}
+
+type UserData = {
+	user_id: number,
+	name: string,
+	description: string,
+	profile_picture: string
+}
+
+function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage}: props) {
 	const navigate = useNavigate();
 	
-	const [wasUserDataChanged, setWasNewUserDataChanged] = useState(false);
+	const [wasUserDataChanged, setWasNewUserDataChanged] = useState<boolean>(false);
 
-	const [newUsername, setNewUsername] = useState("");
-	const [newDescription, setNewDescription] = useState("");
+	const [newUsername, setNewUsername] = useState<string>("");
+	const [newDescription, setNewDescription] = useState<string>("");
 
 	useEffect(() => {
 		setNewUsername(defaultUserData.name);
 		setNewDescription(defaultUserData.description);
 	}, []);
 
-	function onChangeHandler(event) {
+	function onChangeHandler(event: any) {
 		switch (event.target.id) {
 			case "username":
 				setNewUsername(event.target.value);
@@ -32,16 +45,16 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage}) 
 		setWasNewUserDataChanged(true);
 	}
 
-	function discardChanges(event) {
+	function discardChanges() {
 		setNewUsername(defaultUserData.name);
 		setNewDescription(defaultUserData.description);
 		setWasNewUserDataChanged(false);
 
-		document.querySelector("input[id='username']").value = defaultUserData.name;
-		document.querySelector("input[id='description']").value = defaultUserData.description;
+		(document.querySelector("input[id='username']") as HTMLInputElement).value = defaultUserData.name;
+		(document.querySelector("input[id='description']") as HTMLInputElement).value = defaultUserData.description;
 	}
 
-	async function onSubmitHandler(event) {
+	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
 		try {
@@ -52,7 +65,7 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage}) 
 
 				navigate(`/user/${USER_ID}`);
 			}
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.response.data.message);
 		}
 	}
@@ -66,7 +79,7 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage}) 
 				</div>
 				<div className="textarea_container">
 					<label htmlFor="description"><span>Description</span></label>
-					<textarea id="description" defaultValue={defaultUserData.description} rows="4" cols="50" placeholder="Content" onChange={onChangeHandler}></textarea>
+					<textarea id="description" defaultValue={defaultUserData.description} rows={4} cols={50} placeholder="Content" onChange={onChangeHandler}></textarea>
 				</div>
 				<div className="button_container">
 					<button type="button" disabled={!wasUserDataChanged} onClick={discardChanges}>Discard changes</button>

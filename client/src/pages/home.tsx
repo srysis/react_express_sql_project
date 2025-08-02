@@ -5,17 +5,28 @@ import Post from "../components/home/Post"
 
 import "../style/home/posts.css"
 
+type Post = {
+	date_difference: string,
+	post_author: number,
+	post_author_avatar: string,
+	post_author_name: string,
+	post_content: string,
+	post_date: string,
+	post_id: number
+	post_title: string
+}
+
 function Home() {
-	const [arePostsRetrieved, setArePostsRetrieved] = useState(false);
-	const [retrieved_posts, setRetrievedPosts] = useState([]);
+	const [arePostsRetrieved, setArePostsRetrieved] = useState<boolean>(false);
+	const [retrieved_posts, setRetrievedPosts] = useState<Array<Post>>([]);
 
 	useEffect(() => {
 		axios.get('/posts')
-		.then(response => {
+		.then((response: any) => {
 			setRetrievedPosts(response.data.posts);
 			setArePostsRetrieved(true);
 		})
-		.catch(error => console.log(error.response.data));
+		.catch((error: any) => console.log(error.response.data));
 	}, []);
 
 	if (arePostsRetrieved) {

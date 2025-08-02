@@ -1,6 +1,19 @@
 import { Link } from 'react-router-dom'
 
-function Comment({comment}) {
+interface props {
+	comment: {
+		comment_id: number,
+		content: string,
+		comment_date: string,
+		post_id: number,
+		comment_author: number,
+		comment_author_name: string,
+		comment_author_profile_picture: string,
+		date_difference: string
+	}
+}
+
+function Comment({comment}: props) {
 	return(
 		<article className="comment">
 			<div className="comment_info">

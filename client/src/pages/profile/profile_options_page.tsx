@@ -1,10 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { Link, useParams } from 'react-router-dom'
 
 import "../../style/profile/profile_options_page.css"
 
-function ProfileOptionsPage({isLoggedIn, isAdmin}) {
+interface props {
+	isAdmin: boolean
+}
+
+function ProfileOptionsPage({isAdmin}: props) {
 	const { id } = useParams();
 
 	const navigate = useNavigate();

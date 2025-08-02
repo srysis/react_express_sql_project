@@ -2,11 +2,22 @@ import { useState, useEffect } from 'react'
 
 import axios from '../../api/axios'
 
-function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMessage}) {
-	const [image_data, setImageData] = useState(null);
+interface props {
+	USER_ID: string | undefined,
+	defaultUserData: {
+		user_id: number,
+		name: string,
+		description: string,
+		profile_picture: string
+	},
+	setNotificationMessage: Function
+}
 
-	const [selected_image, setSelectedImage] = useState(null);
-	const [preview_image, setPreviewImage] = useState(null);
+function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMessage}: props) {
+	const [image_data, setImageData] = useState<any>(null);
+
+	const [selected_image, setSelectedImage] = useState<any>(null);
+	const [preview_image, setPreviewImage] = useState<any>(null);
 
 	useEffect(() => {
 		if (!selected_image) {
@@ -21,7 +32,7 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 	}, [selected_image])
 
 
-	function onChangeHandler(event) {
+	function onChangeHandler(event: any) {
 		if (event.target.files.length === 0) {
 			setImageData(null);
 			setSelectedImage(null);
@@ -36,26 +47,26 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 		}
 	}
 
-	function discardChanges(event) {
+	function discardChanges() {
 		setImageData(null);
 		setSelectedImage(null);
 	}
 
-	async function onSubmitHandler(event) {
+	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
 		try {
 			const response = await axios.post(`/user/${USER_ID}/upload_profile_picture`, image_data);
 
-			console.log(response);
-
 			if (response.data.success) {
-				document.querySelector("button").setAttribute("disabled", "true");
+				const button = document.querySelector("button");
+				if (button) button.setAttribute("disabled", "true");
+				
 				setImageData(null);
 
 				setNotificationMessage("Your avatar has been changed.")
 			}
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
 		}
 	}

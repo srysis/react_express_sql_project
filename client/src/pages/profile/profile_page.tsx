@@ -11,44 +11,37 @@ import options_icon from "../../assets/gear-icon.png"
 import "../../style/profile/profile_page.css"
 import "../../style/profile/posts.css"
 
-function ProfilePage({isLoggedIn, isAdmin}) {
+interface props {
+	isLoggedIn: boolean
+}
+
+type UserData = {
+	user_id: number,
+	name: string
+	description: string,
+	profile_picture: string
+}
+
+type Post = {
+	date_difference: string,
+	post_author: number,
+	post_author_avatar: string,
+	post_author_name: string,
+	post_content: string,
+	post_date: string,
+	post_id: number
+	post_title: string
+}
+
+function ProfilePage({isLoggedIn} : props) {
 	const { id } = useParams();
 
-	const [hasUserData, setHasUserData] = useState(false);
-	const [userData, setUserData] = useState({});
-	const [ownership, setOwnership] = useState(false);
+	const [hasUserData, setHasUserData] = useState<boolean>(false);
+	const [userData, setUserData] = useState<UserData | null>(null);
+	const [ownership, setOwnership] = useState<boolean>(false);
 
-	const [arePostsRetrieved, setArePostsRetrieved] = useState(false);
-	const [user_posts, setUserPosts] = useState([]);
-
-	useEffect(() => {
-		if (!hasUserData) {
-			axios.get(`/user/${id}`)
-			.then(response => {
-				setUserData(response.data.user_info);
-				
-				if (response.data.ownership) {
-					setOwnership(true);
-				} else {
-					setOwnership(false);
-				}
-
-				axios.get(`/user/${id}/posts`)
-				.then(response => {
-					setUserPosts(response.data.results);
-
-					setArePostsRetrieved(true);
-				})
-				.catch(error => console.log(error.response.data))
-
-				setHasUserData(true);
-			})
-			.catch(error => {
-				setHasUserData(false);
-				setUserData({});
-			}) 
-		}
-	}, []);
+	const [arePostsRetrieved, setArePostsRetrieved] = useState<boolean>(false);
+	const [user_posts, setUserPosts] = useState<Post[] | null>([]);
 
 	useEffect(() => {
 		if (isLoggedIn) {
@@ -60,7 +53,7 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 
 	useEffect(() => {
 		axios.get(`/user/${id}`)
-		.then(response => {
+		.then((response: any) => {
 			setUserData(response.data.user_info);
 			
 			if (response.data.ownership) {
@@ -70,22 +63,24 @@ function ProfilePage({isLoggedIn, isAdmin}) {
 			}
 
 			axios.get(`/user/${id}/posts`)
-			.then(response => {
+			.then((response: any) => {
 				setUserPosts(response.data.results);
 
 				setArePostsRetrieved(true);
 			})
-			.catch(error => console.log(error.response.data))
+			.catch((error: any) => console.log(error.response.data))
 
 			setHasUserData(true);
 		})
-		.catch(error => {
-			setHasUserData(false);
-			setUserData({});
-		}) 
-	}, [id])
+		.catch((error: any) => {
+			console.error(error.response.data);
 
-	if (hasUserData) {
+			setHasUserData(false);
+			setUserData(null);
+		}) 
+	}, [id]);
+
+	if (hasUserData && userData) {
 		return(
 			<section id="profile_page">
 				<div className="flex_wrapper">

@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import axios from '../api/axios'
-import { setAuthorizationHeader } from '../tools/setHeaders'
 
 import "../style/create_post_page/create_post_page.css"
 
-function CreatePostPage({isLoggedIn, USER_ID, logOff}) {
+interface props {
+	USER_ID: string | number | null,
+	logOff: Function
+}
+
+function CreatePostPage({USER_ID, logOff}: props) {
 	const navigate = useNavigate();
 
 	const { id } = useParams();
 
-	const [post_content, setPostContent] = useState({});
+	const [post_content, setPostContent] = useState<{post_content: string, post_title: string} | {}>({});
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
@@ -20,7 +24,14 @@ function CreatePostPage({isLoggedIn, USER_ID, logOff}) {
 		}
 	}, [])
 
-	async function onSubmitHandler(event) {
+	function onChangeHandler(event: any) {
+		setPostContent({
+			...post_content,
+			[event.target.id]: event.target.value
+		})
+	}
+
+	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
 		try {
@@ -38,20 +49,13 @@ function CreatePostPage({isLoggedIn, USER_ID, logOff}) {
 					navigate(`/post/${create_post_response.data.post_id}`);
 				}
 			}
-		} catch (error) {
+		} catch (error: any) {
 			if (!error.response.data.success) {
 				logOff();
 
 				console.error(error.response.data.message);
 			}
 		}
-	}
-
-	function onChangeHandler(event) {
-		setPostContent({
-			...post_content,
-			[event.target.id]: event.target.value
-		})
 	}
 
 	return (
@@ -63,7 +67,7 @@ function CreatePostPage({isLoggedIn, USER_ID, logOff}) {
 				</div>
 				<div className="textarea_container">
 					<label htmlFor="post_content"><span>Content</span></label>
-					<textarea id="post_content" rows="4" cols="50" placeholder="Share your opinions..." onChange={onChangeHandler} required></textarea>
+					<textarea id="post_content" rows={4} cols={50} placeholder="Share your opinions..." onChange={onChangeHandler} required></textarea>
 				</div>
 				<div className="button_container">
 					<button>Post</button>

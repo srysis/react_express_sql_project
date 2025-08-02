@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
 import "../../style/post_page/post_delete_page.css"
 
-function PostDeletePage({USER_ID}) {
+interface props {
+	USER_ID: string | number | null
+}
+
+function PostDeletePage({USER_ID}: props) {
 	const REQUEST_HEADERS = {
 		'Content-Type': 'application/json'
 	}
@@ -15,9 +19,9 @@ function PostDeletePage({USER_ID}) {
 
 	const { post_id } = useParams();
 
-	const [confirm_delete_action, setConfirmDeleteAction] = useState(false);
+	const [confirm_delete_action, setConfirmDeleteAction] = useState<boolean>(false);
 
-	const [user_credentials, setUserCredentials] = useState({});
+	const [user_credentials, setUserCredentials] = useState<{username: string, password: string} | {}>({});
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== USER_ID) {
@@ -25,26 +29,26 @@ function PostDeletePage({USER_ID}) {
 		}
 	}, []);
 
-	function onConfirmDeleteClickHandler(event) {
+	function onConfirmDeleteClickHandler(event: any) {
 		switch (event.target.value) {
 			case "Y":
 				setConfirmDeleteAction(true);
 				break;
 			case "N":
 				setConfirmDeleteAction(false);
-				navigate(`/user/${id}`);
+				navigate(`/user/${USER_ID}`);
 				break;
 		}
 	}
 
-	function onChangeHandler(event) {
+	function onChangeHandler(event: any) {
 		setUserCredentials({
 			...user_credentials,
 			[event.target.id]: event.target.value
 		})
 	}
 
-	async function onSubmitHandler(event) {
+	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
 		try {
@@ -61,7 +65,7 @@ function PostDeletePage({USER_ID}) {
 			} else if (!response.data.success) {
 				navigate(`/post/${post_id}`);
 			}
-		} catch (error) {
+		} catch (error: any) {
 			if (error?.response.status === 403) {
 				navigate(`/post/${post_id}`);
 			}
