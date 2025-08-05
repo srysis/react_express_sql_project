@@ -57,4 +57,4 @@ app.get('/search/:queue', (request, response) => {
 	}
 })
 
-app.listen(port, () => {console.log(`server runs on port ${port}`)});
+app.listen(process.env.PORT || port, () => {console.log(`server runs on port ${port}`)});
