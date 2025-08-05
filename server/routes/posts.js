@@ -11,7 +11,7 @@ const findDifferenceBetweenDates = require('../modules/date.js');
 const router = express.Router();
 
 router.get('/posts', (request, response) => {
-	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `users_info`.`profile_picture` AS `post_author_avatar`, `user_posts`.`*` " +
+	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `users_info`.`profile_picture` AS `post_author_avatar`, `user_posts`.* " +
 								"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` ORDER BY `user_posts`.`post_date` DESC;"
 
 	database.query(get_all_posts_query, (error, data) => {
