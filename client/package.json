@@ -2,7 +2,7 @@
   "name": "client",
   "private": true,
   "version": "0.4.0",
-  // "homepage": "http://srysis-forum.com/",
+  "homepage": ".",
   "type": "module",
   "scripts": {
     "dev": "vite",
