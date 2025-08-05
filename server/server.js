@@ -34,7 +34,7 @@ app.use('/post', commentsRoutes);
 
 // root
 app.get('/', (request, response) => {
-	response.json(`This is a root of localhost on port ${port}. Test`);
+	response.json(`This is a root of localhost on port ${port}.`);
 });
 
 app.get('/search/:queue', (request, response) => {
