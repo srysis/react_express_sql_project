@@ -1,9 +1,10 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const database = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: 'root',
+	host: 'mysql-13377331-forumdb.c.aivencloud.com',
+	port: '19510',
+	user: 'avnadmin',
+	password: process.env.DATABASE_PASSWORD,
 	database: 'forum_db'
 });
 
