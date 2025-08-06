@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+import dotenv from 'dotenv'
+
 import axios from './api/axios.js'
 import { setAuthorizationHeader } from './tools/setHeaders'
 
@@ -27,6 +29,9 @@ import PostDeletePage from './pages/posts/post_delete_page'
 import SearchPage from './pages/search_page'
 
 import "./style/shared.css"
+
+dotenv.config();
+
 
 function App() {
 	const stored_web_token: string | number | null = window.localStorage.getItem('t');
