@@ -23,7 +23,7 @@ function Post({content}: props) {
 				<div className="post_author">
 					<div className="image_container">
 						{/*<Link to={`/user/${content.post_author}`}><img src={`http://localhost:8081/${content.post_author_avatar}`} /></Link>*/}
-					<Link to={`/user/${content.post_author}`}><img src={`${process.env.VITE_IMAGE_STORAGE}${content.post_author_avatar}`} /></Link>
+					<Link to={`/user/${content.post_author}`}><img src={`${import.meta.env.VITE_IMAGE_STORAGE}${content.post_author_avatar}`} /></Link>
 					</div>
 					<div className="name_and_date">
 						<div className="name">
