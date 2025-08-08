@@ -2,30 +2,18 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
-
-const SharpMulter = require('sharp-multer')
+const sharp = require('sharp');
+const dot_env = require('dotenv');
+const vercel_blob = require('@vercel/blob');
 
 const database = require('../database.js')
 const authenticator = require('../middlewares/auth.js');
 
 const findDifferenceBetweenDates = require('../modules/date.js');
 
-const storage = SharpMulter({
-	destination: function(request, file, cb) {
-		// supposedly, multer considers root directory to be the one that contains a file from which the server is being run ('server.js' in this case)
-		// that's why putting '../public' as destination would create a 'public' folder one level above 'root' directory
-		cb(null, './public') 
-	},
-	imageOptions: {
-		fileFormat: "png",
-		quality: 80,
-		resize: { width: 200, height: 200, resizeMode: "outside", withoutEnlargement: true }
-	}
-})
+const imageUpload = multer();
 
-
-
-const imageUpload = multer({storage})
+dot_env.config();
 
 const router = express.Router();
 
@@ -103,19 +91,52 @@ router.post('/:id/create_post', authenticator, (request, response) => {
 	})
 });
 
-router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("image-name")], (request, response) => {
+router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("profile_picture")], (request, response) => {
 	const requested_id = request.params.id;
 
-	const new_file_name = request.file.originalname.split(".")[0] + ".png";
+	const image_data = request.file;
 
-	const set_image_path_query = "UPDATE `users_info` SET `profile_picture` = '" + new_file_name + "' WHERE `users_info`.`user_id` = " + requested_id;
+	sharp(image_data.buffer)
+	.png()
+	.resize(200, 200, { resizeMode: "outside", withoutEnlargement: true })
+	.toBuffer()
+	.then((data, info) => {
+		const blob = uploadImageToVercel(image_data, data)
+					.then((result) => {
+					 	if (result.url) {
+						const get_previous_image_query = "SELECT `profile_picture` FROM `users_info` WHERE `user_id` = " + requested_id;
 
-	database.query(set_image_path_query, (error, data) => {
-		if (error) return response.json({success: false, error: error});
+						const set_image_path_query = "UPDATE `users_info` SET `profile_picture` = '" + result.pathname + "' WHERE `users_info`.`user_id` = " + requested_id;
 
-		response.json({success: true, message: "Profile picture has been updated"})
+						database.query(get_previous_image_query, (error, data) => {
+							if (error) return response.json(error);
+
+							const previous_image = data[0].profile_picture;
+
+							database.query(set_image_path_query, (error, data) => {
+								if (error) return response.json(error);
+
+								response.json({success: true, message: "Profile picture has been updated", previous_image: previous_image});
+							})
+						})
+					}
+					})
+					.catch((error) => {
+						console.error(error);
+						response.status(500).json({success: false, error: error});
+					});
 	})
-})
+});
+
+async function uploadImageToVercel(original_image_data, buffer) {
+	const blob = await vercel_blob.put(`/${original_image_data.originalname}`, buffer, { 
+		access: 'public',
+		allowOverwrite: true,
+		token: process.env.BLOB_READ_WRITE_TOKEN
+	});
+
+	return blob;
+}
 
 router.patch('/:id/edit', authenticator, (request, response) => {
 	const requested_id = request.params.id;
