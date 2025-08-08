@@ -18,7 +18,7 @@ function Comment({comment}: props) {
 		<article className="comment">
 			<div className="comment_info">
 				<div className="image_container">
-					<img src={`http://localhost:8081/${comment.comment_author_profile_picture}`} />
+					<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${comment.comment_author_profile_picture}`} />
 				</div>
 				<div className="author">
 					<p><Link to={`/user/${comment.comment_author}`}><span>{comment.comment_author_name}</span></Link></p>
