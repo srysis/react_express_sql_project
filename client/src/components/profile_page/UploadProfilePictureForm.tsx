@@ -40,7 +40,7 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 			return;
 		} else {
 			const formData = new FormData();
-			formData.append('image-name', event.target.files[0], event.target.files[0].name);
+			formData.append('profile_picture', event.target.files[0], event.target.files[0].name);
 			setImageData(formData);
 
 			setSelectedImage(event.target.files[0]);
@@ -75,12 +75,12 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 		<section id="upload_profile_picture">
 			<span className="title"><span>Profile picture</span></span>
 			<div id="profile_picture">
-				<img src={selected_image ? preview_image : `http://localhost:8081/${defaultUserData.profile_picture}`} />
+				<img src={selected_image ? preview_image : `${import.meta.env.VITE_IMAGE_STORAGE}${defaultUserData.profile_picture}`} />
 			</div>
 			<form encType="multipart/form-data" onSubmit={onSubmitHandler}>
 				<div className="input_container">
 					<label htmlFor="image">Upload your avatar</label>
-					<input type="file" accept=".jpg, .png" id="image" name="profile_picture" onChange={onChangeHandler} />
+					<input type="file" accept="image/png" id="image" name="profile_picture" onChange={onChangeHandler} />
 				</div>
 				<div className="button_container">
 					<button type="button" disabled={!image_data} onClick={discardChanges}>Discard changes</button>
