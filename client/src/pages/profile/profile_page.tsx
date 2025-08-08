@@ -86,7 +86,7 @@ function ProfilePage({isLoggedIn} : props) {
 				<div className="flex_wrapper">
 					<div id="profile_picture">
 						<div className="profile_picture_container">
-							<img src={`http://localhost:8081/${userData.profile_picture}`} />
+							<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${userData.profile_picture}`} />
 						</div>
 					</div>
 					<div id="profile_info">
