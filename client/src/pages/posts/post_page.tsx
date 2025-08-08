@@ -109,7 +109,7 @@ function PostPage({isLoggedIn}: props) {
 					<div className="post_author">
 						<p className="header">Author:</p>
 						<div className="image_container">
-							<img src={`http://localhost:8081/${post_content.post_author_avatar}`} />
+							<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${post_content.post_author_avatar}`} />
 						</div>
 						{post_content.post_author_name !== null &&
 							<Link to={`/user/${post_content.post_author}`}>{post_content.post_author_name}</Link>
