@@ -8,15 +8,16 @@ interface props {
 	isLoggedIn: boolean,
 	logOff: Function,
 	notification_visible: boolean,
-	notification_message: string
+	notification_message: string,
+	notification_type: boolean
 }
 
-function Base({isLoggedIn, logOff, notification_visible, notification_message}: props) {
+function Base({isLoggedIn, logOff, notification_visible, notification_message, notification_type}: props) {
 	return(
 		<>
 			<Header isLoggedIn={isLoggedIn} logOff={logOff} />
 			{notification_visible && 
-				<Notification message={notification_message} />
+				<Notification message={notification_message} type={notification_type} />
 			}
 			<main>
 				<Outlet />
