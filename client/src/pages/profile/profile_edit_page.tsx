@@ -10,7 +10,8 @@ import UploadProfilePictureForm from "../../components/profile_page/UploadProfil
 import "../../style/profile/profile_edit_page.css"
 
 interface props {
-	setNotificationMessage: Function
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
 type UserData = {
@@ -21,7 +22,7 @@ type UserData = {
 }
 
 
-function ProfileEditPage({setNotificationMessage} : props) {
+function ProfileEditPage({setNotificationMessage, setNotificationType} : props) {
 	const navigate = useNavigate();
 
 	const { id } = useParams();
@@ -53,8 +54,8 @@ function ProfileEditPage({setNotificationMessage} : props) {
 	if (hasUserData) {
 		return(
 			<>
-				<ChangeUserInfoForm USER_ID={id} defaultUserData={userData} setNotificationMessage={setNotificationMessage} />
-				<UploadProfilePictureForm USER_ID={id} defaultUserData={userData} setNotificationMessage={setNotificationMessage} />
+				<ChangeUserInfoForm USER_ID={id} defaultUserData={userData} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} />
+				<UploadProfilePictureForm USER_ID={id} defaultUserData={userData} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} />
 			</>
 		)
 	}
