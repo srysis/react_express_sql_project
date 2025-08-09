@@ -1,16 +1,18 @@
 import acknowledge_icon from "../assets/success-icon.png"
+import error_icon from "../assets/error-icon.png"
 
 import "../style/notification.css"
 
 interface props {
-	message: string
+	message: string,
+	type: boolean
 }
 
-function NotificationMessage({message}: props) {
+function NotificationMessage({message, type}: props) {
 	return (
-		<div id="notification">
+		<div id="notification" className={type ? "success" : "error"}>
 			<div className="icon_container">
-				<img src={acknowledge_icon} />
+				<img src={type ? acknowledge_icon : error_icon} />
 			</div>
 			<div className="text_container">
 				<p>{message}</p>
