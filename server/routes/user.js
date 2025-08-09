@@ -96,36 +96,42 @@ router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("p
 
 	const image_data = request.file;
 
-	sharp(image_data.buffer)
-	.png()
-	.resize(200, 200, { resizeMode: "outside", withoutEnlargement: true })
-	.toBuffer()
-	.then((data, info) => {
-		const blob = uploadImageToVercel(image_data, data)
-					.then((result) => {
-					 	if (result.url) {
-						const get_previous_image_query = "SELECT `profile_picture` FROM `users_info` WHERE `user_id` = " + requested_id;
+	if (image_data.mimetype != 'image/png') {
+		response.status(400).json({success: false, message: "Image has to be PNG."});
+	} else {
+		sharp(image_data.buffer)
+		.png()
+		.resize(200, 200, { resizeMode: "outside", withoutEnlargement: true })
+		.toBuffer()
+		.then((data, info) => {
+			const blob = uploadImageToVercel(image_data, data)
+						.then((result) => {
+						 	if (result.url) {
+							const get_previous_image_query = "SELECT `profile_picture` FROM `users_info` WHERE `user_id` = " + requested_id;
 
-						const set_image_path_query = "UPDATE `users_info` SET `profile_picture` = '" + result.pathname + "' WHERE `users_info`.`user_id` = " + requested_id;
+							const set_image_path_query = "UPDATE `users_info` SET `profile_picture` = '" + result.pathname + "' WHERE `users_info`.`user_id` = " + requested_id;
 
-						database.query(get_previous_image_query, (error, data) => {
-							if (error) return response.json(error);
-
-							const previous_image = data[0].profile_picture;
-
-							database.query(set_image_path_query, (error, data) => {
+							database.query(get_previous_image_query, (error, data) => {
 								if (error) return response.json(error);
 
-								response.json({success: true, message: "Profile picture has been updated", previous_image: previous_image});
+								const previous_image = data[0].profile_picture;
+
+								database.query(set_image_path_query, (error, data) => {
+									if (error) return response.json(error);
+
+									deleteImageFromVercel(previous_image);
+
+									response.json({success: true, message: "Profile picture has been updated"});
+								})
 							})
+						}
 						})
-					}
-					})
-					.catch((error) => {
-						console.error(error);
-						response.status(500).json({success: false, error: error});
-					});
-	})
+						.catch((error) => {
+							console.error(error);
+							response.status(500).json({success: false, error: error});
+						});
+		})
+	}
 });
 
 async function uploadImageToVercel(original_image_data, buffer) {
@@ -136,6 +142,11 @@ async function uploadImageToVercel(original_image_data, buffer) {
 	});
 
 	return blob;
+}
+function deleteImageFromVercel(image_name) {
+	vercel_blob.del(`https://nzeeldk4zw3dccii.public.blob.vercel-storage.com/${image_name}`, {
+		token: process.env.BLOB_READ_WRITE_TOKEN
+	});
 }
 
 router.patch('/:id/edit', authenticator, (request, response) => {
