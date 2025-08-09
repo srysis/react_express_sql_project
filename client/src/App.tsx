@@ -44,6 +44,7 @@ function App() {
 	const [hasAdminRights, setHasAdminRights] = useState<boolean>(false);
 
 	const [notification_visible, setNotificationVisible] = useState<boolean>(false);
+	const [notification_type, setNotificationType] = useState<boolean>(true);
 	const [notification_message, setNotificationMessage] = useState<string>("");
 
 
@@ -98,6 +99,12 @@ function App() {
 		setNotificationMessage(message)
 	}
 
+
+	// where if 'type' parameter is 'true' displays regular notification, else if 'false' - error notification
+	function setNotificationTypeWrapper(type: boolean) {
+		setNotificationType(type);
+	}
+
 	function logIn(login_data: any) {
 		const token = login_data.token;
 		const user_id = login_data.user_id;
@@ -127,7 +134,7 @@ function App() {
 	return (
 		<BrowserRouter basename="/">
 			<Routes>
-				<Route element={<BaseLayout isLoggedIn={isLoggedIn} logOff={logOff} notification_visible={notification_visible} notification_message={notification_message} />} >
+				<Route element={<BaseLayout isLoggedIn={isLoggedIn} logOff={logOff} notification_visible={notification_visible} notification_message={notification_message} notification_type={notification_type} />} >
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} logIn={logIn} />} />
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
@@ -137,7 +144,7 @@ function App() {
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/options" element={<ProfileOptionsPage isAdmin={hasAdminRights} />} />
-						<Route path="/user/:id/edit" element={<ProfileEditPage setNotificationMessage={setNotificationMessageWrapper} />} />
+						<Route path="/user/:id/edit" element={<ProfileEditPage setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 						<Route path="/user/:id/delete" element={<ProfileDeletePage logOff={logOff} />} />
 						<Route path="/user/:id/create_post" element={<CreatePostPage USER_ID={stored_user_ID} logOff={logOff} />} />
 						
