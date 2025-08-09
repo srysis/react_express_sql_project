@@ -67,7 +67,9 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 				setNotificationMessage("Your avatar has been changed.")
 			}
 		} catch (error: any) {
-			console.error(error);
+			if (error.status == 400) {
+				setNotificationMessage("Only .png files are allowed!");
+			}
 		}
 	}
 
