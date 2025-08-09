@@ -1,7 +1,7 @@
 div#notification {
 	position: fixed;
 	z-index: 4;
-	top: 15%;
+	top: 3%;
 	left: 31%;
 	min-width: 800px;
 	max-width: 30vw;
@@ -10,18 +10,25 @@ div#notification {
 	box-shadow: 0 0 25px #000;
 	border: 2px solid rgb(57, 58, 58);
 	padding: 10px 1vw;
-	background-color: rgb(17, 18, 18);
 
 	div.icon_container {
 		img {
-			width: 80px;
+			width: 48px;
 		}
 	}
 
 	div.text_container {
 		width: 100%;
 		padding-inline: 1vw;
-		font-size: 2em;
+		font-size: 1.7em;
 		text-align: left;
 	}
+}
+
+div#notification.success {
+	background-color: rgb(17, 35, 18);
+}
+
+div#notification.error {
+	background-color: rgb(70, 6, 7);
 }
