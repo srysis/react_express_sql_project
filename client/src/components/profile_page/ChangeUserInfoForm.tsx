@@ -6,7 +6,8 @@ import axios from '../../api/axios'
 interface props {
 	USER_ID: string | undefined,
 	defaultUserData: UserData,
-	setNotificationMessage: Function
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
 type UserData = {
@@ -16,7 +17,7 @@ type UserData = {
 	profile_picture: string
 }
 
-function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage}: props) {
+function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, setNotificationType}: props) {
 	const navigate = useNavigate();
 	
 	const [wasUserDataChanged, setWasNewUserDataChanged] = useState<boolean>(false);
@@ -61,6 +62,7 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage}: 
 			const response = await axios.patch(`/user/${USER_ID}/edit`, {username: newUsername, description: newDescription});
 
 			if (response.data.success) {
+				setNotificationType(true);
 				setNotificationMessage("Changes have been applied.")
 
 				navigate(`/user/${USER_ID}`);

@@ -10,10 +10,11 @@ interface props {
 		description: string,
 		profile_picture: string
 	},
-	setNotificationMessage: Function
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
-function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMessage}: props) {
+function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMessage, setNotificationType}: props) {
 	const [image_data, setImageData] = useState<any>(null);
 
 	const [selected_image, setSelectedImage] = useState<any>(null);
@@ -64,10 +65,12 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 				
 				setImageData(null);
 
+				setNotificationType(true);
 				setNotificationMessage("Your avatar has been changed.")
 			}
 		} catch (error: any) {
 			if (error.status == 400) {
+				setNotificationType(false);
 				setNotificationMessage("Only .png files are allowed!");
 			}
 		}
