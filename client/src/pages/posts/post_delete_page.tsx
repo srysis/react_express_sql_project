@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import "../../style/shared.css"
 import "../../style/post_page/post_delete_page.css"
 
 interface props {
