@@ -4,8 +4,6 @@ import { useParams } from 'react-router-dom'
 
 import axios from '../api/axios'
 
-import "../style/create_post_page/create_post_page.css"
-
 interface props {
 	USER_ID: string | number | null,
 	logOff: Function
