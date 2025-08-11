@@ -17,7 +17,7 @@ function SearchResult({user} : props) {
 					<Link to={`/user/${user.user_id}`}></Link>
 				</div>
 				<div className="profile_picture">
-					<img src={`http://localhost:8081/${user.profile_picture}`} />
+					<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${user.profile_picture}`} />
 				</div>
 				<div className="user_info">
 					<p>{user.name}</p>
