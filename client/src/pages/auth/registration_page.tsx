@@ -5,6 +5,7 @@ import axios from '../../api/axios'
 
 import error_icon from "../../assets/exclamation-mark-2.png"
 
+import "../../style/shared.css"
 import "../../style/auth_pages/registration_page.css"
 
 const USER_REGEX : RegExp = /^[a-zA-Z][a-zA-Z-_]{3,23}$/;

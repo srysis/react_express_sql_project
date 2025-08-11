@@ -6,6 +6,7 @@ import axios from '../../api/axios'
 
 import error_icon from "../../assets/exclamation-mark-2.png"
 
+import "../../style/shared.css"
 import "../../style/auth_pages/login_page.css"
 
 interface props {
