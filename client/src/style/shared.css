@@ -1,11 +1,14 @@
 section {
-	background-color: rgb(14, 15, 16);
+	background-color: var(--section-color);
 }
 
 p {
 	white-space: pre-wrap;
 }
 
+button[disabled]:hover {
+	background-color: var(--disabled-button-color);
+}
 
 form {
 	padding-block: 20px;
@@ -32,7 +35,7 @@ form {
 
 		span {
 			padding-right: 5px;
-			background-color: rgb(14, 15, 16);
+			background-color: var(--section-color);
 			color: #aaa;
 		}
 	}
@@ -40,9 +43,9 @@ form {
 	input, textarea, button {
 		margin-block: 15px;
 		border: none;
-		box-shadow: inset 0px 0px 8px 2px #222;
+		box-shadow: var(--button-box-shadow);
 		padding: 20px 2vw;
-		background-color: #000;
+		background-color: var(--button-color);
 		color: #fff;
 		font-family: "Open Sans", sans-serif;
 		font-size: 1.1em;
@@ -54,6 +57,10 @@ form {
 
 	button {
 		padding-inline: 3vw;
+	}
+
+	button:hover {
+		background-color: var(--button-hover-color);
 	}
 }
 
@@ -78,9 +85,88 @@ div.link_container {
 }
 
 div.link_container:hover {
-	background-color: #333;
+	background-color: var(--link-container-hover-color);
 }
 
 div.link_container:active {
-	background-color: #222;
+	background-color: var(--link-container-active-color);
+}
+
+
+section#registration, section#login {
+	width: 60%;
+	margin: auto;
+	padding-block: 30px;
+
+	h1 {
+		font-size: 2em;
+	}
+
+	div#error_container {
+		display: flex;
+		align-items: center;
+		width: 92%;
+		margin: 20px auto 0;
+		border: 2px solid #660000;
+		padding: 10px 1vw;
+		background-color: var(--error-container-color);
+
+		div.image_container {
+			margin-right: 20px;
+		}
+
+		div.text_container {
+			color: #fdd;
+			font-weight: bold;
+			font-size: 1.3em;
+		}
+	}
+}
+
+
+div#confirm_delete {
+	display: flex;
+	justify-content: space-evenly;
+	width: 92%;
+	margin: 10px auto 0;
+
+	button {
+		width: 30%;
+		box-shadow: var(--button-box-shadow);
+		border: none;
+		padding: 20px 2vw;
+		color: #fff;
+		font-family: "Open Sans", sans-serif;
+		font-size: 1.1em;
+		transition: background-color .05s;
+	}
+
+	button[value="Y"] {
+		background-color: var(--confirm-button-color);
+	}
+
+	button[value="Y"]:hover {
+		background-color: var(--confirm-button-hover-color);
+	}
+
+	button[value="N"] {
+		background-color: var(--button-color);
+	}
+
+	button[value="N"]:hover {
+		background-color: var(--button-hover-color);
+	}
+
+	button[disabled] {
+		box-shadow: none;
+		cursor: not-allowed;
+	}
+
+	button[value="Y"][disabled] {
+		background-color: var(--disabled-confirm-button-color);
+	}
+
+	button[value="N"][disabled] {
+		background-color: var(--disabled-button-color);
+	}
 }
