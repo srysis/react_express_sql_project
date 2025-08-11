@@ -3,7 +3,7 @@ header {
 	align-items: center;
 	justify-content: space-between;
 	padding: 15px 3vw;
-	background-color: rgb(14, 15, 16);
+	background-color: var(--section-color);
 
 	div#logo_container {
 		width: 8%;
@@ -14,14 +14,14 @@ header {
 		border: none;
 		border-radius: 15px;
 		padding: 10px 2vw;
-		background-color: rgb(35, 36, 37);
+		background-color: var(--login-logoff-button-color);
 		color: #fff;
 		font-size: 1.4em;
 		font-weight: bold;
 	}
 
 	button#log_off_button:hover {
-		background-color: rgb(25, 26, 27);
+		background-color: var(--login-logoff-button-hover-color);
 	}
 
 	nav {
@@ -45,11 +45,11 @@ header {
 		a#log_in_button {
 			padding: 10px 2vw;
 			font-size: 1.5em;
-			background-color: rgb(35, 36, 37);
+			background-color: var(--login-logoff-button-color);
 		}
 
 		a#log_in_button:hover {
-			background-color: rgb(25, 26, 27);
+			background-color: var(--login-logoff-button-hover-color);
 		}
 	}
 }
