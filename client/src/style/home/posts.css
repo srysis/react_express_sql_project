@@ -5,7 +5,7 @@ section#posts {
 	article.post {
 		display: flex;
 		margin: 5px 0;
-		background-color: rgb(14, 15, 16);
+		background-color: var(--section-color);
 
 		div.link_container {
 			width: 100%;
