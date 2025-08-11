@@ -4,7 +4,7 @@ section#profile_page {
 	div.flex_wrapper {
 		display: flex;
 		padding: 2vh 2.5vw;
-		background-color: rgb(14, 15, 16);
+		background-color: var(--section-color);
 
 		div#profile_picture {
 			width: 10%;
@@ -72,7 +72,6 @@ section#profile_page {
 			div:active {
 				background-color: rgb(35, 36, 37);
 			}
-
 		}
 	}
 }
