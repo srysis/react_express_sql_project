@@ -1,5 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+:root {
+	--link-color: #fff;
+	--link-hover-color: #ddd;
+	--link-active-color: #bbb;
+
+	--link-container-hover-color: #333;
+	--link-container-active-color: #222;
+
+	--error-container-color: rgb(70, 6, 7);
+
+	--login-logoff-button-color: rgb(35, 36, 37);
+	--login-logoff-button-hover-color: rgb(25, 26, 27);
+
+	--section-color: rgb(14, 15, 16);
+
+	--post-comment-content-color: rgb(30, 31, 32);
+
+	--confirm-button-color: rgb(70, 6, 7);
+	--confirm-button-hover-color: rgb(45, 6, 7);
+
+	--disabled-confirm-button-color: rgb(25, 6, 7);
+
+	--button-color: #000;
+	--button-hover-color: #333;
+	--button-active-color: #222;
+	--button-box-shadow: inset 0px 0px 8px 1px #111;
+	--disabled-button-color: rgb(19, 20, 21);
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -23,15 +52,15 @@ body {
 
 	a {
 		text-decoration-line: none;
-		color: #fff;
+		color: var(--link-color);
 	}
 
 	a:hover {
-		color: #ddd;
+		color: var(--link-hover-color);
 	}
 
 	a:active {
-		color: #bbb;
+		color: var(--link-active-color);
 	}
 
 	button {
