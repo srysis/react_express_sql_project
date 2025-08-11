@@ -1,5 +1,5 @@
 div.search_result {
-	background-color: rgb(24, 25, 26);
+	background-color: rgb(25, 26, 27);
 
 	div.link_container {
 		display: flex;
@@ -49,6 +49,10 @@ div.search_result {
 	}
 
 	div.link_container:hover {
-		background-color: #333;
+		background-color: var(--link-container-hover-color);
+	}
+
+	div.link_container:active {
+		background-color: var(--link-container-active-color);
 	}
 }
