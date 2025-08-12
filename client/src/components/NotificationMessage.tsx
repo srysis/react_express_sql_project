@@ -5,14 +5,14 @@ import "../style/notification.css"
 
 interface props {
 	message: string,
-	type: boolean
+	type: string
 }
 
 function NotificationMessage({message, type}: props) {
 	return (
-		<div id="notification" className={type ? "success" : "error"}>
+		<div id="notification" className={type === "success" ? "success" : "error"}>
 			<div className="icon_container">
-				<img src={type ? acknowledge_icon : error_icon} />
+				<img src={type === "success" ? acknowledge_icon : error_icon} />
 			</div>
 			<div className="text_container">
 				<p>{message}</p>
