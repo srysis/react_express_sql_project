@@ -29,7 +29,7 @@ import SearchPage from './pages/search_page'
 import "./style/shared.css"
 
 class UnexpectedParameterError extends Error {
-	constructor(message) {
+	constructor(message: string) {
 		super(message);
 		this.name = "UnexpectedParameterError";
 	}
