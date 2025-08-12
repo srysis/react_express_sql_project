@@ -9,7 +9,7 @@ interface props {
 	logOff: Function,
 	notification_visible: boolean,
 	notification_message: string,
-	notification_type: boolean
+	notification_type: string
 }
 
 function Base({isLoggedIn, logOff, notification_visible, notification_message, notification_type}: props) {
