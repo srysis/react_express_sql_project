@@ -5,10 +5,11 @@ import axios from '../../api/axios'
 
 interface props {
 	USER_ID: string | number | null,
-	logOff: Function
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
-function ImagePostForm({USER_ID, logOff}: props) {
+function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: props) {
 	const navigate = useNavigate();
 
 	const [image_data, setImageData] = useState<any>(null);
@@ -52,7 +53,7 @@ function ImagePostForm({USER_ID, logOff}: props) {
 
 		const formData = new FormData();
 
-		formData.append('post_image', image.files[0], image.files[0].name);
+		if (image.files) formData.append('post_image', image.files[0], image.files[0].name);
 		formData.append('post_title', title.value);
 
 		try {
