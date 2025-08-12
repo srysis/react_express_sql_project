@@ -77,12 +77,12 @@ router.get('/:id/posts', (request, response) => {
 	})
 });
 
-router.post('/:id/create_post', authenticator, (request, response) => {
+router.post('/:id/create_text_post', authenticator, (request, response) => {
 	const user_id = request.params.id;
 	const post = request.body.post;
 
-	const sql_query = "INSERT INTO `user_posts` (`post_id`, `post_title`, `post_content`, `post_date`, `post_author`) VALUES (NULL, '" + 
-						post.post_title.replace(/'/g, "\\'") + "', '" + post.post_content.replace(/'/g, "\\'") + "', CURRENT_TIMESTAMP, '" + user_id + "');";
+	const sql_query = "INSERT INTO `user_posts` (`post_id`, `post_title`, `post_content`, `post_date`, `post_author`, `post_type`) VALUES (NULL, '" + 
+						post.post_title.replace(/'/g, "\\'") + "', '" + post.post_content.replace(/'/g, "\\'") + "', CURRENT_TIMESTAMP, '" + user_id + "', 'text');";
 
 	database.query(sql_query, (error, data) => {
 		if (error) return response.json(error);
@@ -90,6 +90,35 @@ router.post('/:id/create_post', authenticator, (request, response) => {
 		response.json({success: true, message: "Posted.", post_content: post, post_id: data.insertId});
 	})
 });
+
+router.post('/:id/create_image_post', [authenticator, imageUpload.single("post_image")], (request, response) => {
+	const user_id = request.params.id;
+
+	const post_title = request.body.post_title;
+	const image_data = request.file;
+
+	if (image_data.mimetype != 'image/png') {
+		response.status(400).json({success: false, message: "Image has to be PNG."});
+	} else {
+		const blob = uploadImageToVercel('posts/', image_data, image_data.buffer)
+					.then((result) => {
+					 	if (result.url) {
+							const sql_query = "INSERT INTO `user_posts` (`post_id`, `post_title`, `post_content`, `post_date`, `post_author`, `post_type`) VALUES (NULL, '" + 
+											   post_title.replace(/'/g, "\\'") + "', '" + image_data.originalname + "', CURRENT_TIMESTAMP, '" + user_id + "', 'image');";
+
+							database.query(sql_query, (error, data) => {
+								if (error) return response.json(error);
+
+								response.json({success: true, message: "Posted.", post_id: data.insertId});
+							})
+						}
+					})
+					.catch((error) => {
+						console.error(error);
+						response.status(500).json({success: false, error: error});
+					});
+	}
+})
 
 router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("profile_picture")], (request, response) => {
 	const requested_id = request.params.id;
@@ -104,7 +133,7 @@ router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("p
 		.resize(200, 200, { resizeMode: "outside", withoutEnlargement: true })
 		.toBuffer()
 		.then((data, info) => {
-			const blob = uploadImageToVercel(image_data, data)
+			const blob = uploadImageToVercel('/', image_data, data)
 						.then((result) => {
 						 	if (result.url) {
 							const get_previous_image_query = "SELECT `profile_picture` FROM `users_info` WHERE `user_id` = " + requested_id;
@@ -134,8 +163,8 @@ router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("p
 	}
 });
 
-async function uploadImageToVercel(original_image_data, buffer) {
-	const blob = await vercel_blob.put(`/${original_image_data.originalname}`, buffer, { 
+async function uploadImageToVercel(pathname, original_image_data, buffer) {
+	const blob = await vercel_blob.put(`${pathname}${original_image_data.originalname}`, buffer, { 
 		access: 'public',
 		allowOverwrite: true,
 		token: process.env.BLOB_READ_WRITE_TOKEN
