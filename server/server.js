@@ -24,20 +24,20 @@ global.access_key = process.env.ACCESS_KEY;
 global.refresh_key = process.env.REFRESH_KEY;
 
 
-app.use('/', authRoutes);
+app.use('/api/auth', authRoutes);
 
-app.use('/user', userRoutes);
+app.use('/api/user', userRoutes);
 
-app.use('/', postsRoutes);
+app.use('/api/', postsRoutes);
 
-app.use('/post', commentsRoutes);
+app.use('/api/post', commentsRoutes);
 
 // root
 app.get('/', (request, response) => {
-	response.json(`This is a root of localhost on port ${port}.`);
+	response.json(`API is running. Awaiting instructions...`);
 });
 
-app.get('/search/:queue', (request, response) => {
+app.get('/api/search/:queue', (request, response) => {
 	const search_queue = request.params.queue;
 
 	if (search_queue) {
