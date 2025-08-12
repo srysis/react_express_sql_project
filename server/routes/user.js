@@ -42,7 +42,7 @@ router.get('/:id', (request, response) => {
 					response.json({success: true, message: "User found, but client does not own this user and is not logged in.", ownership: false, user_info: data[0]});
 				}
 			} else {
-				response.json({success: false, message: 'No user found.'});
+				response.json({success: false, message: 'No user found.', user_info: null});
 			}
 		})
 
