@@ -62,7 +62,7 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, s
 			const response = await axios.patch(`/user/${USER_ID}/edit`, {username: newUsername, description: newDescription});
 
 			if (response.data.success) {
-				setNotificationType(true);
+				setNotificationType("success");
 				setNotificationMessage("Changes have been applied.")
 
 				navigate(`/user/${USER_ID}`);

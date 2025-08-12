@@ -65,12 +65,12 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 				
 				setImageData(null);
 
-				setNotificationType(true);
+				setNotificationType("success");
 				setNotificationMessage("Your avatar has been changed.")
 			}
 		} catch (error: any) {
 			if (error.status == 400) {
-				setNotificationType(false);
+				setNotificationType("error");
 				setNotificationMessage("Only .png files are allowed!");
 			}
 		}
@@ -80,7 +80,7 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 		<section id="upload_profile_picture">
 			<span className="title"><span>Profile picture</span></span>
 			<div id="profile_picture">
-				<img src={selected_image ? preview_image : `${import.meta.env.VITE_IMAGE_STORAGE}${defaultUserData.profile_picture}`} />
+				<img src={selected_image ? preview_image : `${import.meta.env.VITE_IMAGE_STORAGE}${defaultUserData.profile_picture}`} className={preview_image ? "preview" : ""} />
 			</div>
 			<form encType="multipart/form-data" onSubmit={onSubmitHandler}>
 				<div className="input_container">
