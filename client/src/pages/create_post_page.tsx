@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useParams } from 'react-router-dom'
 
-import axios from '../api/axios'
-
 import RegularPostForm from "../components/create_post_page/RegularPostForm"
 import ImagePostForm from "../components/create_post_page/ImagePostForm"
 
 interface props {
 	USER_ID: string | number | null,
-	logOff: Function
+	logOff: Function,
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
-function CreatePostPage({USER_ID, logOff}: props) {
+function CreatePostPage({USER_ID, logOff, setNotificationMessage, setNotificationType}: props) {
 	const navigate = useNavigate();
 
 	const { id } = useParams();
@@ -25,7 +25,7 @@ function CreatePostPage({USER_ID, logOff}: props) {
 		}
 	}, [])
 
-	function onClickHandler(event) {
+	function onClickHandler(event: any) {
 		switch (event.target.value) {
 			case "text":
 				setPostType("text");
@@ -46,7 +46,7 @@ function CreatePostPage({USER_ID, logOff}: props) {
 				<button type="button" value="image" onClick={onClickHandler}>Image</button>
 			</div>
 			{post_type === "text" && <RegularPostForm USER_ID={USER_ID} logOff={logOff} />}
-			{post_type === "image" && <ImagePostForm USER_ID={USER_ID} logOff={logOff} />}
+			{post_type === "image" && <ImagePostForm USER_ID={USER_ID} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} />}
 		</section>
 	)
 }
