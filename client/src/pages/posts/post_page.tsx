@@ -68,6 +68,9 @@ function PostPage({isLoggedIn}: props) {
 					setAreCommentsRetrieved(true);
 				})
 				.catch((error: any) => console.error(error.response.data));
+			} else if (response.data.post == null) {
+				setPostContent(null);
+				setIsPostRetrieved(true);
 			}
 
 		})
@@ -102,7 +105,7 @@ function PostPage({isLoggedIn}: props) {
 		}
 	}
 
-	if (isPostRetrieved && post_content) {
+	if (isPostRetrieved && post_content !== null) {
 		return(
 			<>
 				<section id="post">
@@ -148,6 +151,12 @@ function PostPage({isLoggedIn}: props) {
 				{isLoggedIn && <AddCommentField post_id={post_id} />}
 				{areCommentsRetrieved && <CommentsSection comments={comments} />}
 			</>
+		)
+	} else if (isPostRetrieved && post_content === null) {
+		return(
+			<section id="post" className="missing">
+				<h1>This post does not exist or was deleted by it's author.</h1>
+			</section>
 		)
 	}
 }
