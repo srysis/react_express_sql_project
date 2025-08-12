@@ -86,7 +86,7 @@ function RegistrationPage({isLoggedIn}: props) {
 		}
 
 		try {
-			const register_response = await axios.post('/register', { username: username, password: password } , { headers: REQUEST_HEADERS });
+			const register_response = await axios.post('/auth/register', { username: username, password: password } , { headers: REQUEST_HEADERS });
 
 			console.log(register_response)
 
