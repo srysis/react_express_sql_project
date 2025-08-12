@@ -75,3 +75,9 @@ section#profile_page {
 		}
 	}
 }
+
+section#profile_page.missing {
+	padding: 2vh 2.5vw;
+	background-color: var(--section-color);
+	text-align: left;
+}
