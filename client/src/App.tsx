@@ -28,6 +28,13 @@ import SearchPage from './pages/search_page'
 
 import "./style/shared.css"
 
+class UnexpectedParameterError extends Error {
+	constructor(message) {
+		super(message);
+		this.name = "UnexpectedParameterError";
+	}
+}
+
 function App() {
 	const stored_web_token: string | number | null = window.localStorage.getItem('t');
 	const stored_user_ID: string | number | null = window.localStorage.getItem('id');
@@ -44,7 +51,7 @@ function App() {
 	const [hasAdminRights, setHasAdminRights] = useState<boolean>(false);
 
 	const [notification_visible, setNotificationVisible] = useState<boolean>(false);
-	const [notification_type, setNotificationType] = useState<boolean>(true);
+	const [notification_type, setNotificationType] = useState<string>("");
 	const [notification_message, setNotificationMessage] = useState<string>("");
 
 
@@ -88,6 +95,7 @@ function App() {
 			setTimeout(() => {
 				setNotificationVisible(false);
 				setNotificationMessage("");
+				setNotificationType("");
 			}, 3000);
 		}
 
@@ -99,10 +107,21 @@ function App() {
 		setNotificationMessage(message)
 	}
 
-
-	// where if 'type' parameter is 'true' displays regular notification, else if 'false' - error notification
-	function setNotificationTypeWrapper(type: boolean) {
-		setNotificationType(type);
+	function setNotificationTypeWrapper(type: string) {
+		switch(type) {
+			case "success":
+				setNotificationType("success");
+				break;
+			case "error":
+				setNotificationType("error");
+				break;
+			case "":
+				setNotificationType("");
+				break;
+			default:
+				throw new UnexpectedParameterError(`Values 'success' or 'error' are expected, but instead '${type}' was received`);
+				break;
+		}
 	}
 
 	function logIn(login_data: any) {
