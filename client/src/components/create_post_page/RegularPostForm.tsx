@@ -32,7 +32,7 @@ function RegularPostForm({USER_ID, logOff}: props) {
 
 			if (verification_response.data.success) {
 				// if user has been verified, create a post
-				const create_post_response = await axios.post(`/user/${USER_ID}/create_post`, { post: post_content });
+				const create_post_response = await axios.post(`/user/${USER_ID}/create_text_post`, { post: post_content });
 
 				if (create_post_response.data.success) {
 					navigate(`/post/${create_post_response.data.post_id}`);
