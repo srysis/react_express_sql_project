@@ -54,23 +54,31 @@ function ProfilePage({isLoggedIn} : props) {
 	useEffect(() => {
 		axios.get(`/user/${id}`)
 		.then((response: any) => {
-			setUserData(response.data.user_info);
+			if (response.data.user_info !== null) {
+				setUserData(response.data.user_info);
 			
-			if (response.data.ownership) {
-				setOwnership(true);
-			} else {
+				if (response.data.ownership) {
+					setOwnership(true);
+				} else {
+					setOwnership(false);
+				}
+
+				axios.get(`/user/${id}/posts`)
+				.then((response: any) => {
+					setUserPosts(response.data.results);
+
+					setArePostsRetrieved(true);
+				})
+				.catch((error: any) => console.log(error.response.data))
+
+				setHasUserData(true);
+			} else if (response.data.user_info === null) {
 				setOwnership(false);
+				setHasUserData(true);
+				setUserData(null);
+				setArePostsRetrieved(false);
+				setUserPosts([]);
 			}
-
-			axios.get(`/user/${id}/posts`)
-			.then((response: any) => {
-				setUserPosts(response.data.results);
-
-				setArePostsRetrieved(true);
-			})
-			.catch((error: any) => console.log(error.response.data))
-
-			setHasUserData(true);
 		})
 		.catch((error: any) => {
 			console.error(error.response.data);
@@ -80,7 +88,7 @@ function ProfilePage({isLoggedIn} : props) {
 		}) 
 	}, [id]);
 
-	if (hasUserData && userData) {
+	if (hasUserData && userData !== null) {
 		return(
 			<section id="profile_page">
 				<div className="flex_wrapper">
@@ -122,8 +130,13 @@ function ProfilePage({isLoggedIn} : props) {
 				}
 			</section>
 		)
+	} else if (hasUserData && userData === null) {
+		return(
+			<section id="profile_page" className="missing">
+				<h1>This user does not exist or was deleted.</h1>
+			</section>
+		)
 	}
-	
 }
 
 export default ProfilePage;
