@@ -91,7 +91,7 @@ function RegistrationPage({isLoggedIn}: props) {
 			console.log(register_response)
 
 			if (register_response.data.success) {
-				const set_default_info_response = await axios.post('/set_default_user_info', { username: username }, { headers: REQUEST_HEADERS });
+				const set_default_info_response = await axios.post('/auth/set_default_user_info', { username: username }, { headers: REQUEST_HEADERS });
 
 				if (set_default_info_response.data.success) {
 					navigate('/login');
