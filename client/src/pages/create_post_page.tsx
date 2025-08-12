@@ -37,7 +37,7 @@ function CreatePostPage({USER_ID, logOff}: props) {
 				to make sure that user is allowed to post, make a 'verify' call to check
 				if user's client does not contain modified token or changed 'id'
 			*/
-			const verification_response = await axios.get(`/verify/${window.localStorage.getItem('id')}`);
+			const verification_response = await axios.get(`/auth/verify/${window.localStorage.getItem('id')}`);
 
 			if (verification_response.data.success) {
 				// if user has been verified, create a post
