@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import axios from '../api/axios'
 
 import RegularPostForm from "../components/create_post_page/RegularPostForm"
+import ImagePostForm from "../components/create_post_page/ImagePostForm"
 
 interface props {
 	USER_ID: string | number | null,
@@ -16,15 +17,36 @@ function CreatePostPage({USER_ID, logOff}: props) {
 
 	const { id } = useParams();
 
+	const [post_type, setPostType] = useState<string>("text");
+
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id || window.localStorage.getItem('id') !== USER_ID) {
 			navigate(`/`);
 		}
 	}, [])
 
+	function onClickHandler(event) {
+		switch (event.target.value) {
+			case "text":
+				setPostType("text");
+				break;
+			case "image":
+				setPostType("image");
+				break;
+			default:
+				console.error("Unexpected parameter in 'onClickHandler'");
+				break;
+		}
+	}
+
 	return (
 		<section id="create_post">
-			<RegularPostForm USER_ID={USER_ID} logOff={logOff} />
+			<div id="post_type_switch">
+				<button type="button" value="text" onClick={onClickHandler}>Text</button>
+				<button type="button" value="image" onClick={onClickHandler}>Image</button>
+			</div>
+			{post_type === "text" && <RegularPostForm USER_ID={USER_ID} logOff={logOff} />}
+			{post_type === "image" && <ImagePostForm USER_ID={USER_ID} logOff={logOff} />}
 		</section>
 	)
 }
