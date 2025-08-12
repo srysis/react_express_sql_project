@@ -53,7 +53,7 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 		if (button) button.setAttribute("disabled", true.toString());
 
 		try {
-			const response = await axios.post('/login', user_credentials, { headers: REQUEST_HEADERS });
+			const response = await axios.post('/auth/login', user_credentials, { headers: REQUEST_HEADERS });
 
 			if (response.data.success) {
 				logIn(response.data);
