@@ -51,7 +51,11 @@ section#upload_profile_picture {
 			max-width: inherit;
 			max-height: inherit;
 			object-fit: cover;
-			object-position: 0% 0%;
+			object-position: 0% 50%;
+		}
+
+		img.preview {
+			object-position: 50% 50%;
 		}
 	}
 
