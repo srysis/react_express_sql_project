@@ -30,7 +30,7 @@ div.search_result {
 				max-height: inherit;
 				border: 5px solid black;
 				object-fit: cover;
-				object-position: 0% 0%;
+				object-position: 0% 50%;
 			}
 		}
 
