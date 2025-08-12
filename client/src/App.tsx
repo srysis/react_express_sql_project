@@ -59,7 +59,7 @@ function App() {
 		if (stored_web_token && stored_user_ID) {
 			setAuthorizationHeader(stored_web_token);
 
-			axios.get(`/verify/${stored_user_ID}`)
+			axios.get(`/auth/verify/${stored_user_ID}`)
 			.then((response: any) => {
 				if (!response.data.success) {
 					logOff();
@@ -67,7 +67,7 @@ function App() {
 			})
 			.catch((error: any) => {
 				if (!error.response.data.success) {
-					axios.post(`/refresh/${stored_user_ID}`)
+					axios.post(`/auth/refresh/${stored_user_ID}`)
 					.then((response: any) => {
 						if (response.data.success) {
 							const token = response.data.token;
