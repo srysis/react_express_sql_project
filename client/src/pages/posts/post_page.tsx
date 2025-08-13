@@ -3,10 +3,11 @@ import { useParams, Link } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import TextPost from "../../components/post_page/TextPost"
+import ImagePost from "../../components/post_page/ImagePost"
+
 import AddCommentField from "../../components/post_page/AddCommentField"
 import CommentsSection from "../../components/post_page/CommentsSection"
-
-import dots_icon from "../../assets/v_dots-icon.png"
 
 import "../../style/post_page/post_page.css"
 
@@ -21,7 +22,8 @@ type Post = {
 	post_title: string,
 	post_content: string,
 	post_date: string,
-	post_author: number
+	post_author: number,
+	post_type: string
 }
 
 type Comment = {
@@ -108,46 +110,8 @@ function PostPage({isLoggedIn}: props) {
 	if (isPostRetrieved && post_content !== null) {
 		return(
 			<>
-				<section id="post">
-					<div className="post_author">
-						<p className="header">Author:</p>
-						<div className="image_container">
-							<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${post_content.post_author_avatar}`} />
-						</div>
-						{post_content.post_author_name !== null &&
-							<Link to={`/user/${post_content.post_author}`}>{post_content.post_author_name}</Link>
-						}
-						{post_content.post_author_name === null &&
-							<p style={{"fontStyle": "italic"}}>[deleted]</p>
-						}
-						<p className="date" title={post_content.post_date.split("T")[0]}>Posted: {date_difference}</p>
-					</div>
-					<div className="wrapper">
-						<div className="post_content">
-							<div className="title">
-								<h1>{post_content.post_title}</h1>
-							</div>
-							<div className="content">
-								<p>{post_content.post_content}</p>
-							</div>
-						</div>
-						{post_ownership && 
-							<div className="options_container">
-								<div className="icon_container" title="Post options" 
-									 onClick={() => {
-									 	const element = document.querySelector("div.list_container");
-										if (element) element.classList.toggle("active");
-									 }}>
-									<img src={dots_icon} />
-								</div>
-								<div className="list_container">
-									<Link to={`/post/${post_id}/edit`}>Edit</Link>
-									<Link to={`/post/${post_id}/delete`}>Delete</Link>
-								</div>
-							</div>
-						}
-					</div>
-				</section>
+				{post_content.post_type === "text" && <TextPost post={post_content} post_ownership={post_ownership} date_difference={date_difference} />}
+				{post_content.post_type === "image" && <ImagePost post={post_content} post_ownership={post_ownership} date_difference={date_difference} />}
 				{isLoggedIn && <AddCommentField post_id={post_id} />}
 				{areCommentsRetrieved && <CommentsSection comments={comments} />}
 			</>
