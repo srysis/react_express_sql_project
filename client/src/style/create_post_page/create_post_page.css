@@ -1,0 +1,49 @@
+section#create_post {
+	div#post_type_switch {
+		width: 92%;
+		display: flex;
+		align-items: center;
+		margin: auto;
+		padding-top: 20px;
+
+		div.label {
+			margin-right: 2vw;
+			font-size: 1.4em;
+			font-weight: bold;
+		}
+
+		div.button_container {
+			padding: 0;
+			text-align: center;
+
+			button {
+				border: 0;
+				padding: 10px 2vw;
+				box-shadow: var(--button-box-shadow);
+				font-size: 1.2em;
+				font-weight: bold;
+				color: #fff;
+				background-color: var(--button-color);
+			}
+
+			button:hover {
+				background-color: var(--button-hover-color);
+			}
+
+			button:active {
+				background-color: var(--button-active-color);
+			}
+
+			button.selected {
+				box-shadow: var(--selected-button-box-shadow);
+				background-color: var(--selected-button-color);
+			}
+		}
+	}
+
+	form#image_post_form {
+		div.input_container:nth-child(even) {
+			margin-top: 40px;
+		}
+	}
+}
