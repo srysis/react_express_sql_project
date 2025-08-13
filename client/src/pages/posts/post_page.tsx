@@ -80,7 +80,7 @@ function PostPage({isLoggedIn}: props) {
 	}, [post_id])
 
 	useEffect(() => {
-		if (isPostRetrieved && post_content) {
+		if (isPostRetrieved && post_content && post_content.post_type === "text") {
 			const post_container: any = document.querySelector("div.post_content");
 			const post_content_element: any = document.querySelector("div.post_content > div.content");
 
