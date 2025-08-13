@@ -97,7 +97,7 @@ function RegistrationPage({isLoggedIn}: props) {
 	}
 
 	function clearFields() {
-		const input_fields = document.querySelectorAll("input[type='text'], input[type='password']") as HTMLInputElement[];
+		const input_fields = document.querySelectorAll("input[type='text'], input[type='password']") as any;
 
 		for (let input_field of input_fields) {
 			input_field.value = "";
