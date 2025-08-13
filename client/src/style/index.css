@@ -25,7 +25,13 @@
 	--button-color: #000;
 	--button-hover-color: #333;
 	--button-active-color: #222;
-	--button-box-shadow: inset 0px 0px 8px 1px #111;
+	--button-box-shadow: inset 0px 0px 4px 2px #222;
+	--button-hover-box-shadow: inset 0px 0px 4px 2px #444;
+
+	--selected-button-color: #222;
+	--selected-button-box-shadow: inset 0px 0px 4px 2px #444;
+
+	--disabled-button-border: 1px solid #222;
 	--disabled-button-color: rgb(19, 20, 21);
 }
 
