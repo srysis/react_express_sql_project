@@ -15,18 +15,20 @@ section#login {
 				font-weight: bold;
 			}
 
-			button[disabled="true"] {
-				cursor: not-allowed;
-				box-shadow: none;
-				background-color: var(--disabled-button-color);
-			}
-
 			button:hover {
+				box-shadow: var(--button-hover-box-shadow);
 				background-color: var(--button-hover-color);
 			}
 
 			button:active {
+				box-shadow: var(--button-hover-box-shadow);
 				background-color: var(--button-active-color);
+			}
+
+			button[disabled="true"] {
+				cursor: not-allowed;
+				box-shadow: none;
+				background-color: var(--disabled-button-color);
 			}
 		}
 	}
@@ -36,6 +38,7 @@ section#login {
 
 		a {
 			font-weight: bold;
+			text-decoration-line: underline;
 		}
 	}
 }
