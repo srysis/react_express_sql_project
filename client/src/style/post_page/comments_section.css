@@ -19,18 +19,14 @@ section#comments {
 			div.image_container {
 				width: 8vh;
 				height: 8vh;
-				min-width: 60px;
-				min-height: 60px;
+				min-width: 80px;
+				min-height: 80px;
 				margin: 10px auto;
 
 				img {
 					display: block;
-					width: inherit;
-					height: inherit;
-					min-width: inherit;
-					min-height: inherit;
-					max-width: inherit;
-					max-height: inherit;
+					width: 100%;
+					height: 100%;
 					border: 5px solid black;
 					object-fit: cover;
 					object-position: 0% 50%;
@@ -45,7 +41,7 @@ section#comments {
 
 			p {
 				text-align: center;
-				font-size: 0.8em;
+				font-size: 0.9em;
 
 				span {
 					font-weight: bold;
