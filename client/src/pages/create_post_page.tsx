@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom'
 import RegularPostForm from "../components/create_post_page/RegularPostForm"
 import ImagePostForm from "../components/create_post_page/ImagePostForm"
 
+import "../style/create_post_page/create_post_page.css"
+
 interface props {
 	USER_ID: string | number | null,
 	logOff: Function,
@@ -42,8 +44,15 @@ function CreatePostPage({USER_ID, logOff, setNotificationMessage, setNotificatio
 	return (
 		<section id="create_post">
 			<div id="post_type_switch">
-				<button type="button" value="text" onClick={onClickHandler}>Text</button>
-				<button type="button" value="image" onClick={onClickHandler}>Image</button>
+				<div className="label">
+					Post type
+				</div>
+				<div className="button_container">
+					<button type="button" value="text" onClick={onClickHandler} className={post_type === "text" ? "selected" : ""}>Text</button>
+				</div>
+				<div className="button_container">
+					<button type="button" value="image" onClick={onClickHandler} className={post_type === "image" ? "selected" : ""}>Image</button>
+				</div>
 			</div>
 			{post_type === "text" && <RegularPostForm USER_ID={USER_ID} logOff={logOff} />}
 			{post_type === "image" && <ImagePostForm USER_ID={USER_ID} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} />}
