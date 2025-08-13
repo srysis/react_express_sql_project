@@ -118,8 +118,8 @@ router.get('/verify/:id', (request, response) => {
 router.post('/refresh/:id', (request, response) => {
 	const user_id = request.params.id;
 
-	if (request.cookies?.refresh_token) {
-		const refresh_token = request.cookies.refresh_token;
+	if (request.cookies?.t) {
+		const refresh_token = request.cookies.t;
 
 		try {
 			const decoded_refresh_token = jwt.verify(refresh_token, refresh_key);
