@@ -40,9 +40,9 @@ section#registration {
 
 			button {
 				position: absolute;
-				top: 16px;
-				right: 2.5vw;
-				padding: 4px 1vw;
+				top: 20px;
+				right: 3.5vw;
+				padding: 0;
 				box-shadow: none;
 
 				img {
