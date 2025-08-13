@@ -11,7 +11,7 @@ interface props {
 function RegularPostForm({USER_ID, logOff}: props) {
 	const navigate = useNavigate();
 	
-	const [post_content, setPostContent] = useState<{post_content: string, post_title: string} | {}>({});
+	const [post_content, setPostContent] = useState<{post_content: string, post_title: string}>({post_content: "", post_title: ""});
 
 	function onChangeHandler(event: any) {
 		setPostContent({
