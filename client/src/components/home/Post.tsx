@@ -15,7 +15,7 @@ interface props {
 }
 
 function Post({content}: props) {
-	const { date_difference, post_author_name, post_author_avatar, post_id, post_title, post_content, post_date, post_author, post_type } = content;
+	const { date_difference, post_author_name, post_author_avatar, post_id, post_title, post_content, post_author, post_type } = content;
 
 	return (
 		<article className="post">
