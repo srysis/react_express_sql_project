@@ -35,6 +35,34 @@ section#registration {
 			margin-bottom: 0;
 		}
 
+		div.input_container > div.container {
+			position: relative;
+
+			button {
+				position: absolute;
+				top: 16px;
+				right: 2.5vw;
+				padding: 4px 1vw;
+				box-shadow: none;
+
+				img {
+					filter: invert(50%);
+				}
+
+				img.selected {
+					filter: invert(25%);
+				}
+			}
+
+			button:hover {
+				background-color: var(--button-color);
+
+				img {
+					filter: invert(30%);
+				}
+			}
+		}
+
 		div.submit_container {
 			button {
 				margin-inline: 25px;
