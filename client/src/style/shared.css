@@ -6,6 +6,11 @@ p {
 	white-space: pre-wrap;
 }
 
+button[disabled] {
+	border: var(--disabled-button-border);
+	background-color: var(--disabled-button-color);
+}
+
 button[disabled]:hover {
 	background-color: var(--disabled-button-color);
 }
@@ -61,6 +66,10 @@ form {
 
 	button:hover {
 		background-color: var(--button-hover-color);
+	}
+
+	button[disabled]:hover {
+		background-color: var(--disabled-button-color);
 	}
 }
 
