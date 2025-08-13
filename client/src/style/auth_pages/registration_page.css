@@ -104,12 +104,4 @@ section#registration {
 			}
 		}
 	}
-
-	div#register {
-		font-size: 1.4em;
-
-		a {
-			font-weight: bold;
-		}
-	}
 }
