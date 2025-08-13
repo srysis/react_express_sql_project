@@ -13,7 +13,8 @@ type Post = {
 	post_content: string,
 	post_date: string,
 	post_id: number
-	post_title: string
+	post_title: string,
+	post_type: string
 }
 
 function Home() {
