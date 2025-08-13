@@ -1,6 +1,15 @@
 section#registration {
 	form {
 		div.input_container {
+			label > span {
+				padding-right: 10px;
+
+				img {
+					padding-left: 10px;
+					margin-bottom: -2px;
+				}
+			}
+
 			div#username_note, div#password_note, div#matching_password_note {
 				display: none;
 				width: 92%;
