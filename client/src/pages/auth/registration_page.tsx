@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
+import eye_icon from "../../assets/eye-icon.png"
 import error_icon from "../../assets/exclamation-mark-2.png"
 
 import "../../style/shared.css"
@@ -59,6 +60,21 @@ function RegistrationPage({isLoggedIn}: props) {
 	useEffect(() => {
 		setErrorMessage("");
 	}, [username, password, matching_password])
+
+	function displayPassword(event: any) {
+		const password_field = document.querySelector("input[id='password']") as HTMLInputElement;
+		const match_password_field = document.querySelector("input[id='match_password']") as HTMLInputElement;
+
+		if (password_field.getAttribute("type") === "password" && match_password_field.getAttribute("type") === "password") {
+			password_field.setAttribute("type", "text");
+			match_password_field.setAttribute("type", "text");
+		} else if (password_field.getAttribute("type") === "text" && match_password_field.getAttribute("type") === "text") {
+			password_field.setAttribute("type", "password");
+			match_password_field.setAttribute("type", "password");
+		}
+
+		event.target.classList.toggle("selected");
+	}
 
 	function onChangeHandler(event: any) {
 		switch (event.target.id) {
@@ -146,14 +162,17 @@ function RegistrationPage({isLoggedIn}: props) {
 						</div>
 						<div className="input_container">
 							<label htmlFor="password"><span>Password</span></label>
-							<input 
-								type="password" 
-								id="password" 
-								onChange={onChangeHandler} 
-								onFocus={() => setPasswordFocus(true)} 
-								onBlur={() => setPasswordFocus(false)} 
-								required 
-							/>
+							<div className="container">
+								<input 
+									type="password" 
+									id="password" 
+									onChange={onChangeHandler} 
+									onFocus={() => setPasswordFocus(true)} 
+									onBlur={() => setPasswordFocus(false)} 
+									required 
+								/>
+								<button type="button" onClick={displayPassword}><img src={eye_icon} /></button>
+							</div>
 							<div id="password_note" className={password_focus && !isPasswordValid ? "visible" : ""}>
 								<h3>Password must:</h3>
 								<p>Be 8 to 24 characters long</p>
