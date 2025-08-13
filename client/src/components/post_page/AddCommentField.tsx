@@ -32,10 +32,10 @@ function AddCommentField({post_id}: props) {
 	return(
 		<section id="add_comment">
 			<form onSubmit={onSubmitHandler}>
-				<div className="input_container" style={!comment ? {"marginBottom": "0"} : {"": ""}}>
+				<div className="input_container" style={!comment ? {"marginBottom": "0"} : undefined}>
 					<textarea id="description" placeholder="Comment on this post" onChange={onChangeHandler}></textarea>
 				</div>
-				<div className="button_container" style={!comment ? {"display": "none"} : {"": ""}}>
+				<div className="button_container" style={!comment ? {"display": "none"} : undefined}>
 					<button disabled={!comment}>Comment</button>
 				</div>
 			</form>
