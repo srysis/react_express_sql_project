@@ -88,8 +88,6 @@ function RegistrationPage({isLoggedIn}: props) {
 		try {
 			const register_response = await axios.post('/auth/register', { username: username, password: password } , { headers: REQUEST_HEADERS });
 
-			console.log(register_response)
-
 			if (register_response.data.success) {
 				const set_default_info_response = await axios.post('/auth/set_default_user_info', { username: username }, { headers: REQUEST_HEADERS });
 
