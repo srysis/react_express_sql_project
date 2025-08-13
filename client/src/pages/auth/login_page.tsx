@@ -100,7 +100,7 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 							<button>Login</button>
 						</div>
 					</form>
-					<div id="register"><span>Don't have an account?</span><Link to="/register"> Register now.</Link></div>
+					<div id="register"><span>Don't have an account? </span><Link to="/register">Register now.</Link></div>
 				</section>
 			}
 		</>
