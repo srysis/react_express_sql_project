@@ -60,7 +60,7 @@ function RegularPostForm({USER_ID, logOff}: props) {
 				<textarea id="post_content" rows={4} cols={50} placeholder="Share your opinions..." onChange={onChangeHandler} required></textarea>
 			</div>
 			<div className="button_container">
-				<button>Post</button>
+				<button disabled={(!post_content.post_content || !post_content.post_title)}>Post</button>
 			</div>
 		</form>
 	)
