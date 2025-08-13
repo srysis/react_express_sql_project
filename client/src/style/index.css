@@ -33,6 +33,7 @@
 
 	--disabled-button-border: 1px solid #222;
 	--disabled-button-color: rgb(19, 20, 21);
+	--disabled-button-box-shadow: inset 0px 0px 4px 2px #222;
 }
 
 * {
