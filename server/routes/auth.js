@@ -15,8 +15,10 @@ router.post('/register', (request, response) => {
 	database.query(check_username_query, (error, data) => {
 		if (error) return response.json(error);
 
+		const rehashes_count = 13;
+
 		if (!data.length) {
-			bcrypt.hash(password, 13)
+			bcrypt.hash(password, rehashes_count)
 			.then((hash) => {
 				const register_query = "INSERT INTO `users` (`username`, `password`) VALUES ('" + username + "', '" + hash + "');"
 
