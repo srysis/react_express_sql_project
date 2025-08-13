@@ -17,7 +17,7 @@ interface props {
 
 type UserData = {
 	user_id: number,
-	name: string
+	name: string,
 	description: string,
 	profile_picture: string
 }
@@ -29,8 +29,9 @@ type Post = {
 	post_author_name: string,
 	post_content: string,
 	post_date: string,
-	post_id: number
-	post_title: string
+	post_id: number,
+	post_title: string,
+	post_type: string
 }
 
 function ProfilePage({isLoggedIn} : props) {
