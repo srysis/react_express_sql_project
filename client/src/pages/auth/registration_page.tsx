@@ -96,6 +96,18 @@ function RegistrationPage({isLoggedIn}: props) {
 		}
 	}
 
+	function clearFields() {
+		const input_fields = document.querySelectorAll("input[type='text'], input[type='password']") as HTMLInputElement[];
+
+		for (let input_field of input_fields) {
+			input_field.value = "";
+
+			setUsername("");
+			setPassword("");
+			setMatchingPassword("");
+		}
+	}
+
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
@@ -196,9 +208,15 @@ function RegistrationPage({isLoggedIn}: props) {
 								<p>Must match the password in the "Password" field</p>
 							</div>
 						</div>
-						<div className="submit_container">
-							<button disabled={!isUsernameValid || !isPasswordValid || !doPasswordsMatch ? true : false}>Register!</button>
+						<div className="button_container">
+							<div className="clear_container">
+								<button type="button" onClick={clearFields}>Clear</button>
+							</div>
+							<div className="submit_container">
+								<button type="submit" disabled={!isUsernameValid || !isPasswordValid || !doPasswordsMatch ? true : false}>Register!</button>
+							</div>
 						</div>
+						
 					</form>
 				</section>
 			}
