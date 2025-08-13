@@ -72,8 +72,12 @@ section#registration {
 			}
 		}
 
-		div.submit_container {
+		div.button_container {
+			display: flex;
+			justify-content: center;
+
 			button {
+				width: 10vw;
 				margin-inline: 25px;
 				margin-bottom: 0;
 				padding: 20px 3vw;
@@ -94,7 +98,7 @@ section#registration {
 			}
 
 			button[disabled] {
-				box-shadow: none;
+				box-shadow: var(--disabled-button-box-shadow);
 				background-color: var(--disabled-button-color);
 				cursor: not-allowed;
 			}
