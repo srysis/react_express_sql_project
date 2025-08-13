@@ -79,7 +79,7 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 					<input type="text" id="post_title" placeholder="Title" required />
 				</div>
 				<div className="input_container">
-					<label htmlFor="image"><span>Upload your picture</span></label>
+					<label htmlFor="post_image"><span>Content</span></label>
 					<input type="file" accept="image/png" id="post_image" name="post_image" onChange={onImageChangeHandler} />
 				</div>
 				<div className="button_container">
