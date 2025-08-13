@@ -30,7 +30,7 @@ function Home() {
 		.catch((error: any) => console.log(error.response.data));
 	}, []);
 
-	if (arePostsRetrieved) {
+	if (arePostsRetrieved && retrieved_posts != undefined) {
 		return(
 			<section id="home">
 				<section id="posts">
