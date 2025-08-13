@@ -7,7 +7,7 @@ p {
 }
 
 button[disabled] {
-	border: var(--disabled-button-border);
+	box-shadow: var(--disabled-button-box-shadow);
 	background-color: var(--disabled-button-color);
 }
 
