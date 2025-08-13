@@ -1,7 +1,6 @@
 section#post {
 	display: flex;
 	align-items: center;
-	max-height: 400px;
 	margin-bottom: 40px;
 	background-color: transparent;
 
@@ -123,6 +122,10 @@ section#post {
 			}
 		}
 	}
+}
+
+section#post.text {
+	max-height: 400px;
 }
 
 section#post.missing {
