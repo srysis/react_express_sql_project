@@ -6,6 +6,9 @@ import axios from '../../api/axios'
 import eye_icon from "../../assets/eye-icon.png"
 import error_icon from "../../assets/exclamation-mark-2.png"
 
+import correct_icon from "../../assets/correct.png"
+import incorrect_icon from "../../assets/incorrect.png"
+
 import "../../style/shared.css"
 import "../../style/auth_pages/registration_page.css"
 
@@ -143,7 +146,7 @@ function RegistrationPage({isLoggedIn}: props) {
 					}
 					<form onSubmit={onSubmitHandler}>
 						<div className="input_container">
-							<label htmlFor="username"><span>Username</span></label>
+							<label htmlFor="username"><span>Username<img src={isUsernameValid ? correct_icon : incorrect_icon} /></span></label>
 							<input 
 								type="text" 
 								id="username" 
@@ -161,7 +164,7 @@ function RegistrationPage({isLoggedIn}: props) {
 							</div>
 						</div>
 						<div className="input_container">
-							<label htmlFor="password"><span>Password</span></label>
+							<label htmlFor="password"><span>Password<img src={isPasswordValid ? correct_icon : incorrect_icon} /></span></label>
 							<div className="container">
 								<input 
 									type="password" 
@@ -180,7 +183,7 @@ function RegistrationPage({isLoggedIn}: props) {
 							</div>
 						</div>
 						<div className="input_container">
-							<label htmlFor="match_password"><span>Confirm password</span></label>
+							<label htmlFor="match_password"><span>Confirm password<img src={password && isPasswordValid && doPasswordsMatch ? correct_icon : incorrect_icon} /></span></label>
 							<input 
 								type="password" 
 								id="match_password" 
