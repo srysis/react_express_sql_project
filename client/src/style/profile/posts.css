@@ -34,6 +34,31 @@ section#posts_by_user {
 
 				div.content {
 					padding-block: 20px;
+
+					div {
+						padding: 0;
+					}
+
+					div.text_container {
+						max-height: 70px;
+						overflow: hidden;
+					}
+
+					div.image_container {
+						min-width: 200px;
+						min-height: 200px;
+						max-width: 40vw;
+						max-height: 40vh;
+
+						img {
+							display: block;
+							min-width: inherit;
+							min-height: inherit;
+							max-width: inherit;
+							max-height: inherit;
+							object-fit: cover;
+						}
+					}
 				}
 			}
 		}
