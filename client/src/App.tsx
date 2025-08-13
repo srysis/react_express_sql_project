@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
+
 import axios from './api/axios.js'
 import { setAuthorizationHeader } from './tools/setHeaders'
 
@@ -27,6 +29,10 @@ import PostDeletePage from './pages/posts/post_delete_page'
 import SearchPage from './pages/search_page'
 
 import "./style/shared.css"
+
+if (import.meta.env.PROD) {
+	disableReactDevTools();
+}
 
 class UnexpectedParameterError extends Error {
 	constructor(message: string) {
