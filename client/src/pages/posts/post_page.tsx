@@ -22,7 +22,8 @@ type Post = {
 	post_content: string,
 	post_date: string,
 	post_author: number,
-	post_type: string
+	post_type: string,
+	is_editable: number
 }
 
 type Comment = {
@@ -145,7 +146,7 @@ function PostPage({isLoggedIn}: props) {
 									<img src={dots_icon} />
 								</div>
 								<div className="list_container">
-									{post_content.post_type === "text" && <Link to={`/post/${post_id}/edit`}>Edit</Link>}
+									{post_content.is_editable === 1 && <Link to={`/post/${post_id}/edit`}>Edit</Link>}
 									<Link to={`/post/${post_id}/delete`}>Delete</Link>
 								</div>
 							</div>
