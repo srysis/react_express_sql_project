@@ -85,7 +85,7 @@ function App() {
 							logOff();
 						}
 					})
-					.catch((error: any) => { console.error(error); logOff(); })
+					.catch((error: any) => { logOff(); })
 				} else {
 					logOff();
 				}
@@ -147,18 +147,20 @@ function App() {
 	}
 
 	function logOff() {
-		axios.post('/auth/logoff')
-		.then((response: any) => {
-			if (response.data.success) {
-				setLoggedInState(false);
-				setHasAdminRights(false);
+		if (stored_web_token && stored_user_ID) {
+			axios.post('/auth/logoff')
+			.then((response: any) => {
+				if (response.data.success) {
+					setLoggedInState(false);
+					setHasAdminRights(false);
 
-				setAuthorizationHeader(null);
+					setAuthorizationHeader(null);
 
-				window.localStorage.removeItem('t');
-				window.localStorage.removeItem('id');
-			}
-		})
+					window.localStorage.removeItem('t');
+					window.localStorage.removeItem('id');
+				}
+			})
+		}
 	}
 
 	return (
