@@ -85,7 +85,7 @@ function App() {
 							logOff();
 						}
 					})
-					.catch((error: any) => { logOff(); })
+					.catch(() => { logOff(); })
 				} else {
 					logOff();
 				}
