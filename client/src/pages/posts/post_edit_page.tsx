@@ -13,7 +13,9 @@ type Post = {
 	post_title: string,
 	post_content: string,
 	post_date: string,
-	post_author: number
+	post_author: number,
+	post_type: string,
+	is_editable: number
 }	
 
 function PostEditPage() {
@@ -33,6 +35,10 @@ function PostEditPage() {
 		.then((response: any) => {
 
 			if (response.data.post != null) { 
+				if (response.data.post.is_editable != 1 || response.data.post.post_author != window.localStorage.getItem('id')) {
+					navigate(`/post/${post_id}`);
+				}
+
 				setPostData(response.data.post);
 				setIsPostRetrieved(true);
 			}
