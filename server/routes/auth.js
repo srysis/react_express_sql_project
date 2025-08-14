@@ -67,8 +67,8 @@ router.post('/login', (request, response) => {
 					response.cookie('t', refresh_token, {
 						httpOnly: true,
 						path: '/',
-						secure: false,
-						sameSite: "lax",
+						secure: true,
+						sameSite: "none",
 						maxAge: 86400000
 					});
 
@@ -87,8 +87,8 @@ router.post('/logoff', (request, response) => {
 	response.clearCookie('t', {
 		httpOnly: true,
 		path: '/',
-		secure: false,
-		sameSite: "lax"
+		secure: true,
+		sameSite: "none"
 	})
 
 	response.json({success: true, message: "Logged off."});
