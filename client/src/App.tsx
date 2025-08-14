@@ -72,7 +72,7 @@ function App() {
 				}
 			})
 			.catch((error: any) => {
-				if (!error.response.data.success) {
+				if (!error.response.data.success && error.response.data.refreshable) {
 					axios.post(`/auth/refresh/${stored_user_ID}`)
 					.then((response: any) => {
 						if (response.data.success) {
@@ -86,6 +86,8 @@ function App() {
 						}
 					})
 					.catch((error: any) => { console.error(error); logOff(); })
+				} else {
+					logOff();
 				}
 			});
 		} else {
@@ -145,15 +147,18 @@ function App() {
 	}
 
 	function logOff() {
-		setLoggedInState(false);
-		setHasAdminRights(false);
+		axios.post('/auth/logoff')
+		.then((response: any) => {
+			if (response.data.success) {
+				setLoggedInState(false);
+				setHasAdminRights(false);
 
-		setAuthorizationHeader(null);
+				setAuthorizationHeader(null);
 
-		window.localStorage.removeItem('t');
-		window.localStorage.removeItem('id');
-
-		document.cookie = "t=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+				window.localStorage.removeItem('t');
+				window.localStorage.removeItem('id');
+			}
+		})
 	}
 
 	return (
