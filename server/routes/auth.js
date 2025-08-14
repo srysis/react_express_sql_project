@@ -67,7 +67,6 @@ router.post('/login', (request, response) => {
 					response.cookie('t', refresh_token, {
 						httpOnly: true,
 						path: '/',
-						domain: "localhost",
 						secure: false,
 						sameSite: "lax",
 						maxAge: 86400000
@@ -83,6 +82,17 @@ router.post('/login', (request, response) => {
 		}
 	})
 });
+
+router.post('/logoff', (request, response) => {
+	response.clearCookie('t', {
+		httpOnly: true,
+		path: '/',
+		secure: false,
+		sameSite: "lax"
+	})
+
+	response.json({success: true, message: "Logged off."});
+})
 
 router.get('/verify/:id', (request, response) => {
 	const token = request.headers['authorization'];
@@ -106,11 +116,11 @@ router.get('/verify/:id', (request, response) => {
 				})
 
 			} else {
-				response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID."});
+				response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID.", refreshable: false});
 			}
 
 		} catch (error) {
-			response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."})
+			response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired.", refreshable: true});
 		}
 	} else {
 		response.status(401).json({success: false, message: "User is not logged in."})
