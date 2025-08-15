@@ -14,7 +14,7 @@ function ProfileOptionsPage({isAdmin}: props) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (window.localStorage.getItem('id') !== id) navigate(`/user/${window.localStorage.getItem('id')}/options`);
+		if (window.localStorage.getItem('id') !== id) navigate(`/user/${id}`);
 	}, [])
 
 	return(
