@@ -2,12 +2,8 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 15px 3vw;
+	padding: 15px 3.35vw 15px 4.5vw;
 	background-color: var(--section-color);
-
-	div#logo_container {
-		width: 8%;
-	}
 
 	button#log_off_button {
 		margin-inline: 1vw;
@@ -28,8 +24,6 @@ header {
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		width: 35%;
-		margin-right: .3vw;
 
 		a {
 			margin-inline: 1vw;
