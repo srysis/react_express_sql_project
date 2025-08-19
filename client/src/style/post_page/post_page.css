@@ -68,7 +68,7 @@ section#post {
 					min-width: 200px;
 					min-height: 200px;
 					max-width: 60vw;
-					max-height: 60vh;
+					max-height: 100vh;
 
 					img {
 						display: block;
@@ -79,11 +79,6 @@ section#post {
 						object-fit: cover;
 					}
 				}
-			}
-
-			div.content.expandable:hover {
-				color: #ddd;
-				cursor: pointer;
 			}
 		}
 
@@ -136,10 +131,6 @@ section#post {
 			}
 		}
 	}
-}
-
-section#post.text {
-	max-height: 400px;
 }
 
 section#post.missing {
