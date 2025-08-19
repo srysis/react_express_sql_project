@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
@@ -18,8 +17,6 @@ type UserData = {
 }
 
 function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, setNotificationType}: props) {
-	const navigate = useNavigate();
-	
 	const [wasUserDataChanged, setWasNewUserDataChanged] = useState<boolean>(false);
 
 	const [newUsername, setNewUsername] = useState<string>("");
@@ -65,7 +62,7 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, s
 				setNotificationType("success");
 				setNotificationMessage("Changes have been applied.")
 
-				navigate(`/user/${USER_ID}`);
+				setWasNewUserDataChanged(false);
 			}
 		} catch (error: any) {
 			console.error(error.response.data.message);
