@@ -1,7 +1,7 @@
 {
   "name": "client",
   "private": true,
-  "version": "0.5.2",
+  "version": "0.5.2.1",
   "homepage": "http://srysis-forum.com",
   "type": "module",
   "scripts": {
