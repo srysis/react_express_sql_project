@@ -8,7 +8,11 @@ const checkPostOwner = require('../middlewares/checkPostOwner.js');
 
 const findDifferenceBetweenDates = require('../modules/date.js');
 
+const change_rating_routes = require('./rating.js');
+
 const router = express.Router();
+
+router.use('/', change_rating_routes);
 
 router.get('/posts', (request, response) => {
 	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `users_info`.`profile_picture` AS `post_author_avatar`, `user_posts`.*, CAST(SUM(`user_posts_ratings`.`like`) AS SIGNED) AS likes_amount, " +
