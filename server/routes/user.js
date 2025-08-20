@@ -54,9 +54,11 @@ router.get('/:id', (request, response) => {
 router.get('/:id/posts', (request, response) => {
 	const requested_id = request.params.id;
 
-	const get_posts_of_one_user_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.* " +
-										"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " +
-										"WHERE `user_posts`.`post_author` = '" + requested_id + "' ORDER BY `user_posts`.`post_date` DESC";
+	const get_posts_of_one_user_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.*, CAST(SUM(`user_posts_ratings`.`like`) AS SIGNED) AS likes_amount, " +
+										"CAST(SUM(`user_posts_ratings`.`dislike`) AS SIGNED) AS dislikes_amount " + 
+										"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " + 
+										"INNER JOIN `user_posts_ratings` ON `user_posts`.`post_id` = `user_posts_ratings`.`post_id` " +
+										"WHERE `user_posts`.`post_author` = '" + requested_id + "' GROUP BY `user_posts`.`post_id` ORDER BY `user_posts`.`post_date` DESC"
 
 	database.query(get_posts_of_one_user_query, (error, data) => {
 		if (error) return response.json(error);
