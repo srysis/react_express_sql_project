@@ -55,7 +55,7 @@ router.post('/post/:post_id/:id/like', [authenticator, checkPostOwner], (request
 		database.query(check_post_rating_query, (error, data) => {
 			if (error) return response.status(500).json({success: false, message: "Something went wrong."});
 
-			if (data[0].dislike == 1) {
+			if (data[0].dislike == 1 || data[0].like == 0) {
 				const update_row_query = "UPDATE `forum_db`.`user_posts_ratings` SET `like` = '1', `dislike` = '0' WHERE (`post_id` = '" + post_id + "') and (`user_id` = '" + user_id + "')";
 
 				database.query(update_row_query, (error, data) => {
@@ -64,7 +64,13 @@ router.post('/post/:post_id/:id/like', [authenticator, checkPostOwner], (request
 					return response.json({success: true, message: "User liked this post."});
 				})
 			} else if (data[0].like == 1) {
-				return response.json({success: true, message: "User has already liked this post."});
+				const update_row_query = "UPDATE `forum_db`.`user_posts_ratings` SET `like` = '0', `dislike` = '0' WHERE (`post_id` = '" + post_id + "') and (`user_id` = '" + user_id + "')";
+
+				database.query(update_row_query, (error, data) => {
+					if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+
+					return response.json({success: true, message: "User has already liked this post and hence his like was removed."});
+				})
 			}
 		})
 	})
@@ -93,7 +99,7 @@ router.post('/post/:post_id/:id/dislike', [authenticator, checkPostOwner], (requ
 		database.query(check_post_rating_query, (error, data) => {
 			if (error) return response.status(500).json({success: false, message: "Something went wrong."});
 
-			if (data[0].like == 1) {
+			if (data[0].like == 1 || data[0].dislike == 0) {
 				const update_row_query = "UPDATE `forum_db`.`user_posts_ratings` SET `like` = '0', `dislike` = '1' WHERE (`post_id` = '" + post_id + "') and (`user_id` = '" + user_id + "')";
 
 				database.query(update_row_query, (error, data) => {
@@ -102,7 +108,13 @@ router.post('/post/:post_id/:id/dislike', [authenticator, checkPostOwner], (requ
 					return response.json({success: true, message: "User disliked this post."});
 				})
 			} else if (data[0].dislike == 1) {
-				return response.json({success: true, message: "User has already disliked this post."});
+				const update_row_query = "UPDATE `forum_db`.`user_posts_ratings` SET `like` = '0', `dislike` = '0' WHERE (`post_id` = '" + post_id + "') and (`user_id` = '" + user_id + "')";
+
+				database.query(update_row_query, (error, data) => {
+					if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+
+					return response.json({success: true, message: "User has already disliked this post and hence his dislike was removed."});
+				})
 			}
 		})
 	})
