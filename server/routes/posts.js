@@ -11,8 +11,10 @@ const findDifferenceBetweenDates = require('../modules/date.js');
 const router = express.Router();
 
 router.get('/posts', (request, response) => {
-	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `users_info`.`profile_picture` AS `post_author_avatar`, `user_posts`.* " +
-								"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` ORDER BY `user_posts`.`post_date` DESC;"
+	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `users_info`.`profile_picture` AS `post_author_avatar`, `user_posts`.*, CAST(SUM(`user_posts_ratings`.`like`) AS SIGNED) AS likes_amount, " +
+								"CAST(SUM(`user_posts_ratings`.`dislike`) AS SIGNED) AS dislikes_amount FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " + 
+								"INNER JOIN `user_posts_ratings` ON `user_posts`.`post_id` = `user_posts_ratings`.`post_id` GROUP BY `user_posts`.`post_id` " + 
+								"ORDER BY `user_posts`.`post_date` DESC";
 
 	database.query(get_all_posts_query, (error, data) => {
 		if (error) return response.json(error);
@@ -44,9 +46,10 @@ router.get('/post/:post_id', checkPostOwner, (request, response) => {
 				if (error) return response.json(error);
 
 				if (!data.length) {
-					const get_post_by_id_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author`, `user_posts`.`post_type` " + 
-												 "FROM `user_posts` LEFT JOIN `users_info` ON `user_posts`.`post_author` = `users_info`.`user_id` " +
-								 				 "WHERE `user_posts`.`post_id` = " + requested_post_id;
+					const get_post_by_id_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author`, `user_posts`.`post_type`, " + 
+												 "CAST(SUM(`user_posts_ratings`.`like`) AS SIGNED) AS likes_amount, CAST(SUM(`user_posts_ratings`.`dislike`) AS SIGNED) AS dislikes_amount " + 
+												 "FROM `user_posts` LEFT JOIN `users_info` ON `user_posts`.`post_author` = `users_info`.`user_id` INNER JOIN `user_posts_ratings` ON `user_posts`.`post_id` = `user_posts_ratings`.`post_id` " +
+								 				 "WHERE `user_posts`.`post_id` = '" + requested_post_id + "' GROUP BY `user_posts`.`post_id`";
 
 					database.query(get_post_by_id_query, (error, data) => {
 						if (error) return response.json(error);
@@ -62,9 +65,10 @@ router.get('/post/:post_id', checkPostOwner, (request, response) => {
 					})
 
 				} else {
-					const get_post_by_id_query = "SELECT `users_info`.`name` AS `post_author_name`, `users_info`.`profile_picture` AS `post_author_avatar`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author`, `user_posts`.`post_type`, `user_posts`.`is_editable` " +
-								 "FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " +
-								 "WHERE `user_posts`.`post_id` = " + requested_post_id;
+					const get_post_by_id_query = "SELECT `users_info`.`name` AS `post_author_name`, `users_info`.`profile_picture` AS `post_author_avatar`, `user_posts`.`post_id`, `user_posts`.`post_title`, `user_posts`.`post_content`, `user_posts`.`post_date`, `user_posts`.`post_author`, `user_posts`.`post_type`, `user_posts`.`is_editable`, " +
+								 "CAST(SUM(`user_posts_ratings`.`like`) AS SIGNED) AS likes_amount, CAST(SUM(`user_posts_ratings`.`dislike`) AS SIGNED) AS dislikes_amount " + 
+								 "FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` INNER JOIN `user_posts_ratings` ON `user_posts`.`post_id` = `user_posts_ratings`.`post_id` " +
+								 "WHERE `user_posts`.`post_id` = '" + requested_post_id + "' GROUP BY `user_posts`.`post_id`";
 
 					database.query(get_post_by_id_query, (error, data) => {
 						if (error) return response.json(error);
