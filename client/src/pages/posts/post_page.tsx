@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import Rating from "../../components/post_page/Rating"
+
 import AddCommentField from "../../components/post_page/AddCommentField"
 import CommentsSection from "../../components/post_page/CommentsSection"
 
@@ -23,7 +25,9 @@ type Post = {
 	post_date: string,
 	post_author: number,
 	post_type: string,
-	is_editable: number
+	is_editable: number,
+	likes_amount: number,
+	dislikes_amount: number
 }
 
 type Comment = {
@@ -95,6 +99,7 @@ function PostPage({isLoggedIn}: props) {
 							<p style={{"fontStyle": "italic"}}>[deleted]</p>
 						}
 						<p className="date" title={post_content.post_date.split("T")[0]}>Posted: {date_difference}</p>
+						<Rating post_id={post_content.post_id} />
 					</div>
 					<div className="wrapper">
 						<div className="post_content">
