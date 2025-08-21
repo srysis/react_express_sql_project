@@ -11,4 +11,8 @@ const database = mysql.createConnection({
 	database: 'forum_db'
 });
 
+database.connect((error) => {
+	if (error) throw error;
+})
+
 module.exports = database;
