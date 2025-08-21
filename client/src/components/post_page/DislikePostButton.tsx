@@ -8,11 +8,12 @@ import dislike_icon_filled from "../../assets/dislike_filled.png"
 interface props {
 	post_id: number,
 	forceUpdate: Function,
-	isDisliked: boolean,
+	dislikes: number,
+	isDisliked: boolean | null,
 	isLoggedIn: boolean
 }
 
-function DislikePostButton({post_id, forceUpdate, isDisliked, isLoggedIn}: props) {
+function DislikePostButton({post_id, forceUpdate, dislikes, isDisliked, isLoggedIn}: props) {
 	const navigate = useNavigate();
 
 	async function onClickHandler() {
@@ -32,7 +33,7 @@ function DislikePostButton({post_id, forceUpdate, isDisliked, isLoggedIn}: props
 	}
 
 	return(
-		<button onClick={onClickHandler}><img src={isDisliked ? dislike_icon_filled : dislike_icon}/></button>
+		<button onClick={onClickHandler}><img src={isDisliked ? dislike_icon_filled : dislike_icon}/>{dislikes}</button>
 	)
 }
 

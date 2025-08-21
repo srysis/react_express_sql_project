@@ -8,11 +8,12 @@ import like_icon_filled from "../../assets/like_filled.png"
 interface props {
 	post_id: number,
 	forceUpdate: Function,
-	isLiked: boolean,
+	likes: number,
+	isLiked: boolean | null,
 	isLoggedIn: boolean
 }
 
-function LikePostButton({post_id, forceUpdate, isLiked, isLoggedIn}: props) {
+function LikePostButton({post_id, forceUpdate, likes, isLiked, isLoggedIn}: props) {
 	const navigate = useNavigate();
 
 	async function onClickHandler() {
@@ -32,7 +33,7 @@ function LikePostButton({post_id, forceUpdate, isLiked, isLoggedIn}: props) {
 	}
 
 	return(
-		<button onClick={onClickHandler}><img src={isLiked ? like_icon_filled : like_icon}/></button>
+		<button onClick={onClickHandler}><img src={isLiked ? like_icon_filled : like_icon}/>{likes}</button>
 	)
 }
 
