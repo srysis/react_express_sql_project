@@ -99,7 +99,7 @@ function PostPage({isLoggedIn}: props) {
 							<p style={{"fontStyle": "italic"}}>[deleted]</p>
 						}
 						<p className="date" title={post_content.post_date.split("T")[0]}>Posted: {date_difference}</p>
-						<Rating post_id={post_content.post_id} />
+						<Rating post_id={post_content.post_id} isLoggedIn={isLoggedIn} />
 					</div>
 					<div className="wrapper">
 						<div className="post_content">
