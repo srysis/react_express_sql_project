@@ -1,0 +1,56 @@
+div.rating_container {
+	--border-style: 1px solid #ccc;
+	--border-radius: 30px;
+
+	--button-inner-padding: 10px;
+	--button-outer-padding: 20px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 15px auto;
+	border-radius: 30px;
+	background-color: rgb(5, 6, 7);
+
+	div:nth-child(odd) {
+		border-right: var(--border-style);
+
+		button {
+			border-top-left-radius: var(--border-radius);
+			border-bottom-left-radius: var(--border-radius);
+			padding-left: var(--button-outer-padding);
+			padding-right: var(--button-inner-padding);
+		}
+	}
+
+	div:nth-child(even) {
+		border-left: var(--border-style);
+
+		button {
+			border-top-right-radius: var(--border-radius);
+			border-bottom-right-radius: var(--border-radius);
+			padding-left: var(--button-inner-padding);
+			padding-right: var(--button-outer-padding);
+		}
+	}
+
+	div {
+		button {
+			border: none;
+			padding: 5px;
+			background-color: transparent;
+			font-size: 1.2em;
+			font-weight: bold;
+			color: #fff;
+
+			img {
+				margin-right: 10px;
+				vertical-align: middle;
+			}
+		}
+
+		button:hover {
+			background-color: #555;
+		}
+	}
+}
