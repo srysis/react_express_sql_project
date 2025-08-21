@@ -5,6 +5,8 @@ import axios from '../../api/axios'
 import LikePostButton from "./LikePostButton"
 import DislikePostButton from "./DislikePostButton"
 
+import "../../style/post_page/rating.css"
+
 interface props {
 	post_id: number,
 	isLoggedIn: boolean
@@ -39,10 +41,14 @@ function Rating({post_id, isLoggedIn}: props) {
 	}, [update_count])
 
 	return (
-		<>
-			<p>{likes}<LikePostButton post_id={post_id} forceUpdate={forceUpdate} isLiked={isLiked} isLoggedIn={isLoggedIn}/></p>
-			<p>{dislikes}<DislikePostButton post_id={post_id} forceUpdate={forceUpdate} isDisliked={isDisliked} isLoggedIn={isLoggedIn}/></p>
-		</>
+		<div className="rating_container">
+			<div>
+				<LikePostButton post_id={post_id} forceUpdate={forceUpdate} likes={likes} isLiked={isLiked} isLoggedIn={isLoggedIn}/>
+			</div>
+			<div>
+				<DislikePostButton post_id={post_id} forceUpdate={forceUpdate} dislikes={dislikes} isDisliked={isDisliked} isLoggedIn={isLoggedIn}/>
+			</div>
+		</div>
 	)
 }
 
