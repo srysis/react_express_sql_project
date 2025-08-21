@@ -2,6 +2,9 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
+import like_icon from "../../assets/like.png"
+import like_icon_filled from "../../assets/like_filled.png"
+
 interface props {
 	post_id: number,
 	forceUpdate: Function,
@@ -29,7 +32,7 @@ function LikePostButton({post_id, forceUpdate, isLiked, isLoggedIn}: props) {
 	}
 
 	return(
-		<button onClick={onClickHandler}>Like</button>
+		<button onClick={onClickHandler}><img src={isLiked ? like_icon_filled : like_icon}/></button>
 	)
 }
 

@@ -2,6 +2,9 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
+import dislike_icon from "../../assets/dislike.png"
+import dislike_icon_filled from "../../assets/dislike_filled.png"
+
 interface props {
 	post_id: number,
 	forceUpdate: Function,
@@ -29,7 +32,7 @@ function DislikePostButton({post_id, forceUpdate, isDisliked, isLoggedIn}: props
 	}
 
 	return(
-		<button onClick={onClickHandler}>Dislike</button>
+		<button onClick={onClickHandler}><img src={isDisliked ? dislike_icon_filled : dislike_icon}/></button>
 	)
 }
 
