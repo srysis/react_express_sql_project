@@ -13,7 +13,9 @@ import dots_icon from "../../assets/v_dots-icon.png"
 import "../../style/post_page/post_page.css"
 
 interface props {
-	isLoggedIn: boolean
+	isLoggedIn: boolean,
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
 type Post = {
@@ -42,7 +44,7 @@ type Comment = {
 }
 
 
-function PostPage({isLoggedIn}: props) {
+function PostPage({isLoggedIn, setNotificationMessage, setNotificationType}: props) {
 	const { post_id } = useParams();
 
 	const [post_content, setPostContent] = useState<Post | null>(null);
@@ -99,7 +101,7 @@ function PostPage({isLoggedIn}: props) {
 							<p style={{"fontStyle": "italic"}}>[deleted]</p>
 						}
 						<p className="date" title={post_content.post_date.split("T")[0]}>Posted: {date_difference}</p>
-						<Rating post_id={post_content.post_id} isLoggedIn={isLoggedIn} />
+						<Rating post_id={post_content.post_id} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} />
 					</div>
 					<div className="wrapper">
 						<div className="post_content">
