@@ -63,7 +63,7 @@ router.get('/post/:post_id/:id/check_if_rated', authenticator, (request, respons
 
 router.post('/post/:post_id/:id/like', [authenticator, checkPostOwner], (request, response) => {
 	if (response.locals.post_ownership) {
-		return response.json({success: false, message: "Post owners cannot affect their own posts' ratings"});
+		return response.json({success: false, post_ownership: true, message: "Post owners cannot affect their own posts' ratings!"});
 	}
 
 	const post_id = request.params.post_id;
@@ -116,7 +116,7 @@ router.post('/post/:post_id/:id/like', [authenticator, checkPostOwner], (request
 
 router.post('/post/:post_id/:id/dislike', [authenticator, checkPostOwner], (request, response) => {
 	if (response.locals.post_ownership) {
-		return response.json({success: false, message: "Post owners cannot affect their own posts' ratings"});
+		return response.json({success: false, post_ownership: true, message: "Post owners cannot affect their own posts' ratings!"});
 	}
 
 	const post_id = request.params.post_id;
