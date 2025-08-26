@@ -172,7 +172,7 @@ function App() {
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
 					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} />} />
-					<Route path="/post/:post_id" element={<PostPage isLoggedIn={isLoggedIn} />} />
+					<Route path="/post/:post_id" element={<PostPage isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/options" element={<ProfileOptionsPage isAdmin={hasAdminRights} />} />
