@@ -10,16 +10,23 @@ interface props {
 	forceUpdate: Function,
 	likes: number,
 	isLiked: boolean | null,
-	isLoggedIn: boolean
+	isLoggedIn: boolean,
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
-function LikePostButton({post_id, forceUpdate, likes, isLiked, isLoggedIn}: props) {
+function LikePostButton({post_id, forceUpdate, likes, isLiked, isLoggedIn, setNotificationMessage, setNotificationType}: props) {
 	const navigate = useNavigate();
 
 	async function onClickHandler() {
 		if (isLoggedIn) {
 			try {
 				const response: any = await axios.post(`/post/${post_id}/${window.localStorage.getItem('id')}/like`);
+
+				if (response.data.post_ownership) {
+					setNotificationType("error");
+					setNotificationMessage(response.data.message);
+				}
 
 				if (response.data.success) {
 					forceUpdate();

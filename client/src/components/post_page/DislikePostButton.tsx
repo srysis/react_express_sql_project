@@ -10,16 +10,23 @@ interface props {
 	forceUpdate: Function,
 	dislikes: number,
 	isDisliked: boolean | null,
-	isLoggedIn: boolean
+	isLoggedIn: boolean,
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
-function DislikePostButton({post_id, forceUpdate, dislikes, isDisliked, isLoggedIn}: props) {
+function DislikePostButton({post_id, forceUpdate, dislikes, isDisliked, isLoggedIn, setNotificationMessage, setNotificationType}: props) {
 	const navigate = useNavigate();
 
 	async function onClickHandler() {
 		if (isLoggedIn) {
 			try {
 				const response: any = await axios.post(`/post/${post_id}/${window.localStorage.getItem('id')}/dislike`);
+
+				if (response.data.post_ownership) {
+					setNotificationType("error");
+					setNotificationMessage(response.data.message);
+				}
 
 				if (response.data.success) {
 					forceUpdate();
