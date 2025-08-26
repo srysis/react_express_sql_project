@@ -9,10 +9,12 @@ import "../../style/post_page/rating.css"
 
 interface props {
 	post_id: number,
-	isLoggedIn: boolean
+	isLoggedIn: boolean,
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
-function Rating({post_id, isLoggedIn}: props) {
+function Rating({post_id, isLoggedIn, setNotificationMessage, setNotificationType}: props) {
 	const [update_count, forceUpdate] = useReducer(x => x + 1, 0);
 
 	const [likes, setLikes] = useState<number>(0);
@@ -43,10 +45,26 @@ function Rating({post_id, isLoggedIn}: props) {
 	return (
 		<div className="rating_container">
 			<div>
-				<LikePostButton post_id={post_id} forceUpdate={forceUpdate} likes={likes} isLiked={isLiked} isLoggedIn={isLoggedIn}/>
+				<LikePostButton 
+					post_id={post_id} 
+					forceUpdate={forceUpdate} 
+					likes={likes} 
+					isLiked={isLiked} 
+					isLoggedIn={isLoggedIn} 
+					setNotificationMessage={setNotificationMessage} 
+					setNotificationType={setNotificationType}
+				/>
 			</div>
 			<div>
-				<DislikePostButton post_id={post_id} forceUpdate={forceUpdate} dislikes={dislikes} isDisliked={isDisliked} isLoggedIn={isLoggedIn}/>
+				<DislikePostButton 
+					post_id={post_id} 
+					forceUpdate={forceUpdate} 
+					dislikes={dislikes} 
+					isDisliked={isDisliked} 
+					isLoggedIn={isLoggedIn} 
+					setNotificationMessage={setNotificationMessage} 
+					setNotificationType={setNotificationType}
+				/>
 			</div>
 		</div>
 	)
