@@ -25,7 +25,7 @@ function Post({content}: props) {
 				</div>
 				<div className="post_author">
 					<div className="image_container">
-						<Link to={`/user/${post_author}`}><img src={`${import.meta.env.VITE_IMAGE_STORAGE}${post_author_avatar}`} /></Link>
+						<Link to={`/user/${post_author}`}><img src={`${import.meta.env.VITE_IMAGE_STORAGE}${post_author_avatar}`} loading="lazy" /></Link>
 					</div>
 					<div className="name_and_date">
 						<div className="name">
@@ -44,7 +44,7 @@ function Post({content}: props) {
 					<div className="content">
 						<div className={post_type === "image" ? "image_container" : "text_container"}>
 							{post_type === "text" && <p>{post_content}</p>}
-							{post_type === "image" && <img src={`${import.meta.env.VITE_POST_IMAGE_STORAGE}${post_content}`} />}
+							{post_type === "image" && <img src={`${import.meta.env.VITE_POST_IMAGE_STORAGE}${post_content}`} loading="lazy" />}
 						</div>
 					</div>
 				</div>

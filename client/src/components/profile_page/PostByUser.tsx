@@ -30,7 +30,7 @@ function PostByUser({content} : props) {
 					<div className="content">
 						<div className={post_type === "image" ? "image_container" : "text_container"}>
 							{post_type === "text" && <p>{post_content}</p>}
-							{post_type === "image" && <img src={`${import.meta.env.VITE_POST_IMAGE_STORAGE}${post_content}`} />}
+							{post_type === "image" && <img src={`${import.meta.env.VITE_POST_IMAGE_STORAGE}${post_content}`} loading="lazy" />}
 						</div>
 					</div>
 				</div>
