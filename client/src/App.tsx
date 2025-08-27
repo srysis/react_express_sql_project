@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
-import axios from './api/axios.js'
+import axios from './api/axios.ts'
 import { setAuthorizationHeader } from './tools/setHeaders'
 
 import ProtectedRoutes from './tools/ProtectedRoutes'
