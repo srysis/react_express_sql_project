@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
 import axios from './api/axios.ts'
-import { setAuthorizationHeader } from './tools/setHeaders'
 
 import ProtectedRoutes from './tools/ProtectedRoutes'
 
@@ -63,7 +62,6 @@ function App() {
 
 	useEffect(() => {
 		if (stored_web_token && stored_user_ID) {
-			setAuthorizationHeader(stored_web_token);
 
 			axios.get(`/auth/verify/${stored_user_ID}`)
 			.then(() => {})
@@ -75,8 +73,6 @@ function App() {
 							const token = response.data.token;
 
 							window.localStorage.setItem('t', token);
-
-							setAuthorizationHeader(token);
 						} else {
 							logOff();
 						}
@@ -135,8 +131,6 @@ function App() {
 		window.localStorage.setItem('t', token);
 		window.localStorage.setItem('id', user_id);
 
-		setAuthorizationHeader(token);
-
 		setLoggedInState(true);
 
 		if (login_data.admin) setHasAdminRights(true);
@@ -149,8 +143,6 @@ function App() {
 				if (response.data.success) {
 					setLoggedInState(false);
 					setHasAdminRights(false);
-
-					setAuthorizationHeader(null);
 
 					window.localStorage.removeItem('t');
 					window.localStorage.removeItem('id');
