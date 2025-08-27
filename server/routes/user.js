@@ -83,13 +83,21 @@ router.post('/:id/create_text_post', authenticator, (request, response) => {
 	const user_id = request.params.id;
 	const post = request.body.post;
 
-	const sql_query = "INSERT INTO `user_posts` (`post_id`, `post_title`, `post_content`, `post_date`, `post_author`, `post_type`) VALUES (NULL, '" + 
-						post.post_title.replace(/'/g, "\\'") + "', '" + post.post_content.replace(/'/g, "\\'") + "', CURRENT_TIMESTAMP, '" + user_id + "', 'text');";
+	const sql_query = "INSERT INTO `user_posts` (`post_id`, `post_title`, `post_content`, `post_date`, `post_author`, `post_type`, `is_editable`) VALUES (NULL, '" + 
+						post.post_title.replace(/'/g, "\\'") + "', '" + post.post_content.replace(/'/g, "\\'") + "', CURRENT_TIMESTAMP, '" + user_id + "', 'text', 1);";
 
 	database.query(sql_query, (error, data) => {
-		if (error) return response.json(error);
+		if (error) return response.status(500).json({success: false, message: "Something went wrong."});
 
-		response.json({success: true, message: "Posted.", post_content: post, post_id: data.insertId});
+		const inserted_post_id = data.insertId;
+
+		const set_default_rating_query = "INSERT INTO `user_posts_ratings` (`post_id`, `user_id`, `like`, `dislike`) VALUES ('" + data.insertId + "', '" + user_id + "', '1', '0')";
+
+		database.query(set_default_rating_query, (error, data) => {
+			if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+
+			response.json({success: true, message: "Posted.", post_content: post, post_id: inserted_post_id});
+		})
 	})
 });
 
@@ -105,13 +113,21 @@ router.post('/:id/create_image_post', [authenticator, imageUpload.single("post_i
 		const blob = uploadImageToVercel('posts/', image_data, image_data.buffer)
 					.then((result) => {
 					 	if (result.url) {
-							const sql_query = "INSERT INTO `user_posts` (`post_id`, `post_title`, `post_content`, `post_date`, `post_author`, `post_type`) VALUES (NULL, '" + 
-											   post_title.replace(/'/g, "\\'") + "', '" + image_data.originalname + "', CURRENT_TIMESTAMP, '" + user_id + "', 'image');";
+							const sql_query = "INSERT INTO `user_posts` (`post_id`, `post_title`, `post_content`, `post_date`, `post_author`, `post_type`, `is_editable`) VALUES (NULL, '" + 
+											   post_title.replace(/'/g, "\\'") + "', '" + image_data.originalname + "', CURRENT_TIMESTAMP, '" + user_id + "', 'image', 0);";
 
 							database.query(sql_query, (error, data) => {
-								if (error) return response.json(error);
+								if (error) return response.status(500).json({success: false, message: "Something went wrong."});
 
-								response.json({success: true, message: "Posted.", post_id: data.insertId});
+								const inserted_post_id = data.insertId;
+
+								const set_default_rating_query = "INSERT INTO `user_posts_ratings` (`post_id`, `user_id`, `like`, `dislike`) VALUES ('" + data.insertId + "', '" + user_id + "', '1', '0')";
+
+								database.query(set_default_rating_query, (error, data) => {
+									if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+
+									response.json({success: true, message: "Posted.", post_id: inserted_post_id});
+								})
 							})
 						}
 					})
@@ -174,6 +190,7 @@ async function uploadImageToVercel(pathname, original_image_data, buffer) {
 
 	return blob;
 }
+
 function deleteImageFromVercel(image_name) {
 	vercel_blob.del(`https://nzeeldk4zw3dccii.public.blob.vercel-storage.com/${image_name}`, {
 		token: process.env.BLOB_READ_WRITE_TOKEN
