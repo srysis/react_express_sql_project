@@ -29,6 +29,12 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 		return () => URL.revokeObjectURL(imageObjectURL);
 	}, [selected_image])
 
+	function selectImage() {
+		const input = document.querySelector("input#post_image") as HTMLInputElement;
+
+		if (input) input.click();
+	}
+
 	function onImageChangeHandler(event: any) {
 		if (event.target.files.length === 0) {
 			setImageData(null);
@@ -47,6 +53,8 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
+
+		if (!image_data) return;
 
 		const image = document.querySelector("input#post_image") as HTMLInputElement;
 		const title = document.querySelector("input#post_title") as HTMLInputElement;
@@ -72,7 +80,6 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 
 	return(
 		<>
-			
 			<form id="image_post_form" encType="multipart/form-data" onSubmit={onSubmitHandler}>
 				<div className="input_container">
 					<label htmlFor="post_title"><span>Title</span></label>
@@ -80,18 +87,22 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 				</div>
 				<div className="input_container">
 					<label htmlFor="post_image"><span>Content</span></label>
+					<div className="inner_container">
+						<button type="button" onClick={selectImage}>Select image</button>
+						{
+							selected_image &&
+							<div className="image_preview">
+								<img src={selected_image ? preview_image : ""} />
+							</div>
+						}
+					</div>
 					<input type="file" accept="image/png" id="post_image" name="post_image" onChange={onImageChangeHandler} />
 				</div>
+				
 				<div className="button_container">
 					<button type="submit" disabled={!image_data}>Post</button>
 				</div>
 			</form>
-			{
-				selected_image &&
-				<div>
-					<img src={selected_image ? preview_image : ""} />
-				</div>
-			}
 			
 		</>
 	)
