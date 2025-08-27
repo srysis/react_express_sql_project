@@ -15,7 +15,7 @@ function checkPostOwner(request, response, next) {
 			try {
 				const decoded_token = jwt.verify(token, access_key);
 
-				if (decoded_token.id === data[0].post_author) {
+				if (decoded_token.id == data[0].post_author) {
 					response.locals.post_ownership = true;
 				} else {
 					response.locals.post_ownership = false;
