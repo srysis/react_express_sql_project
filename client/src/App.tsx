@@ -154,6 +154,8 @@ function App() {
 
 					window.localStorage.removeItem('t');
 					window.localStorage.removeItem('id');
+
+					window.location.reload();
 				}
 			})
 		}
