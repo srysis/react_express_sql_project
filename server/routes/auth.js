@@ -137,12 +137,22 @@ router.post('/refresh/:id', (request, response) => {
 	if (request.cookies?.t) {
 		const refresh_token = request.cookies.t;
 
+		const sql_query = "SELECT `username` FROM `users` WHERE `id` = " + user_id;
+
 		try {
 			const decoded_refresh_token = jwt.verify(refresh_token, refresh_key);
 
-			const access_token = jwt.sign({ id: user_id }, access_key, { expiresIn: '1h' });
+			database.query(sql_query, (error, data) => {
+				if (error) return response.json(error);
 
-			response.json({success: true, token: access_token});
+				if (data[0].username == decoded_refresh_token.id) {
+					const access_token = jwt.sign({ id: user_id }, access_key, { expiresIn: '1h' });
+
+					response.json({success: true, token: access_token});
+				} else {
+					response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
+				}
+			})
 		} catch (error) {
 			response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
 		}
