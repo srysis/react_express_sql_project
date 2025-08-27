@@ -16,7 +16,6 @@ function authenticator(request, response, next) {
 				}
 			}
 		} catch (error) {
-			console.log(error)
 			response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."})
 		}
 		
