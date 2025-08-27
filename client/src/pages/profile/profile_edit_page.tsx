@@ -37,12 +37,11 @@ function ProfileEditPage({setNotificationMessage, setNotificationType} : props) 
 
 		if (!hasUserData) {
 			axios.get(`/user/${id}`)
-			.then(response => {
+			.then((response: any) => {
 				setUserData(response.data.user_info);
 				setHasUserData(true);
 			})
-			.catch(error => {
-				console.error(error);
+			.catch(() => {
 				setUserData({user_id: 0, name: '', description: '', profile_picture: ''});
 				setHasUserData(false);
 			}) 
