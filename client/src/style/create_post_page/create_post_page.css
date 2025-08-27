@@ -41,9 +41,48 @@ section#create_post {
 		}
 	}
 
+	form#regular_post_form {
+		div.textarea_container {
+			margin-block: 20px;
+		}
+	}
+
 	form#image_post_form {
 		div.input_container:nth-child(even) {
-			margin-top: 40px;
+			div.inner_container {
+				width: 92%;
+				margin: 25px auto;
+				box-shadow: var(--button-box-shadow);
+				background-color: var(--button-color);
+				text-align: left;
+
+				button {
+					width: 7%;
+					margin-block: 5px;
+					margin-left: 1.8vw;
+					padding: 20px 0;
+					box-shadow: none;
+				}
+
+				div.image_preview {
+					min-height: 400px;
+					max-height: 70vh;
+					text-align: left;
+					
+					img {
+						display: block;
+						width: 100%;
+						min-height: inherit;
+						max-height: inherit;
+						padding-block: 10px;
+						object-fit: contain;
+					}
+				}
+			}
+
+			input[type="file"] {
+				display: none;
+			}
 		}
 	}
 }
