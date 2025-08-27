@@ -129,7 +129,7 @@ router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
 	const select_user_query = "SELECT * FROM `users` WHERE `username` = '" + username + "' AND `id` = " + user_id;
 
 	database.query(select_user_query, (error, data) => {
-		if (error) return response.json(error);
+		if (error) return response.status(500).json({success: false, message: "Something went wrong."});
 
 		if (data.length) {
 			bcrypt.compare(password, data[0].password)
@@ -144,14 +144,20 @@ router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
 									const delete_post_query = "DELETE FROM `user_posts` WHERE `post_id` = " + requested_post_id;
 
 									database.query(delete_post_query, (error, data) => {
-										if (error) return response.json(error);
+										if (error) return response.status(500).json({success: false, message: "Something went wrong."});
 
 										const delete_related_comments_query = "DELETE FROM `comments` WHERE `post_id` = " + requested_post_id;
 
 										database.query(delete_related_comments_query, (error, data) => {
-											if (error) return response.json(error);
+											if (error) return response.status(500).json({success: false, message: "Something went wrong."});
 
-											response.json({success: true, message: "Post was deleted."});
+											const delete_ratings_query = "DELETE FROM `user_posts_ratings` WHERE (`post_id` = '" + requested_post_id + "') and (`user_id` = '" + user_id + "')";
+
+											database.query(delete_ratings_query, (error, data) => {
+												if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+
+												response.json({success: true, message: "Post was deleted."});
+											})
 										})
 									});
 								} else {
