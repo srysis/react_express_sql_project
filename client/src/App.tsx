@@ -66,9 +66,7 @@ function App() {
 			setAuthorizationHeader(stored_web_token);
 
 			axios.get(`/auth/verify/${stored_user_ID}`)
-			.then((response: any) => {
-				if (response.data.success) setAuthorizationHeader(stored_web_token);
-			})
+			.then(() => {})
 			.catch((error: any) => {
 				if (!error.response.data.success && error.response.data.refreshable) {
 					axios.post(`/auth/refresh/${stored_user_ID}`)
