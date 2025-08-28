@@ -33,22 +33,43 @@ axiosInstance.interceptors.response.use(
 			try {
 				const refresh_access_response = await axiosInstance.post(`/auth/refresh/${window.localStorage.getItem('id')}`);
 
-				if (refresh_access_response.data.success) {
+				if (refresh_access_response.data?.success) {
 					error.config.headers['Authorization'] = refresh_access_response.data.token;
 
 					window.localStorage.setItem('t', refresh_access_response.data.token);
 
 					return axiosInstance.request(error.config);
-				} else {
-					return Promise.reject(error);
+
+				// for some incredibly stupid and unknown to me reason, the flow does not switch to 'catch' block
+				// after failing to fetch a new token. that's why we check if refresh failed here in 'try' block
+				// Stupid? Yes, but it works as far as I am concerned.
+				} else if (refresh_access_response.response?.status === 401 && !refresh_access_response.response.data?.success) {
+					return Promise.reject(refresh_access_response);
 				}
+
+			// we still send a rejected promise if some other unknown error occurs, just to be safe.
 			} catch (error: any) {
-				if (error.response.status === 401 && !error.response.data.refreshable) {
-					return Promise.reject(error);
-				}
+				return Promise.reject(error);
 			}
 		}
 		return Promise.reject(error);
+	}
+);
+
+axiosInstance.interceptors.response.use(
+	(response: any) => {
+		const access_token : any = window.localStorage.getItem('t');
+
+		if (access_token && response.data.logged_in == false) {
+			response.config.headers['Authorization'] = access_token;
+
+			return axiosInstance.request(response.config);
+		}
+
+		return response;
+	},
+	(error: any) => {
+		return error;
 	}
 );
 
