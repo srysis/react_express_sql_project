@@ -64,23 +64,11 @@ function App() {
 		if (stored_web_token && stored_user_ID) {
 
 			axios.get(`/auth/verify/${stored_user_ID}`)
-			.then(() => {})
-			.catch((error: any) => {
-				if (!error.response.data.success && error.response.data.refreshable) {
-					axios.post(`/auth/refresh/${stored_user_ID}`)
-					.then((response: any) => {
-						if (response.data.success) {
-							const token = response.data.token;
-
-							window.localStorage.setItem('t', token);
-						} else {
-							logOff();
-						}
-					})
-					.catch(() => { logOff(); })
-				} else {
-					logOff();
-				}
+			.then(response => {
+				if (!response.data.success) logOff();
+			})
+			.catch(() => {
+				logOff();
 			});
 		} else {
 			logOff();
