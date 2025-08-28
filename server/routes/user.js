@@ -33,13 +33,13 @@ router.get('/:id', (request, response) => {
 					const decoded_token = jwt.verify(token, access_key);
 
 					if (decoded_token.id == data[0].user_id) {
-						response.json({success: true, message: "User found and client owns this user.", ownership: true, user_info: data[0]});
+						response.json({success: true, message: "User found and client owns this user.", ownership: true, user_info: data[0], logged_in: true});
 					} else {
-						response.json({success: true, message: "User found, but client does not own this user.", ownership: false, user_info: data[0]});
+						response.json({success: true, message: "User found, but client does not own this user.", ownership: false, user_info: data[0], logged_in: true});
 					}
 
 				} catch (error) {
-					response.json({success: true, message: "User found, but client does not own this user and is not logged in.", ownership: false, user_info: data[0]});
+					response.json({success: true, message: "User found, but client does not own this user and is not logged in.", ownership: false, user_info: data[0], logged_in: false});
 				}
 			} else {
 				response.json({success: false, message: 'No user found.', user_info: null});
