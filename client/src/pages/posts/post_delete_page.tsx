@@ -24,7 +24,7 @@ function PostDeletePage({USER_ID, setNotificationMessage, setNotificationType}: 
 
 	const [confirm_delete_action, setConfirmDeleteAction] = useState<boolean>(false);
 
-	const [user_credentials, setUserCredentials] = useState<{username: string, password: string} | {}>({});
+	const [user_credentials, setUserCredentials] = useState<{username: string, password: string}>({username: "", password: ""});
 
 	useEffect(() => {
 		axios.get(`/post/${post_id}`)
