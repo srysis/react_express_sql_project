@@ -61,7 +61,7 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 				navigate('/');
 			}
 		} catch (error: any) {
-			if (error.response.status === 404) {
+			if (error.status === 404) {
 				setLoginFailed(true);
 
 				const button = document.querySelector("button");
