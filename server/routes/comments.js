@@ -54,8 +54,11 @@ router.post('/:post_id/comments/add', (request, response) => {
 				response.status(401).json({success: false, message: "Passed token does not correspond to the passed user ID."});
 			}
 		} catch (error) {
-			console.log(error)
-			response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
+			if (error.name == "TokenExpiredError") {
+				response.status(401).json({success: false, message: "Passed token has been expired.", refreshable: true});
+			} else {
+				response.status(401).json({success: false, message: "Passed token is either invalid or modified.", refreshable: false});
+			}
 		}
 	} else {
 		response.status(401).json({success: false, message: "No authorization header passed."});
