@@ -63,7 +63,8 @@ function PostEditPage() {
 				navigate(`/post/${post_id}`);
 			}
 		} catch (error: any) {
-			console.error(error.response.data.message);
+			console.error(error);
+			navigate(`/post/${post_id}`);
 		}
 	}
 
