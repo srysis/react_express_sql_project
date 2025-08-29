@@ -159,7 +159,7 @@ function App() {
 						<Route path="/user/:id/create_post" element={<CreatePostPage USER_ID={stored_user_ID} logOff={logOff} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 						
 						<Route path="/post/:post_id/edit" element={<PostEditPage />} />
-						<Route path="/post/:post_id/delete" element={<PostDeletePage USER_ID={stored_user_ID} />} />
+						<Route path="/post/:post_id/delete" element={<PostDeletePage USER_ID={stored_user_ID} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 					</Route>
 
 				</Route>
