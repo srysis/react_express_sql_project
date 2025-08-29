@@ -66,7 +66,9 @@ function ProfileDeletePage({logOff}: props) {
 				navigate(`/user/${id}`);
 			}
 		} catch (error: any) {
-			console.error(error.response.data);
+			if (error?.status === 403) {
+				navigate(`/user/${id}`);
+			}
 		}
 	}
 
