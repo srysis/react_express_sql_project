@@ -25,7 +25,9 @@ function AddCommentField({post_id}: props) {
 				window.location.reload();
 			}
 		} catch (error: any) {
-			console.error(error.response.data.message);
+			if (error?.status === 401) {
+				window.location.reload();
+			}
 		}
 	}
 
