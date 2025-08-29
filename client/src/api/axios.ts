@@ -49,27 +49,10 @@ axiosInstance.interceptors.response.use(
 
 			// we still send a rejected promise if some other unknown error occurs, just to be safe.
 			} catch (error: any) {
-				return Promise.reject(error);
+				return Promise.reject(error.response);
 			}
 		}
-		return Promise.reject(error);
-	}
-);
-
-axiosInstance.interceptors.response.use(
-	(response: any) => {
-		const access_token : any = window.localStorage.getItem('t');
-
-		if (access_token && response.data.logged_in == false) {
-			response.config.headers['Authorization'] = access_token;
-
-			return axiosInstance.request(response.config);
-		}
-
-		return response;
-	},
-	(error: any) => {
-		return error;
+		return Promise.reject(error.response);
 	}
 );
 
