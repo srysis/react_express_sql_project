@@ -64,7 +64,7 @@ function App() {
 		if (stored_web_token && stored_user_ID) {
 
 			axios.get(`/auth/verify/${stored_user_ID}`)
-			.then(response => {
+			.then((response: any) => {
 				if (!response.data.success) logOff();
 			})
 			.catch(() => {
