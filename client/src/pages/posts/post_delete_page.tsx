@@ -25,9 +25,17 @@ function PostDeletePage({USER_ID}: props) {
 	const [user_credentials, setUserCredentials] = useState<{username: string, password: string} | {}>({});
 
 	useEffect(() => {
-		if (window.localStorage.getItem('id') !== USER_ID) {
-			navigate(`/`);
-		}
+		axios.get(`/post/${post_id}`)
+		.then((response: any) => {
+			if (response.data.post != null) { 
+				if (!response.data.post_ownership) navigate(`/`);
+			} else if (response.data.post == null) {
+				navigate(`/`);
+			}
+		})
+		.catch((error: any) => {
+			console.error(error);
+		})
 	}, []);
 
 	function onConfirmDeleteClickHandler(event: any) {
@@ -37,7 +45,7 @@ function PostDeletePage({USER_ID}: props) {
 				break;
 			case "N":
 				setConfirmDeleteAction(false);
-				navigate(`/user/${USER_ID}`);
+				navigate(`/post/${post_id}`);
 				break;
 		}
 	}
@@ -52,22 +60,29 @@ function PostDeletePage({USER_ID}: props) {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
-		try {
-			const response = await axios.delete(`/post/${post_id}/delete`, {
-				headers: REQUEST_HEADERS,
-				data: { 
-					user_credentials,
-					user_id: USER_ID
-				}
-			});
+		const button = document.querySelector("div.submit_container > button");
+		if (button) button.setAttribute("disabled", true.toString());
 
-			if (response.data.success) {
-				navigate('/');
-			} else if (!response.data.success) {
-				navigate(`/post/${post_id}`);
-			}
+		try {
+			const verify_access = await axios.get(`/auth/verify/${USER_ID}`);
+
+			if (verify_access.data.success) {
+				const response = await axios.delete(`/post/${post_id}/delete`, {
+					headers: REQUEST_HEADERS,
+					data: { 
+						user_credentials,
+						user_id: USER_ID
+					}
+				});
+
+				if (response.data.success) {
+					navigate('/');
+				} else if (!response.data.success) {
+					navigate(`/post/${post_id}`);
+				}
+			}			
 		} catch (error: any) {
-			if (error?.response.status === 403) {
+			if (error?.status === 403) {
 				navigate(`/post/${post_id}`);
 			}
 		}
