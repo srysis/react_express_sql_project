@@ -21,7 +21,11 @@ function checkPostOwner(request, response, next) {
 					response.locals.post_ownership = false;
 				}
 			} catch (error) {
-				response.locals.post_ownership = false;
+				if (error.name == "TokenExpiredError") {
+					return response.status(401).json({success: false, message: "Passed token has been expired.", refreshable: true});
+				} else {
+					response.locals.post_ownership = false;
+				}
 			}
 		} else {
 			response.locals.post_ownership = false;
