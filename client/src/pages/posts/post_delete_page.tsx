@@ -8,10 +8,12 @@ import "../../style/shared.css"
 import "../../style/post_page/post_delete_page.css"
 
 interface props {
-	USER_ID: string | number | null
+	USER_ID: string | number | null,
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
-function PostDeletePage({USER_ID}: props) {
+function PostDeletePage({USER_ID, setNotificationMessage, setNotificationType}: props) {
 	const REQUEST_HEADERS = {
 		'Content-Type': 'application/json'
 	}
@@ -60,6 +62,9 @@ function PostDeletePage({USER_ID}: props) {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setNotificationType("");
+		setNotificationMessage("");
+
 		const button = document.querySelector("div.submit_container > button");
 		if (button) button.setAttribute("disabled", true.toString());
 
@@ -84,6 +89,11 @@ function PostDeletePage({USER_ID}: props) {
 		} catch (error: any) {
 			if (error?.status === 403) {
 				navigate(`/post/${post_id}`);
+			} else if (error?.status === 404 || error?.status === 401) {
+				if (button) button.removeAttribute("disabled");
+
+				setNotificationType("error");
+				setNotificationMessage("Invaild credentials supplied.");
 			}
 		}
 	}
@@ -110,7 +120,7 @@ function PostDeletePage({USER_ID}: props) {
 							<input type="password" id="password" name="password" onChange={onChangeHandler} required />
 						</div>
 						<div className="submit_container">
-							<button>Confirm</button>
+							<button disabled={!user_credentials.username || !user_credentials.password}>Confirm</button>
 						</div>
 					</form>
 				</section>
