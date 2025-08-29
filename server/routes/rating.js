@@ -36,25 +36,20 @@ router.get('/post/:post_id/:id/check_if_rated', authenticator, (request, respons
 	const post_id = request.params.post_id;
 	const user_id = request.params.id;
 
-	const check_if_rating_exists_query = "SELECT * FROM forum_db.user_posts_ratings WHERE `post_id` = '" + post_id + "' AND `user_id` = '" + user_id + "'";
 
-	database.query(check_if_rating_exists_query, (error, data) => {
+	const check_if_rated_query = "SELECT * FROM `user_posts_ratings` WHERE `post_id` = '" + post_id + "' AND `user_id` = '" + user_id + "'";
+
+	database.query(check_if_rated_query, (error, data) => {
 		if (error) return response.status(500).json({success: false, message: "Something went wrong."});
 
 		if (data.length) {
-			const check_if_rated_query = "SELECT * FROM forum_db.user_posts_ratings WHERE `post_id` = '" + post_id + "' AND `user_id` = '" + user_id + "'";
-
-			database.query(check_if_rated_query, (error, data) => {
-				if (error) return response.status(500).json({success: false, message: "Something went wrong."});
-
-				if (data[0].like == 1) {
-					return response.json({liked: true, disliked: false});
-				} else if (data[0].dislike == 1) {
-					return response.json({liked: false, disliked: true});
-				} else {
-					return response.json({liked: false, disliked: false});
-				}
-			})
+			if (data[0].like == 1) {
+				return response.json({liked: true, disliked: false});
+			} else if (data[0].dislike == 1) {
+				return response.json({liked: false, disliked: true});
+			} else {
+				return response.json({liked: false, disliked: false});
+			}
 		} else {
 			return response.json({liked: false, disliked: false});
 		}
