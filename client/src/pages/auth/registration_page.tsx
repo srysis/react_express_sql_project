@@ -62,6 +62,7 @@ function RegistrationPage({isLoggedIn}: props) {
 
 	useEffect(() => {
 		setErrorMessage("");
+		setRegistrationFailed(false);
 	}, [username, password, matching_password])
 
 	function displayPassword(event: any) {
@@ -110,6 +111,13 @@ function RegistrationPage({isLoggedIn}: props) {
 
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
+		setRegistrationFailed(false);
+
+		const submit_button = document.querySelector("div.submit_container > button");
+		const clear_button = document.querySelector("div.clear_container > button");
+
+		if (submit_button) submit_button.setAttribute("disabled", true.toString());
+		if (clear_button) clear_button.setAttribute("disabled", true.toString());
 
 		if (!USER_REGEX.test(username) || !PWD_REGEX.test(password)) {
 			console.error("Missing credentials.");
@@ -129,14 +137,16 @@ function RegistrationPage({isLoggedIn}: props) {
 				}
 			}
 		} catch (error: any) {
-			if (error.response?.status === 409) {
-				setErrorMessage("Username was taken");
-			} else if (error.response) {
-				setErrorMessage("No response");
+			if (error?.status === 409) {
+				setErrorMessage("Username is taken");
+			} else if (!error.data) {
+				setErrorMessage("No response from the server");
 			} else {
 				setErrorMessage("Registration failed");
 			}
 
+			if (submit_button) submit_button.removeAttribute("disabled");
+			if (clear_button) clear_button.removeAttribute("disabled");
 			setRegistrationFailed(true);
 		}
 	}
