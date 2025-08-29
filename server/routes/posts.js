@@ -121,22 +121,23 @@ router.patch('/post/:post_id/edit', checkPostOwner, (request, response) => {
 
 router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
 	const token = request.headers['authorization'];
-	const requested_post_id = request.params.post_id;
-	const username = request.body.user_credentials.username;
-	const password = request.body.user_credentials.password;
-	const user_id = request.body.user_id;
 
-	const select_user_query = "SELECT * FROM `users` WHERE `username` = '" + username + "' AND `id` = " + user_id;
+	if (token) {
+		const requested_post_id = request.params.post_id;
+		const username = request.body.user_credentials.username;
+		const password = request.body.user_credentials.password;
+		const user_id = request.body.user_id;
 
-	database.query(select_user_query, (error, data) => {
-		if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+		const select_user_query = "SELECT * FROM `users` WHERE `username` = '" + username + "' AND `id` = " + user_id;
 
-		if (data.length) {
-			bcrypt.compare(password, data[0].password)
-			.then(result => {
-				if (result) {
-					if (response.locals.post_ownership) {
-						if (token) {
+		database.query(select_user_query, (error, data) => {
+			if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+
+			if (data.length) {
+				bcrypt.compare(password, data[0].password)
+				.then(result => {
+					if (result) {
+						if (response.locals.post_ownership) {
 							try {
 								const decoded_token = jwt.verify(token, access_key);
 
@@ -168,20 +169,22 @@ router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
 								response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
 							}
 						} else {
-							response.status(401).json({success: false, message: "No authorization header passed."});
+							response.status(403).json({success: false, message: "Client does not own this post."});
 						}
 					} else {
-						response.status(403).json({success: false, message: "Client does not own this post."});
+						response.status(401).json({success: false, message: "Invalid credentials supplied."});
 					}
-				}
-			})
-			.catch(error => {
-				response.status(401).json({success: false, message: "Invalid credentials supplied."});
-			})
-		} else {
-			response.status(404).json({success: false, message: "Invalid credentials supplied."});
-		}
-	})
+				})
+				.catch(error => {
+					response.status(401).json({success: false, message: "Invalid credentials supplied."});
+				})
+			} else {
+				response.status(404).json({success: false, message: "Invalid credentials supplied."});
+			}
+		})
+	} else {
+		return response.status(401).json({success: false, message: "No authorization header passed."});
+	}
 });
 
 module.exports = router;
