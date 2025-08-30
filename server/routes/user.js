@@ -248,7 +248,7 @@ router.delete('/:id/delete', authenticator, (request, response) => {
 				}
 			})
 		} else {
-			response.status(403).json({success: false, message: "Client attempted to delete a user that is not owned by the client."});
+			response.status(404).json({success: false, message: "Invalid credentials."});
 		}
 	})
 });
