@@ -8,10 +8,12 @@ import "../../style/shared.css"
 import "../../style/profile/profile_delete_page.css"
 
 interface props {
-	logOff: Function
+	logOff: Function,
+	setNotificationMessage: Function,
+	setNotificationType: Function
 }
 
-function ProfileDeletePage({logOff}: props) {
+function ProfileDeletePage({logOff, setNotificationMessage, setNotificationType}: props) {
 	const REQUEST_HEADERS : any = {
 		'Content-Type': 'application/json'
 	}
@@ -22,7 +24,7 @@ function ProfileDeletePage({logOff}: props) {
 
 	const [confirm_delete_action, setConfirmDeleteAction] = useState<boolean>(false);
 
-	const [user_credentials, setUserCredentials] = useState<{username: string, password: string} | {}>({});
+	const [user_credentials, setUserCredentials] = useState<{username: string, password: string}>({username: "", password: ""});
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
@@ -52,6 +54,12 @@ function ProfileDeletePage({logOff}: props) {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setNotificationType("");
+		setNotificationMessage("");
+
+		const button = document.querySelector("div.submit_container > button");
+		if (button) button.setAttribute("disabled", true.toString());
+
 		try {
 			const response = await axios.delete(`/user/${id}/delete`, {
 				headers: REQUEST_HEADERS,
@@ -66,8 +74,13 @@ function ProfileDeletePage({logOff}: props) {
 				navigate(`/user/${id}`);
 			}
 		} catch (error: any) {
-			if (error?.status === 403) {
-				navigate(`/user/${id}`);
+			if (error?.status === 401) {
+				window.location.reload();
+			} else if (error?.status === 404) {
+				if (button) button.removeAttribute("disabled");
+
+				setNotificationType("error");
+				setNotificationMessage("Invaild credentials supplied.");
 			}
 		}
 	}
@@ -97,7 +110,7 @@ function ProfileDeletePage({logOff}: props) {
 							<input type="password" id="password" name="password" onChange={onChangeHandler} required />
 						</div>
 						<div className="submit_container">
-							<button>Confirm</button>
+							<button disabled={!user_credentials.username || !user_credentials.password}>Confirm</button>
 						</div>
 					</form>
 				</section>
