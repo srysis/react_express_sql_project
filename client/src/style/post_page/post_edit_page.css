@@ -1,5 +1,9 @@
-input[readonly] {
-	background-color: rgb(9, 10, 11);
-	cursor: not-allowed;
-	user-select: none;
+section#edit_post {
+	margin-top: 20px;
+
+	input[readonly] {
+		background-color: rgb(9, 10, 11);
+		cursor: not-allowed;
+		user-select: none;
+	}
 }
