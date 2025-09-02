@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
+
 interface props {
 	USER_ID: string | number | null,
 	setNotificationMessage: Function,
@@ -56,6 +58,12 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 
 		if (!image_data) return;
 
+		const button = document.querySelector("div.button_container > button.submit");
+		if (button) { 
+			button.setAttribute("disabled", true.toString());
+			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
+		}
+
 		const image = document.querySelector("input#post_image") as HTMLInputElement;
 		const title = document.querySelector("input#post_title") as HTMLInputElement;
 
@@ -74,6 +82,9 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 			if (error.status == 400) {
 				setNotificationType("error");
 				setNotificationMessage("Only .png files are allowed!");
+
+				button.removeAttribute("disabled");
+				button.innerHTML = "Post";
 			}
 		}
 	}
@@ -100,7 +111,7 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 				</div>
 				
 				<div className="button_container">
-					<button type="submit" disabled={!image_data}>Post</button>
+					<button type="submit" className="submit" disabled={!image_data}>Post</button>
 				</div>
 			</form>
 			
