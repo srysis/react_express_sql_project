@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
 import error_icon from "../../assets/exclamation-mark-2.png"
 
 import "../../style/shared.css"
@@ -50,7 +51,10 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 		event.preventDefault();
 
 		const button = document.querySelector("button");
-		if (button) button.setAttribute("disabled", true.toString());
+		if (button) { 
+			button.setAttribute("disabled", true.toString());
+			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle}/></span>`;
+		}
 
 		try {
 			const response = await axios.post('/auth/login', user_credentials, { headers: REQUEST_HEADERS });
@@ -65,7 +69,10 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 				setLoginFailed(true);
 
 				const button = document.querySelector("button");
-				if (button) button.removeAttribute("disabled");
+				if (button) { 
+					button.removeAttribute("disabled");
+					button.innerHTML = "Login";
+				}
 
 				setErrorMessage("Invalid username or password.");
 			}
