@@ -8,6 +8,7 @@ import Rating from "../../components/post_page/Rating"
 import AddCommentField from "../../components/post_page/AddCommentField"
 import CommentsSection from "../../components/post_page/CommentsSection"
 
+import half_circle from "../../assets/half-circle.png"
 import dots_icon from "../../assets/v_dots-icon.png"
 
 import "../../style/post_page/post_page.css"
@@ -133,13 +134,23 @@ function PostPage({isLoggedIn, setNotificationMessage, setNotificationType}: pro
 					</div>
 				</section>
 				{isLoggedIn && <AddCommentField post_id={post_id} />}
-				{areCommentsRetrieved && <CommentsSection comments={comments} />}
+				{areCommentsRetrieved ? <CommentsSection comments={comments} /> : 
+					<section id="loading">
+						<div className="loading_spinner"><img src={half_circle}/></div>
+					</section>
+			}
 			</>
 		)
 	} else if (isPostRetrieved && post_content === null) {
 		return(
 			<section id="post" className="missing">
 				<h1>This post does not exist or was deleted by it's author.</h1>
+			</section>
+		)
+	} else {
+		return(
+			<section id="loading">
+				<div className="loading_spinner"><img src={half_circle}/></div>
 			</section>
 		)
 	}
