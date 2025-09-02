@@ -47,6 +47,12 @@ section#create_post {
 		div.textarea_container {
 			margin-block: 20px;
 		}
+
+		div.button_container {
+			button {
+				width: 10vw;
+			}
+		}
 	}
 
 	form#image_post_form {
@@ -84,6 +90,12 @@ section#create_post {
 
 			input[type="file"] {
 				display: none;
+			}
+		}
+
+		div.button_container {
+			button {
+				width: 10vw;
 			}
 		}
 	}
