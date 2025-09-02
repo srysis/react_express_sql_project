@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
+
 import eye_icon from "../../assets/eye-icon.png"
 import error_icon from "../../assets/exclamation-mark-2.png"
 
@@ -116,7 +118,10 @@ function RegistrationPage({isLoggedIn}: props) {
 		const submit_button = document.querySelector("div.submit_container > button");
 		const clear_button = document.querySelector("div.clear_container > button");
 
-		if (submit_button) submit_button.setAttribute("disabled", true.toString());
+		if (submit_button) { 
+			submit_button.setAttribute("disabled", true.toString());
+			submit_button.innerHTML = `<span class="loading_spinner"><img src=${half_circle}/></span>`;
+		}
 		if (clear_button) clear_button.setAttribute("disabled", true.toString());
 
 		if (!USER_REGEX.test(username) || !PWD_REGEX.test(password)) {
@@ -145,7 +150,10 @@ function RegistrationPage({isLoggedIn}: props) {
 				setErrorMessage("Registration failed");
 			}
 
-			if (submit_button) submit_button.removeAttribute("disabled");
+			if (submit_button) { 
+				submit_button.removeAttribute("disabled");
+				submit_button.innerHTML = "Register!";
+			}
 			if (clear_button) clear_button.removeAttribute("disabled");
 			setRegistrationFailed(true);
 		}
