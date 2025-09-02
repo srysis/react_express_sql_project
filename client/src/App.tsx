@@ -28,6 +28,7 @@ import PostDeletePage from './pages/posts/post_delete_page'
 import SearchPage from './pages/search_page'
 
 import "./style/shared.css"
+import "./style/loader.css"
 
 if (import.meta.env.PROD) {
 	disableReactDevTools();
