@@ -6,6 +6,7 @@ import axios from '../../api/axios'
 
 import PostByUser from "../../components/profile_page/PostByUser"
 
+import half_circle from "../../assets/half-circle.png"
 import options_icon from "../../assets/gear-icon.png"
 
 import "../../style/profile/profile_page.css"
@@ -115,6 +116,12 @@ function ProfilePage({isLoggedIn} : props) {
 						}
 					</div>
 				</div>
+				{
+					!arePostsRetrieved && 
+					<section id="loading">
+						<div className="loading_spinner"><img src={half_circle}/></div>
+					</section>
+				}
 				{ 
 					arePostsRetrieved && (user_posts != undefined) && 
 					<section id="posts_by_user">
@@ -123,7 +130,7 @@ function ProfilePage({isLoggedIn} : props) {
 					</section> 
 				}
 				{
-					user_posts == undefined &&
+					arePostsRetrieved && (user_posts == undefined) &&
 					<section id="posts_by_user">
 						<h2>Recent posts</h2>
 						<p style={{'padding': '20px 2vw', 'textAlign': 'left'}}>Seems like this user is not very active here...</p>
@@ -135,6 +142,12 @@ function ProfilePage({isLoggedIn} : props) {
 		return(
 			<section id="profile_page" className="missing">
 				<h1>This user does not exist or was deleted.</h1>
+			</section>
+		)
+	} else {
+		return(
+			<section id="loading">
+				<div className="loading_spinner"><img src={half_circle}/></div>
 			</section>
 		)
 	}
