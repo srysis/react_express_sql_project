@@ -2,9 +2,23 @@ section#loading {
 	margin-top: 20px;
 }
 
-div.loading_spinner {
+span.loading_spinner, div.loading_spinner {
 	display: inline-block;
-	animation: spinner .8s linear infinite;
+
+	img {
+		animation: spinner .8s linear infinite;
+	}
+	
+}
+
+span.loading_spinner {
+	width: 20px;
+	height: 20px;
+
+	img {
+		width: inherit;
+		height: inherit;
+	}
 }
 
 @keyframes spinner {
