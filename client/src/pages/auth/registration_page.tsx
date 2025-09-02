@@ -120,7 +120,7 @@ function RegistrationPage({isLoggedIn}: props) {
 
 		if (submit_button) { 
 			submit_button.setAttribute("disabled", true.toString());
-			submit_button.innerHTML = `<span class="loading_spinner"><img src=${half_circle}/></span>`;
+			submit_button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 		if (clear_button) clear_button.setAttribute("disabled", true.toString());
 

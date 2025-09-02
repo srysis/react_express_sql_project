@@ -53,7 +53,7 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 		const button = document.querySelector("button");
 		if (button) { 
 			button.setAttribute("disabled", true.toString());
-			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle}/></span>`;
+			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		try {
