@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
+
 interface props {
 	USER_ID: string | number | null,
 	logOff: Function
@@ -22,6 +24,12 @@ function RegularPostForm({USER_ID, logOff}: props) {
 
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
+
+		const button = document.querySelector("div.button_container > button.submit");
+		if (button) { 
+			button.setAttribute("disabled", true.toString());
+			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
+		}
 
 		try {
 			/*
@@ -60,7 +68,7 @@ function RegularPostForm({USER_ID, logOff}: props) {
 				<textarea id="post_content" rows={4} cols={50} placeholder="Share your opinions..." onChange={onChangeHandler} required></textarea>
 			</div>
 			<div className="button_container">
-				<button disabled={(!post_content.post_content || !post_content.post_title)}>Post</button>
+				<button className="submit" disabled={(!post_content.post_content || !post_content.post_title)}>Post</button>
 			</div>
 		</form>
 	)
