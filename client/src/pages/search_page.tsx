@@ -50,7 +50,7 @@ function SearchPage() {
 				setSearchResults(response.data.results);
 				setSearchFinished(true);
 
-				button.removeAttribute("disabled");
+				if (button) button.removeAttribute("disabled");
 			})
 			.catch((error: any) => {
 				console.error(error.response)

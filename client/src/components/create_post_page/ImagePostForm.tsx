@@ -83,8 +83,11 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 				setNotificationType("error");
 				setNotificationMessage("Only .png files are allowed!");
 
-				button.removeAttribute("disabled");
-				button.innerHTML = "Post";
+				if (button) {
+					button.removeAttribute("disabled");
+					button.innerHTML = "Post";
+				}
+				
 			}
 		}
 	}
