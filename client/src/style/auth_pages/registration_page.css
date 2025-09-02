@@ -1,4 +1,6 @@
 section#registration {
+	margin-top: 20px;
+	
 	form {
 		div.input_container {
 			label > span {
