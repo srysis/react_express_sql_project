@@ -20,6 +20,10 @@ section {
 	}
 }
 
+section#change_user_info {
+	margin-top: 20px;
+}
+
 section#upload_profile_picture {
 	padding-top: 40px;
 
