@@ -1,0 +1,17 @@
+section#loading {
+	margin-top: 20px;
+}
+
+div.loading_spinner {
+	display: inline-block;
+	animation: spinner .8s linear infinite;
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
