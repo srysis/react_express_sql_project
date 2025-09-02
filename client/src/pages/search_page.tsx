@@ -4,6 +4,8 @@ import axios from '../api/axios'
 
 import SearchResult from "../components/search_page/SearchResult"
 
+import half_circle from "../assets/half-circle.png"
+
 import "../style/search_page/search_page.css"
 import "../style/search_page/search_result.css"
 
@@ -17,6 +19,7 @@ type User = {
 function SearchPage() {
 	const [search_queue, setSearchQueue] = useState<string>("");
 	const [search_results, setSearchResults] = useState<Array<User>>([]);
+	const [search_in_progress, setSearchInProgress] = useState<boolean>(false);
 	const [isSearchFinished, setSearchFinished] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -30,6 +33,15 @@ function SearchPage() {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setSearchFinished(false);
+		setSearchInProgress(true);
+		setSearchResults([]);
+
+		const button = document.querySelector("div.button_container > button");
+		if (button) { 
+			button.setAttribute("disabled", true.toString());
+		}
+
 		setSearchQueue(() => {
 			const new_search_queue : string = event.target.elements[0].value;
 
@@ -37,6 +49,8 @@ function SearchPage() {
 			.then((response: any) => {
 				setSearchResults(response.data.results);
 				setSearchFinished(true);
+
+				button.removeAttribute("disabled");
 			})
 			.catch((error: any) => {
 				console.error(error.response)
@@ -69,6 +83,12 @@ function SearchPage() {
 						</>
 					}
 					{!search_results.length && <h3>No users found.</h3>}
+				</section>
+			}
+
+			{ search_in_progress && !search_results.length && 
+				<section id="loading">
+					<div className="loading_spinner"><img src={half_circle}/></div>
 				</section>
 			}
 
