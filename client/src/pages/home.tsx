@@ -93,7 +93,7 @@ function Home() {
 			<>
 				<section id="home">
 					<section id="posts">
-						{retrieved_posts.map((post, index) => <Post key={post.post_id} content={post} />)}
+						{retrieved_posts.map((post) => <Post key={post.post_id} content={post} />)}
 					</section>
 					<button type="button" id="load_more" onClick={increaseOffset} disabled={hasReachedEnd}>Load more posts</button>
 					{(isLoadingNewPosts && !hasReachedEnd) && <div className="loading_spinner"><img src={half_circle}/></div>}
