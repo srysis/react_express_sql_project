@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
+
 import "../../style/post_page/add_comment_field.css"
 
 interface props {
@@ -17,6 +19,12 @@ function AddCommentField({post_id}: props) {
 
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
+
+		const button = document.querySelector("div.button_container > button");
+		if (button) { 
+			button.setAttribute("disabled", true.toString());
+			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
+		}
 
 		try {
 			const response: any = await axios.post(`/post/${post_id}/comments/add`, {comment: comment, user_id: window.localStorage.getItem('id')});
