@@ -1,4 +1,6 @@
 section#create_post {
+	margin-top: 20px;
+
 	div#post_type_switch {
 		width: 92%;
 		display: flex;
