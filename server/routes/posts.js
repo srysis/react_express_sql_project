@@ -18,12 +18,12 @@ router.get('/posts', (request, response) => {
 	const limit = request.query.limit;
 	const offset = request.query.offset;
 
-	const get_all_posts_query = "SELECT `users_info`.`name` AS `post_author_name`, `users_info`.`profile_picture` AS `post_author_avatar`, `user_posts`.*, CAST(SUM(`user_posts_ratings`.`like`) AS SIGNED) AS likes_amount, " +
+	const get_all_posts_within_limit_query = "SELECT `users_info`.`name` AS `post_author_name`, `users_info`.`profile_picture` AS `post_author_avatar`, `user_posts`.*, CAST(SUM(`user_posts_ratings`.`like`) AS SIGNED) AS likes_amount, " +
 								"CAST(SUM(`user_posts_ratings`.`dislike`) AS SIGNED) AS dislikes_amount FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " + 
 								"INNER JOIN `user_posts_ratings` ON `user_posts`.`post_id` = `user_posts_ratings`.`post_id` GROUP BY `user_posts`.`post_id` " + 
 								"ORDER BY `user_posts`.`post_date` DESC LIMIT " + limit + " OFFSET " + offset;
 
-	database.query(get_all_posts_query, (error, data) => {
+	database.query(get_all_posts_within_limit_query, (error, data) => {
 		if (error) return response.json(error);
 
 		if (data.length) {
