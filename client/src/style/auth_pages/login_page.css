@@ -1,4 +1,6 @@
 section#login {
+	margin-top: 20px;
+
 	form {
 		div.input_container:nth-child(even) {
 			margin-bottom: 0;
@@ -6,8 +8,9 @@ section#login {
 
 		div.submit_container {
 			button {
+				width: 20%;
 				margin-inline: 25px;
-				padding: 20px 3vw;
+				padding: 20px 2vw;
 				background-color: var(--button-color);
 				color: #fff;
 				font-family: "Open Sans", sans-serif;
