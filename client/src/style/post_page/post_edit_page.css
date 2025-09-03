@@ -6,4 +6,10 @@ section#edit_post {
 		cursor: not-allowed;
 		user-select: none;
 	}
+
+	div.button_container {
+		button {
+			width: 20%;
+		}
+	}
 }
