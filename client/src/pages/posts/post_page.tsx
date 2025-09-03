@@ -124,7 +124,7 @@ function PostPage({DEVICE_TYPE, isLoggedIn, setNotificationMessage, setNotificat
 								</div>
 							</div>
 						</div>
-						{post_ownership && 
+						{post_ownership && (DEVICE_TYPE === "desktop") && 
 							<div className="options_container">
 								<div className="icon_container" title="Post options" 
 									 onClick={() => {
