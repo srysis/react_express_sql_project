@@ -1,9 +1,10 @@
 section#comments {
 	margin-top: 40px;
+	background-color: #000;
 
 	article.comment {
 		display: flex;
-		border: 2px solid #000;
+		margin: 10px 0;
 		text-align: left;
 		background-color: #111;
 
@@ -58,6 +59,14 @@ section#comments {
 				font-size: 1.2em;
 			}
 		}
+	}
+
+	article.comment:first-child {
+		margin-top: 0;
+	}
+
+	article.comment:last-child {
+		margin-bottom: 0;
 	}
 }
 
