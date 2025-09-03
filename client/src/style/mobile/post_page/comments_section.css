@@ -1,0 +1,62 @@
+@media screen and (max-width: 550px) {
+	section#comments {
+		margin-top: 10px;
+
+		article.comment {
+			flex-direction: column;
+
+			div.comment_info, div.comment_content {
+				width: 100%;
+				align-self: auto;
+			}
+
+			div.comment_info {
+				display: flex;
+				align-items: center;
+
+				div.image_container {
+					width: 40px;
+					height: 40px;
+					min-width: 40px;
+					min-height: 40px;
+					margin: 5px;
+					margin-right: 10px;
+
+					img {
+						border: 3px solid black;
+						object-position: 50% 50%;
+					}
+				}
+
+				div.author {
+					display: inline;
+
+					p {
+						margin-bottom: 0;
+					}
+
+					p:after {
+						content: '•';
+						margin-inline: 5px;
+					}
+				}
+			}
+
+			div.comment_content {
+				padding: 15px 7px;
+
+				p {
+					font-size: 1em;
+				}
+			}
+		}
+	}
+
+	section#comments.empty {
+		padding: 20px 3vw;
+
+		p {
+			font-size: 1.2em;
+		}
+	}
+}
