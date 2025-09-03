@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
+
 import "../../style/shared.css"
 import "../../style/post_page/post_delete_page.css"
 
@@ -66,7 +68,10 @@ function PostDeletePage({USER_ID, setNotificationMessage, setNotificationType}: 
 		setNotificationMessage("");
 
 		const button = document.querySelector("div.submit_container > button");
-		if (button) button.setAttribute("disabled", true.toString());
+		if (button) { 
+			button.setAttribute("disabled", true.toString());
+			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
+		}
 
 		try {
 			const verify_access = await axios.get(`/auth/verify/${USER_ID}`);
@@ -90,7 +95,10 @@ function PostDeletePage({USER_ID, setNotificationMessage, setNotificationType}: 
 			if (error?.status === 403) {
 				navigate(`/post/${post_id}`);
 			} else if (error?.status === 404 || error?.status === 401) {
-				if (button) button.removeAttribute("disabled");
+				if (button) {
+					button.removeAttribute("disabled");
+					button.innerHTML = "Confirm";
+				}
 
 				setNotificationType("error");
 				setNotificationMessage("Invaild credentials supplied.");

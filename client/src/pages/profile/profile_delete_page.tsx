@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
+
 import "../../style/shared.css"
 import "../../style/profile/profile_delete_page.css"
 
@@ -58,7 +60,10 @@ function ProfileDeletePage({logOff, setNotificationMessage, setNotificationType}
 		setNotificationMessage("");
 
 		const button = document.querySelector("div.submit_container > button");
-		if (button) button.setAttribute("disabled", true.toString());
+		if (button) { 
+			button.setAttribute("disabled", true.toString());
+			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
+		}
 
 		try {
 			const response = await axios.delete(`/user/${id}/delete`, {
@@ -77,7 +82,11 @@ function ProfileDeletePage({logOff, setNotificationMessage, setNotificationType}
 			if (error?.status === 401) {
 				window.location.reload();
 			} else if (error?.status === 404) {
-				if (button) button.removeAttribute("disabled");
+
+				if (button) {
+					button.removeAttribute("disabled");
+					button.innerHTML = "Confirm";
+				}
 
 				setNotificationType("error");
 				setNotificationMessage("Invaild credentials supplied.");
