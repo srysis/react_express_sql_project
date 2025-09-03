@@ -146,7 +146,7 @@ function App() {
 
 	const [DEVICE_TYPE, setDeviceType] = useState<string>(initial_device_type);
 
-	window.addEventListener("resize", (event) => {
+	window.addEventListener("resize", () => {
 		if (window.innerWidth > 500) {
 			setDeviceType("desktop");
 		} else {
