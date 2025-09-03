@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
+
 interface props {
 	USER_ID: string | undefined,
 	defaultUserData: {
@@ -56,22 +58,44 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		const apply_button = document.querySelector("section#upload_profile_picture > form > div.button_container > button[type='submit']");
+		const discard_button = document.querySelector("section#upload_profile_picture > form > div.button_container > button[type='button']");
+
+		if (apply_button) { 
+			apply_button.setAttribute("disabled", true.toString());
+			apply_button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
+		}
+
+		if (discard_button) {
+			discard_button.setAttribute("disabled", true.toString());
+		}
+
 		try {
 			const response = await axios.post(`/user/${USER_ID}/upload_profile_picture`, image_data);
 
 			if (response.data.success) {
-				const button = document.querySelector("button");
-				if (button) button.setAttribute("disabled", "true");
-				
 				setImageData(null);
 
+				if (apply_button) {
+					apply_button.innerHTML = "Apply changes";
+				}
+
 				setNotificationType("success");
-				setNotificationMessage("Your avatar has been changed.")
+				setNotificationMessage("Your avatar has been changed.");
 			}
 		} catch (error: any) {
 			if (error.status == 400) {
 				setNotificationType("error");
 				setNotificationMessage("Only .png files are allowed!");
+
+				if (apply_button) {
+					apply_button.removeAttribute("disabled");
+					apply_button.innerHTML = "Apply changes";
+				}
+
+				if (discard_button) {
+					discard_button.removeAttribute("disabled");
+				}
 			}
 		}
 	}
