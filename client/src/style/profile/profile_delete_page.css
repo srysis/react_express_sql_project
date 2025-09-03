@@ -32,6 +32,7 @@ section#authorize_delete {
 
 		form {
 			button {
+				width: 15%;
 				margin-top: 0;
 			}
 		}
