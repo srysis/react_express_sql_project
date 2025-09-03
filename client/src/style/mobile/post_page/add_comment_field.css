@@ -1,0 +1,20 @@
+@media screen and (max-width: 550px) {
+	section#add_comment {
+		padding-block: 10px;
+
+		form {
+			div.input_container {
+				margin-bottom: 10px;
+
+				textarea {
+					padding: 20px;
+				}
+			}
+
+			div.button_container {
+				left: 52.8vw;
+				width: 45%;
+			}
+		}
+	}
+}
