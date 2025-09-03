@@ -20,6 +20,7 @@ section#delete_post {
 
 		form {
 			button {
+				width: 15%;
 				margin-top: 0;
 			}
 		}
