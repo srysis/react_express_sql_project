@@ -1,0 +1,24 @@
+@media screen and (max-width: 550px) {
+	section#registration {
+		form {
+			div.input_container {
+				div#username_note, div#password_note, div#matching_password_note {
+					width: 96%;
+					padding-inline: 15px;
+				}
+			}
+
+			div.input_container > div.container {
+				button {
+					right: 7.5vw;
+				}
+			}
+
+			div.button_container {
+				button {
+					width: 40.4vw;
+				}
+			}
+		}
+	}
+}

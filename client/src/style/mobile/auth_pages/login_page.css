@@ -1,0 +1,15 @@
+@media screen and (max-width: 550px) {
+	section#login {
+		form {
+			div.submit_container {
+				button {
+					width: 50%;
+				}
+			}
+		}
+
+		div#register {
+			font-size: 1.2em;
+		}
+	}
+}
