@@ -6,6 +6,7 @@
 
 		div.post_author, div.wrapper {
 			width: 100%;
+			padding-inline: 5px;
 		}
 
 		div.post_author, div.post_content {
@@ -46,7 +47,8 @@
 		}
 
 		div.wrapper {
-			padding: 6px 7px;
+			padding-inline: 13px;
+			padding-block: 4px;
 
 			div.post_content {
 				width: 100%;
