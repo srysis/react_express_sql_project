@@ -142,6 +142,18 @@ function App() {
 		}
 	}
 
+	const initial_device_type = window.innerWidth < 550 ? "mobile" : "desktop";
+
+	const [DEVICE_TYPE, setDeviceType] = useState<string>(initial_device_type);
+
+	window.addEventListener("resize", (event) => {
+		if (window.innerWidth > 500) {
+			setDeviceType("desktop");
+		} else {
+			setDeviceType("mobile");
+		}
+	})
+
 	return (
 		<BrowserRouter basename="/">
 			<Routes>
@@ -151,7 +163,7 @@ function App() {
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
 					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} />} />
-					<Route path="/post/:post_id" element={<PostPage isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
+					<Route path="/post/:post_id" element={<PostPage DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/options" element={<ProfileOptionsPage isAdmin={hasAdminRights} />} />
