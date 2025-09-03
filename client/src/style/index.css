@@ -83,3 +83,9 @@ main {
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+@media screen and (max-width: 550px) {
+	main {
+		padding: 10px 1vw;
+	}
+}
