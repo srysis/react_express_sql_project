@@ -47,12 +47,8 @@ function RegularPostForm({USER_ID, logOff}: props) {
 				}
 			}
 		} catch (error: any) {
-			console.log(error);
-
 			if (!error.response.data.success) {
 				logOff();
-
-				console.error(error.response.data.message);
 			}
 		}
 	}
