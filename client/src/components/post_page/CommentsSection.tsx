@@ -1,6 +1,7 @@
 import Comment from "./Comment"
 
 import "../../style/post_page/comments_section.css"
+import "../../style/mobile/post_page/comments_section.css"
 
 interface props {
 	comments : {
