@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
+
 interface props {
 	USER_ID: string | undefined,
 	defaultUserData: UserData,
@@ -49,23 +51,49 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, s
 		setWasNewUserDataChanged(false);
 
 		(document.querySelector("input[id='username']") as HTMLInputElement).value = defaultUserData.name;
-		(document.querySelector("input[id='description']") as HTMLInputElement).value = defaultUserData.description;
+		(document.querySelector("textarea[id='description']") as HTMLInputElement).value = defaultUserData.description;
 	}
 
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
+
+		const apply_button = document.querySelector("section#change_user_info > form > div.button_container > button[type='submit']");
+		const discard_button = document.querySelector("section#change_user_info > form > div.button_container > button[type='button']");
+
+		if (apply_button) { 
+			apply_button.setAttribute("disabled", true.toString());
+			apply_button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
+		}
+
+		if (discard_button) {
+			discard_button.setAttribute("disabled", true.toString());
+		}
 
 		try {
 			const response = await axios.patch(`/user/${USER_ID}/edit`, {username: newUsername, description: newDescription});
 
 			if (response.data.success) {
 				setNotificationType("success");
-				setNotificationMessage("Changes have been applied.")
+				setNotificationMessage("Changes have been applied.");
 
 				setWasNewUserDataChanged(false);
+
+				if (apply_button) {
+					apply_button.innerHTML = "Apply changes";
+				}
 			}
 		} catch (error: any) {
-			console.error(error.response.data.message);
+			const apply_button = document.querySelector("section#change_user_info > form > div.button_container > button[type='submit']");
+			const discard_button = document.querySelector("section#change_user_info > form > div.button_container > button[type='button']");
+
+			if (apply_button) {
+				apply_button.removeAttribute("disabled");
+				apply_button.innerHTML = "Apply changes";
+			}
+
+			if (discard_button) {
+				discard_button.removeAttribute("disabled");
+			}
 		}
 	}
 
