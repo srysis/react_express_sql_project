@@ -13,7 +13,10 @@ import dots_icon from "../../assets/v_dots-icon.png"
 
 import "../../style/post_page/post_page.css"
 
+import "../../style/mobile/post_page/post_page.css"
+
 interface props {
+	DEVICE_TYPE: string,
 	isLoggedIn: boolean,
 	setNotificationMessage: Function,
 	setNotificationType: Function
@@ -45,7 +48,7 @@ type Comment = {
 }
 
 
-function PostPage({isLoggedIn, setNotificationMessage, setNotificationType}: props) {
+function PostPage({DEVICE_TYPE, isLoggedIn, setNotificationMessage, setNotificationType}: props) {
 	const { post_id } = useParams();
 
 	const [post_content, setPostContent] = useState<Post | null>(null);
@@ -91,18 +94,23 @@ function PostPage({isLoggedIn, setNotificationMessage, setNotificationType}: pro
 			<>
 				<section id="post" className={post_content.post_type === "image" ? "image" : "text"}>
 					<div className="post_author">
-						<p className="header">Author:</p>
 						<div className="image_container">
 							<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${post_content.post_author_avatar}`} />
 						</div>
+						<span className="name">
 						{post_content.post_author_name !== null &&
 							<Link to={`/user/${post_content.post_author}`}>{post_content.post_author_name}</Link>
 						}
 						{post_content.post_author_name === null &&
 							<p style={{"fontStyle": "italic"}}>[deleted]</p>
 						}
-						<p className="date" title={post_content.post_date.split("T")[0]}>Posted: {date_difference}</p>
-						<Rating post_id={post_content.post_id} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} />
+						</span>
+						<span>
+							<p className="date" title={post_content.post_date.split("T")[0]}>{date_difference}</p>
+						</span>
+						{ DEVICE_TYPE === "desktop" && 
+							<Rating post_id={post_content.post_id} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} /> 
+						}
 					</div>
 					<div className="wrapper">
 						<div className="post_content">
