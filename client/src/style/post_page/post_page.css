@@ -33,13 +33,12 @@ section#post {
 			}
 		}
 
-		p.header {
-			font-size: 1.2em;
-		}
-
-		a {
+		span {
 			margin-bottom: 10px;
-			font-weight: bold;
+
+			a {
+				font-weight: bold;
+			}
 		}
 	}
 
