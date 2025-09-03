@@ -14,6 +14,9 @@ import incorrect_icon from "../../assets/incorrect.png"
 import "../../style/shared.css"
 import "../../style/auth_pages/registration_page.css"
 
+import "../../style/mobile/shared.css"
+import "../../style/mobile/auth_pages/registration_page.css"
+
 const USER_REGEX : RegExp = /^[a-zA-Z][a-zA-Z-_]{3,23}$/;
 const PWD_REGEX : RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
 

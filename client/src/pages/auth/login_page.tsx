@@ -10,6 +10,9 @@ import error_icon from "../../assets/exclamation-mark-2.png"
 import "../../style/shared.css"
 import "../../style/auth_pages/login_page.css"
 
+import "../../style/mobile/shared.css"
+import "../../style/mobile/auth_pages/login_page.css"
+
 interface props {
 	isLoggedIn: boolean,
 	logIn: Function
