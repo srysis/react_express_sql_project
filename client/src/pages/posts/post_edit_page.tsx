@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import half_circle from "../../assets/half-circle.png"
+
 import "../../style/post_page/post_edit_page.css"
 
 type Post = {
@@ -56,6 +58,12 @@ function PostEditPage() {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		const button = document.querySelector("div.button_container > button");
+		if (button) { 
+			button.setAttribute("disabled", true.toString());
+			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
+		}
+
 		try {
 			const response = await axios.patch(`/post/${post_id}/edit`, {new_post_content: new_post_content});
 
@@ -63,7 +71,6 @@ function PostEditPage() {
 				navigate(`/post/${post_id}`);
 			}
 		} catch (error: any) {
-			console.error(error);
 			navigate(`/post/${post_id}`);
 		}
 	}
