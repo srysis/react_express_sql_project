@@ -8,6 +8,9 @@ import half_circle from "../assets/half-circle.png"
 import "../style/home/home.css"
 import "../style/home/posts.css"
 
+import "../style/mobile/home/home.css"
+import "../style/mobile/home/posts.css"
+
 type Post = {
 	date_difference: string,
 	post_author: number,
