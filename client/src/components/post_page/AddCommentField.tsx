@@ -5,6 +5,7 @@ import axios from '../../api/axios'
 import half_circle from "../../assets/half-circle.png"
 
 import "../../style/post_page/add_comment_field.css"
+import "../../style/mobile/post_page/add_comment_field.css"
 
 interface props {
 	post_id: string | undefined
