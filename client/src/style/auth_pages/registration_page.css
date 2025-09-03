@@ -20,6 +20,7 @@ section#registration {
 				padding: 10px 1vw;
 				background-color: #000;
 				text-align: left;
+				line-height: 1.3em;
 
 				h3, p {
 					margin-block: .3em;
