@@ -1,0 +1,51 @@
+@media screen and (max-width: 550px) {
+	section#posts {
+		margin-top: 0;
+
+		article.post {
+			div.link_container {
+				padding: 5px 2vw;
+
+				div.post_author {
+					padding-inline: 0;
+
+					div.image_container {
+						margin-block: 5px;
+
+						a > img {
+							object-position: 50% 50%;
+						}
+					}
+				}
+
+				div.post_content {
+					padding-block: 10px;
+
+					div.title > h1 {
+						font-size: 1.4em;
+					}
+
+					div.content {
+						margin-top: 10px;
+						font-size: 0.9em;
+
+						div.text_container {
+							-webkit-line-clamp: 4;
+							-moz-line-clamp: 4;
+							-ms-line-clamp: 4;
+						}
+
+						div.image_container {
+							max-width: 100%;
+							max-height: 40vh;
+
+							img {
+								margin: auto;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
