@@ -20,6 +20,16 @@ section {
 	}
 }
 
+section {
+	form {
+		div.button_container {
+			button {
+				width: 20%;
+			}
+		}
+	}
+}
+
 section#change_user_info {
 	margin-top: 20px;
 }
