@@ -1,0 +1,36 @@
+@media screen and (max-width: 550px) {
+	section#posts_by_user {
+		margin-top: 10px;
+		padding-block: 5px;
+
+		h2 {
+			padding-block: 10px;
+		}
+
+		article.post {
+			div.link_container {
+				div.post_content {
+					div.content {
+						padding-block: 10px;
+
+						div.text_container {
+							-webkit-line-clamp: 5;
+							-moz-line-clamp: 5;
+							-ms-line-clamp: 5;
+						}
+
+						div.image_container {
+							max-width: 100%;
+							max-height: 40vh;
+
+							img {
+								margin: auto;
+							}
+						}
+					}
+				}
+				
+			}
+		}
+	}
+}
