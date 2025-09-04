@@ -13,6 +13,7 @@ import "../../style/profile/profile_page.css"
 import "../../style/profile/posts.css"
 
 import "../../style/mobile/profile/profile_page.css"
+import "../../style/mobile/profile/posts.css"
 
 interface props {
 	DEVICE_TYPE: string,
