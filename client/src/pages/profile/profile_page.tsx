@@ -12,7 +12,10 @@ import options_icon from "../../assets/gear-icon.png"
 import "../../style/profile/profile_page.css"
 import "../../style/profile/posts.css"
 
+import "../../style/mobile/profile/profile_page.css"
+
 interface props {
+	DEVICE_TYPE: string,
 	isLoggedIn: boolean
 }
 
@@ -35,7 +38,7 @@ type Post = {
 	post_type: string
 }
 
-function ProfilePage({isLoggedIn} : props) {
+function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 	const { id } = useParams();
 
 	const [hasUserData, setHasUserData] = useState<boolean>(false);
@@ -93,35 +96,71 @@ function ProfilePage({isLoggedIn} : props) {
 	if (hasUserData && userData !== null) {
 		return(
 			<section id="profile_page">
-				<div className="flex_wrapper">
-					<div id="profile_picture">
-						<div className="profile_picture_container">
-							<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${userData.profile_picture}`} />
+
+				{ 
+					DEVICE_TYPE === "desktop" &&
+					<div className="flex_wrapper">
+						<div id="profile_picture">
+							<div className="profile_picture_container">
+								<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${userData.profile_picture}`} />
+							</div>
+						</div>
+						<div id="profile_info">
+							<div id="name">
+								<h1>{userData.name}</h1>
+							</div>
+							<div id="description">
+								<p>{userData.description ? userData.description : "No description."}</p>
+							</div>
 						</div>
 					</div>
-					<div id="profile_info">
-						<div id="name">
-							<h1>{userData.name}</h1>
+				}
+
+				{
+					DEVICE_TYPE === "mobile" &&
+					<div className="wrapper">
+						<div id="profile_picture_and_name">
+							<div className="picture_container">
+								<div className="profile_picture_container">
+									<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${userData.profile_picture}`} />
+								</div>
+							</div>
+							<div id="name">
+								<h1>{userData.name}</h1>
+							</div>
 						</div>
-						<div id="description">
-							<p>{userData.description ? userData.description : "No description."}</p>
+						<div id="profile_info">
+							<div id="description">
+								<p>{userData.description ? userData.description : "No description."}</p>
+							</div>
 						</div>
-					</div>
-					<div id="options">
-						{ 
-							ownership && 
-							<div title="Profile options">
-								<Link to={`/user/${id}/options`}><img src={options_icon} /></Link>
+						{
+							ownership && (DEVICE_TYPE === "mobile") &&
+							<div id="options">
+								<div title="Profile options">
+									<Link to={`/user/${id}/options`}>Profile options</Link>
+								</div>
 							</div>
 						}
 					</div>
-				</div>
+				}
+
+				{
+					ownership && (DEVICE_TYPE === "desktop") &&
+					<div id="options">
+						<div title="Profile options">
+							<Link to={`/user/${id}/options`}><img src={options_icon} /></Link>
+						</div>
+					</div>
+				}
+				
 				{
 					!arePostsRetrieved && 
 					<section id="loading">
 						<div className="loading_spinner"><img src={half_circle}/></div>
 					</section>
 				}
+
 				{ 
 					arePostsRetrieved && (user_posts != undefined) && 
 					<section id="posts_by_user">
@@ -129,6 +168,7 @@ function ProfilePage({isLoggedIn} : props) {
 						{user_posts.map((post, index) => <PostByUser key={index} content={post} />)}
 					</section> 
 				}
+
 				{
 					arePostsRetrieved && (user_posts == undefined) &&
 					<section id="posts_by_user">
@@ -136,6 +176,7 @@ function ProfilePage({isLoggedIn} : props) {
 						<p style={{'padding': '20px 2vw', 'textAlign': 'left'}}>Seems like this user is not very active here...</p>
 					</section> 
 				}
+				
 			</section>
 		)
 	} else if (hasUserData && userData === null) {
