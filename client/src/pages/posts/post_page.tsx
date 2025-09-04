@@ -105,11 +105,26 @@ function PostPage({DEVICE_TYPE, isLoggedIn, setNotificationMessage, setNotificat
 							<p style={{"fontStyle": "italic"}}>[deleted]</p>
 						}
 						</span>
-						<span>
+						<span className="date_container">
 							<p className="date" title={post_content.post_date.split("T")[0]}>{date_difference}</p>
 						</span>
 						{ DEVICE_TYPE === "desktop" && 
 							<Rating post_id={post_content.post_id} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} /> 
+						}
+						{post_ownership && (DEVICE_TYPE === "mobile") && 
+							<div className="options_container">
+								<div className="icon_container" title="Post options" 
+									 onClick={() => {
+									 	const element = document.querySelector("div.list_container");
+										if (element) element.classList.toggle("active");
+									 }}>
+									<img src={dots_icon} />
+								</div>
+								<div className="list_container">
+									{post_content.is_editable === 1 && <Link to={`/post/${post_id}/edit`}>Edit</Link>}
+									<Link to={`/post/${post_id}/delete`}>Delete</Link>
+								</div>
+							</div>
 						}
 					</div>
 					<div className="wrapper">
