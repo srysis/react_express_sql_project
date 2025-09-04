@@ -123,6 +123,9 @@ function PostPage({DEVICE_TYPE, isLoggedIn, setNotificationMessage, setNotificat
 									{post_content.post_type === "image" && <img src={`${import.meta.env.VITE_POST_IMAGE_STORAGE}${post_content.post_content}`} />}
 								</div>
 							</div>
+							{ DEVICE_TYPE === "mobile" && 
+								<Rating post_id={post_content.post_id} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} /> 
+							}
 						</div>
 						{post_ownership && (DEVICE_TYPE === "desktop") && 
 							<div className="options_container">
