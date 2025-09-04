@@ -162,7 +162,7 @@ function App() {
 					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} logIn={logIn} />} />
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
-					<Route path="/user/:id" element={<ProfilePage isLoggedIn={isLoggedIn} />} />
+					<Route path="/user/:id" element={<ProfilePage DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} />} />
 					<Route path="/post/:post_id" element={<PostPage DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
