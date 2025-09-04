@@ -93,7 +93,7 @@ function PostPage({DEVICE_TYPE, isLoggedIn, setNotificationMessage, setNotificat
 		.catch((error: any) => console.error(error.response.data))
 	}, [post_id])
 
-	function checkElementClasses(event) {
+	function checkElementClasses(event: any) {
 		if (!event.target.classList.contains("icon_container") && (event.target.tagName != "IMG")) {
 			const element = document.querySelector("div.list_container");
 			if (element) element.classList.remove("active");
