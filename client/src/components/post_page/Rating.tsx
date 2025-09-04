@@ -7,6 +7,8 @@ import DislikePostButton from "./DislikePostButton"
 
 import "../../style/post_page/rating.css"
 
+import "../../style/mobile/post_page/rating.css"
+
 interface props {
 	post_id: number,
 	isLoggedIn: boolean,
