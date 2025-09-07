@@ -26,13 +26,21 @@ function PostDeletePage({USER_ID, setNotificationMessage, setNotificationType}: 
 
 	const [confirm_delete_action, setConfirmDeleteAction] = useState<boolean>(false);
 
+	const [post_ownership, setPostOwnership] = useState<boolean>(false);
+	const [isPostRetrieved, setIsPostRetrieved] = useState<boolean>(false);
+
 	const [user_credentials, setUserCredentials] = useState<{username: string, password: string}>({username: "", password: ""});
 
 	useEffect(() => {
 		axios.get(`/post/${post_id}`)
 		.then((response: any) => {
 			if (response.data.post != null) { 
-				if (!response.data.post_ownership) navigate(`/`);
+				if (!response.data.post_ownership) { 
+					navigate(`/`); 
+				} else {
+					setPostOwnership(true);
+					setIsPostRetrieved(true);
+				}
 			} else if (response.data.post == null) {
 				navigate(`/`);
 			}
@@ -106,35 +114,43 @@ function PostDeletePage({USER_ID, setNotificationMessage, setNotificationType}: 
 		}
 	}
 
-	return(
-		<section id="delete_post">
-			<section id="first_check">
-				<p id="question">Are you sure?</p>
-				<div id="confirm_delete">
-					<button type="button" onClick={onConfirmDeleteClickHandler} value="Y" disabled={confirm_delete_action}>Yes</button>
-					<button type="button" onClick={onConfirmDeleteClickHandler} value="N" disabled={confirm_delete_action}>No</button>
-				</div>
-			</section>
-			{confirm_delete_action && 
-				<section id="second_check">
-					<h2>Enter your credentials to confirm your identity.</h2>
-					<form onSubmit={onSubmitHandler}>
-						<div className="input_container">
-							<label htmlFor="username"><span>Username</span></label>
-							<input type="text" id="username" name="username" autoComplete="off" onChange={onChangeHandler} required />
-						</div>
-						<div className="input_container">
-							<label htmlFor="password"><span>Password</span></label>
-							<input type="password" id="password" name="password" onChange={onChangeHandler} required />
-						</div>
-						<div className="submit_container">
-							<button disabled={!user_credentials.username || !user_credentials.password}>Confirm</button>
-						</div>
-					</form>
+	if (post_ownership && isPostRetrieved) {
+		return(
+			<section id="delete_post">
+				<section id="first_check">
+					<p id="question">Are you sure?</p>
+					<div id="confirm_delete">
+						<button type="button" onClick={onConfirmDeleteClickHandler} value="Y" disabled={confirm_delete_action}>Yes</button>
+						<button type="button" onClick={onConfirmDeleteClickHandler} value="N" disabled={confirm_delete_action}>No</button>
+					</div>
 				</section>
-			}
-		</section>
-	)
+				{confirm_delete_action && 
+					<section id="second_check">
+						<h2>Enter your credentials to confirm your identity.</h2>
+						<form onSubmit={onSubmitHandler}>
+							<div className="input_container">
+								<label htmlFor="username"><span>Username</span></label>
+								<input type="text" id="username" name="username" autoComplete="off" onChange={onChangeHandler} required />
+							</div>
+							<div className="input_container">
+								<label htmlFor="password"><span>Password</span></label>
+								<input type="password" id="password" name="password" onChange={onChangeHandler} required />
+							</div>
+							<div className="submit_container">
+								<button disabled={!user_credentials.username || !user_credentials.password}>Confirm</button>
+							</div>
+						</form>
+					</section>
+				}
+			</section>
+		)
+	} else {
+		return(
+			<section id="loading">
+				<div className="loading_spinner"><img src={half_circle}/></div>
+			</section>
+		)
+	}
 }
 
 export default PostDeletePage;
