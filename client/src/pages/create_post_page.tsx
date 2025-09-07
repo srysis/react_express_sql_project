@@ -49,7 +49,7 @@ function CreatePostPage({USER_ID, logOff, setNotificationMessage, setNotificatio
 				<div className="label">
 					Post type
 				</div>
-				<div className="buttons_container">
+				<div className="button_container">
 					<button type="button" value="text" onClick={onClickHandler} className={post_type === "text" ? "selected" : ""}>Text</button>
 					<button type="button" value="image" onClick={onClickHandler} className={post_type === "image" ? "selected" : ""}>Image</button>
 				</div>
