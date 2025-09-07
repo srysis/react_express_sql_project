@@ -1,0 +1,12 @@
+@media screen and (max-width: 550px) {
+	section#options {
+		margin-top: 0;
+		padding: 20px 2vw;
+
+		div.edit, div.delete {
+			div {
+				width: 50%;
+			}
+		}
+	}
+}
