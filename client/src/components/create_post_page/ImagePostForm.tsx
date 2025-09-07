@@ -42,6 +42,12 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 			setImageData(null);
 			setSelectedImage(null);
 
+			const select_image_button = document.querySelector("div.inner_container > button");
+
+			if (select_image_button) {
+				select_image_button.innerHTML = "Select image";
+			}
+
 			return;
 		} else {
 			const image_formData = new FormData();
@@ -50,6 +56,12 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 			setImageData(image_formData);
 
 			setSelectedImage(event.target.files[0]);
+
+			const select_image_button = document.querySelector("div.inner_container > button");
+
+			if (select_image_button) {
+				select_image_button.innerHTML = event.target.files[0].name;
+			}
 		}
 	}
 
