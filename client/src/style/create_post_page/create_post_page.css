@@ -14,7 +14,7 @@ section#create_post {
 			font-weight: bold;
 		}
 
-		div.buttons_container {
+		div.button_container {
 			padding: 0;
 			text-align: center;
 
@@ -54,6 +54,8 @@ section#create_post {
 		}
 
 		div.button_container {
+			display: block;
+
 			button {
 				width: 15%;
 			}
@@ -99,6 +101,8 @@ section#create_post {
 		}
 
 		div.button_container {
+			display: block;
+			
 			button {
 				width: 15%;
 			}
