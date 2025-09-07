@@ -40,6 +40,16 @@ type Post = {
 }
 
 function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
+	function isVisibleInViewport(element: any, percentage: number) {
+		let rect = element.getBoundingClientRect();
+		let windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+
+		return !(
+			Math.floor(100 - (((rect.top >= 0 ? 0 : rect.top) / +-rect.height) * 100)) < percentage ||
+			Math.floor(100 - ((rect.bottom - windowHeight) / rect.height) * 100) < percentage
+		)
+	}
+
 	const { id } = useParams();
 
 	const [hasUserData, setHasUserData] = useState<boolean>(false);
@@ -48,6 +58,16 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 
 	const [arePostsRetrieved, setArePostsRetrieved] = useState<boolean>(false);
 	const [user_posts, setUserPosts] = useState<Post[] | null>([]);
+	const [isLoadingNewPosts, setIsLoadingNewPosts] = useState<boolean>(false);
+	const [hasReachedEnd, setHasReachedEnd] = useState<boolean>(false);
+
+	const POST_LIMIT = 5;
+
+	const [offset, setOffset] = useState<number>(0);
+
+	useEffect(() => {
+		return () => { window.removeEventListener("scroll", loadMorePosts) }
+	}, [])
 
 	useEffect(() => {
 		if (isLoggedIn) {
@@ -69,11 +89,24 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 					setOwnership(false);
 				}
 
-				axios.get(`/user/${id}/posts`)
+				axios.get(`/user/${id}/posts?limit=${POST_LIMIT}&offset=${offset}`)
 				.then((response: any) => {
-					setUserPosts(response.data.results);
+					if (response.data.posts) {
+						setUserPosts([...user_posts, ...response.data.posts]);
 
-					setArePostsRetrieved(true);
+						const button = document.querySelector("button#load_more");
+
+						if (button != null) {
+							button.removeAttribute("disabled");
+						}
+
+						setIsLoadingNewPosts(false);
+					} else {
+						setIsLoadingNewPosts(false);
+						setHasReachedEnd(true);
+					}
+
+					if (!arePostsRetrieved) setArePostsRetrieved(true);
 				})
 				.catch((error: any) => console.log(error.response.data))
 
@@ -92,7 +125,32 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 			setHasUserData(false);
 			setUserData(null);
 		}) 
-	}, [id]);
+	}, [id, offset]);
+
+	function loadMorePosts() {
+		const button = document.querySelector("button#load_more") as HTMLButtonElement;
+
+		if (button != null) {
+			if (isVisibleInViewport(button, 1)) {
+				button.click();
+
+				button.setAttribute("disabled", "");
+
+				setIsLoadingNewPosts(true);
+			}
+		}
+	}
+
+	function increaseOffset() {
+		const new_offset = offset + 5;
+
+		setOffset(new_offset);
+	}
+
+	useEffect(() => {
+		if (!hasReachedEnd) window.addEventListener("scroll", loadMorePosts);
+		if (hasReachedEnd) window.removeEventListener("scroll", loadMorePosts);
+	}, [hasReachedEnd]);
 
 	if (hasUserData && userData !== null) {
 		return(
@@ -114,6 +172,13 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 								<p>{userData.description ? userData.description : "No description."}</p>
 							</div>
 						</div>
+						{ ownership &&
+							<div id="options">
+								<div title="Profile options">
+									<Link to={`/user/${id}/options`}><img src={options_icon} /></Link>
+								</div>
+							</div>
+						}
 					</div>
 				}
 
@@ -136,7 +201,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 							</div>
 						</div>
 						{
-							ownership && (DEVICE_TYPE === "mobile") &&
+							ownership &&
 							<div id="options">
 								<div title="Profile options">
 									<Link to={`/user/${id}/options`}>Profile options</Link>
@@ -145,16 +210,8 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 						}
 					</div>
 				}
-
-				{
-					ownership && (DEVICE_TYPE === "desktop") &&
-					<div id="options">
-						<div title="Profile options">
-							<Link to={`/user/${id}/options`}><img src={options_icon} /></Link>
-						</div>
-					</div>
-				}
 				
+				{/* if posts are being loaded */}
 				{
 					!arePostsRetrieved && 
 					<section id="loading">
@@ -162,14 +219,18 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 					</section>
 				}
 
+				{/* if request has been completed and posts exist */}
 				{ 
 					arePostsRetrieved && (user_posts != undefined) && 
 					<section id="posts_by_user">
 						<h2>Recent posts</h2>
 						{user_posts.map((post, index) => <PostByUser key={index} content={post} />)}
+						<button type="button" id="load_more" onClick={increaseOffset} disabled={hasReachedEnd}>Load more posts</button>
+						{(isLoadingNewPosts && !hasReachedEnd) && <div className="loading_spinner"><img src={half_circle}/></div>}
 					</section> 
 				}
 
+				{/* if request has been completed, but posts do not exist */}
 				{
 					arePostsRetrieved && (user_posts == undefined) &&
 					<section id="posts_by_user">
