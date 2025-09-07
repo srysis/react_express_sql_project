@@ -148,6 +148,7 @@ div#confirm_delete {
 		color: #fff;
 		font-family: "Open Sans", sans-serif;
 		font-size: 1.1em;
+		font-weight: bold;
 		transition: background-color .05s;
 	}
 
