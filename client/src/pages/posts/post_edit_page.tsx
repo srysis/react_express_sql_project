@@ -113,6 +113,12 @@ function PostEditPage() {
 				</form>
 			</section>
 		)
+	} else {
+		return(
+			<section id="loading">
+				<div className="loading_spinner"><img src={half_circle}/></div>
+			</section>
+		)
 	}
 }
 
