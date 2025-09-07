@@ -1,0 +1,45 @@
+@media screen and (max-width: 550px) {
+	section {
+		form {
+			div.button_container {
+				display: flex;
+				justify-content: space-between;
+
+				button {
+					width: 45%;
+				}
+			}
+		}
+	}
+
+	section#change_user_info {
+		margin-top: 0;
+
+		form {
+			div.textarea_container {
+				margin-bottom: 10px;
+			}
+		}
+	}
+
+	section#upload_profile_picture {
+		padding-top: 20px;
+
+		span.title {
+			width: 95.5%;
+		}
+
+		div#profile_picture {
+			width: 24vh;
+			height: 24vh;
+			margin-left: 2.4vw;
+		}
+
+		form {
+			div.input_container {
+				margin-left: 2vw;
+				margin-bottom: 30px;
+			}
+		}
+	}
+}
