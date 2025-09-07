@@ -57,7 +57,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 	const [ownership, setOwnership] = useState<boolean>(false);
 
 	const [arePostsRetrieved, setArePostsRetrieved] = useState<boolean>(false);
-	const [user_posts, setUserPosts] = useState<Post[] | null>([]);
+	const [user_posts, setUserPosts] = useState<Array<Post> | null>([]);
 	const [isLoadingNewPosts, setIsLoadingNewPosts] = useState<boolean>(false);
 	const [hasReachedEnd, setHasReachedEnd] = useState<boolean>(false);
 
@@ -92,7 +92,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 				axios.get(`/user/${id}/posts?limit=${POST_LIMIT}&offset=${offset}`)
 				.then((response: any) => {
 					if (response.data.posts) {
-						setUserPosts([...user_posts, ...response.data.posts]);
+						setUserPosts([...(user_posts as []), ...response.data.posts]);
 
 						const button = document.querySelector("button#load_more");
 
