@@ -9,6 +9,9 @@ import half_circle from "../../assets/half-circle.png"
 import "../../style/shared.css"
 import "../../style/post_page/post_delete_page.css"
 
+import "../../style/mobile/shared.css"
+import "../../style/mobile/post_page/post_delete_page.css"
+
 interface props {
 	USER_ID: string | number | null,
 	setNotificationMessage: Function,
