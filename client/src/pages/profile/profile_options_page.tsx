@@ -4,6 +4,8 @@ import { Link, useParams } from 'react-router-dom'
 
 import "../../style/profile/profile_options_page.css"
 
+import "../../style/mobile/profile/profile_options_page.css"
+
 interface props {
 	isAdmin: boolean
 }
