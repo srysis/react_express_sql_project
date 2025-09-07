@@ -58,11 +58,15 @@ router.get('/:id', (request, response) => {
 router.get('/:id/posts', (request, response) => {
 	const requested_id = request.params.id;
 
+	const limit = request.query.limit;
+	const offset = request.query.offset;
+
 	const get_posts_of_one_user_query = "SELECT `users_info`.`name` AS `post_author_name`, `user_posts`.*, CAST(SUM(`user_posts_ratings`.`like`) AS SIGNED) AS likes_amount, " +
 										"CAST(SUM(`user_posts_ratings`.`dislike`) AS SIGNED) AS dislikes_amount " + 
 										"FROM `users_info` INNER JOIN `user_posts` ON `users_info`.`user_id` = `user_posts`.`post_author` " + 
 										"INNER JOIN `user_posts_ratings` ON `user_posts`.`post_id` = `user_posts_ratings`.`post_id` " +
-										"WHERE `user_posts`.`post_author` = '" + requested_id + "' GROUP BY `user_posts`.`post_id` ORDER BY `user_posts`.`post_date` DESC"
+										"WHERE `user_posts`.`post_author` = '" + requested_id + "' GROUP BY `user_posts`.`post_id` ORDER BY `user_posts`.`post_date` DESC " +
+										"LIMIT " + limit + " OFFSET " + offset;
 
 	database.query(get_posts_of_one_user_query, (error, data) => {
 		if (error) return response.json(error);
@@ -76,9 +80,9 @@ router.get('/:id/posts', (request, response) => {
 				row.date_difference = findDifferenceBetweenDates(post_date, current_date);
 			}
 
-			response.json({results: data})
+			response.json({posts: data})
 		} else {
-			response.json({message: "User has no posts."})
+			response.json({posts: null})
 		}
 	})
 });
