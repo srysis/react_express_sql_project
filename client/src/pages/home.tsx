@@ -39,7 +39,7 @@ function Home() {
 	const [isLoadingNewPosts, setIsLoadingNewPosts] = useState<boolean>(false);
 	const [hasReachedEnd, setHasReachedEnd] = useState<boolean>(false);
 
-	const POST_LIMIT = 5;
+	const POST_LIMIT = 10;
 
 	const [offset, setOffset] = useState<number>(0);
 
@@ -81,7 +81,7 @@ function Home() {
 	}
 
 	function increaseOffset() {
-		const new_offset = offset + 5;
+		const new_offset = offset + 10;
 
 		setOffset(new_offset);
 	}
