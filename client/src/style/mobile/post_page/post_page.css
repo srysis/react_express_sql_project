@@ -122,4 +122,9 @@
 			}
 		}
 	}
+
+	section#post + section#loading,
+	section#add_comment + section#loading {
+		margin-top: 10px;
+	}
 }

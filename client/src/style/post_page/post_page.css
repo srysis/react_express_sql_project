@@ -137,3 +137,8 @@ section#post.missing {
 	padding: 2vh 2.5vw;
 	background-color: var(--section-color);
 }
+
+section#post + section#loading,
+section#add_comment + section#loading {
+	margin-top: 40px;
+}
