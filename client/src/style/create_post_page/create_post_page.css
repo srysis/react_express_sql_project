@@ -14,11 +14,12 @@ section#create_post {
 			font-weight: bold;
 		}
 
-		div.button_container {
+		div.buttons_container {
 			padding: 0;
 			text-align: center;
 
 			button {
+				margin-right: 2vw;
 				border: 0;
 				padding: 10px 2vw;
 				box-shadow: var(--button-box-shadow);
@@ -26,6 +27,10 @@ section#create_post {
 				font-weight: bold;
 				color: #fff;
 				background-color: var(--button-color);
+			}
+
+			button:last-child {
+				margin-right: 0;
 			}
 
 			button:hover {
@@ -50,7 +55,7 @@ section#create_post {
 
 		div.button_container {
 			button {
-				width: 10vw;
+				width: 15%;
 			}
 		}
 	}
@@ -65,16 +70,16 @@ section#create_post {
 				text-align: left;
 
 				button {
-					width: 7%;
 					margin-block: 5px;
-					margin-left: 1.8vw;
+					margin-left: 2.1vw;
 					padding: 20px 0;
 					box-shadow: none;
 				}
 
 				div.image_preview {
+					min-width: 100%;
 					min-height: 400px;
-					max-height: 70vh;
+					max-height: 80vh;
 					text-align: left;
 					
 					img {
@@ -95,7 +100,7 @@ section#create_post {
 
 		div.button_container {
 			button {
-				width: 10vw;
+				width: 15%;
 			}
 		}
 	}
