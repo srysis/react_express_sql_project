@@ -10,11 +10,16 @@
 
 		input, textarea, button {
 			padding-inline: 20px;
+			font-size: 1em;
 		}
 	}
 
 	section#login, section#registration {
 		width: 100%;
 		margin-top: 0;
+	}
+
+	div.button_container {
+		padding-inline: 2vw;
 	}
 }
