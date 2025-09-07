@@ -1,0 +1,14 @@
+@media screen and (max-width: 550px) {
+	section#edit_post {
+		margin-top: 0;
+
+		div.button_container {
+			display: flex;
+			justify-content: space-between;
+
+			button {
+				width: 50%;
+			}
+		}
+	}
+}
