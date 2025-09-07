@@ -71,5 +71,19 @@ section#posts_by_user {
 		}
 		
 	}
+
+	button#load_more {
+		width: 100%;
+		border: none;
+		padding-block: 20px;
+		box-shadow: none;
+		background-color: #111;
+		color: #fff;
+		cursor: default;
+	}
+
+	button#load_more[disabled] {
+		display: none;
+	}
 }
 
