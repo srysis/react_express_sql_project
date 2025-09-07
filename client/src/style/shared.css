@@ -133,51 +133,93 @@ section#registration, section#login {
 	}
 }
 
+section#delete {
+	margin-top: 20px;
 
-div#confirm_delete {
-	display: flex;
-	justify-content: space-evenly;
-	width: 92%;
-	margin: 10px auto 0;
-
-	button {
-		width: 30%;
-		box-shadow: var(--button-box-shadow);
-		border: none;
-		padding: 20px 2vw;
-		color: #fff;
-		font-family: "Open Sans", sans-serif;
-		font-size: 1.1em;
-		font-weight: bold;
-		transition: background-color .05s;
+	section {
+		padding-block: 20px;
 	}
 
-	button[value="Y"] {
-		background-color: var(--confirm-button-color);
+	section#first_check {
+		h1, p {
+			padding-block: 10px;
+		}
+
+		h1 {
+			color: #cc0000;
+			font-size: 2.4em;
+		}
+
+		p {
+			font-size: 1.4em;
+		}
+
+		p#question {
+			padding-block: 10px;
+			font-size: 1.8em;
+			font-weight: bold;
+		}
+
+		div#confirm_delete {
+			display: flex;
+			justify-content: space-evenly;
+			width: 92%;
+			margin: 10px auto 0;
+
+			button {
+				width: 30%;
+				box-shadow: var(--button-box-shadow);
+				border: none;
+				padding: 20px 2vw;
+				color: #fff;
+				font-family: "Open Sans", sans-serif;
+				font-size: 1.1em;
+				font-weight: bold;
+				transition: background-color .05s;
+			}
+
+			button[value="Y"] {
+				background-color: var(--confirm-button-color);
+			}
+
+			button[value="Y"]:hover {
+				background-color: var(--confirm-button-hover-color);
+			}
+
+			button[value="N"] {
+				background-color: var(--button-color);
+			}
+
+			button[value="N"]:hover {
+				background-color: var(--button-hover-color);
+			}
+
+			button[disabled] {
+				box-shadow: none;
+				cursor: not-allowed;
+			}
+
+			button[value="Y"][disabled] {
+				background-color: var(--disabled-confirm-button-color);
+			}
+
+			button[value="N"][disabled] {
+				background-color: var(--disabled-button-color);
+			}
+		}
 	}
 
-	button[value="Y"]:hover {
-		background-color: var(--confirm-button-hover-color);
-	}
+	section#second_check {
+		h2 {
+			font-size: 1.8em;
+		}
 
-	button[value="N"] {
-		background-color: var(--button-color);
-	}
-
-	button[value="N"]:hover {
-		background-color: var(--button-hover-color);
-	}
-
-	button[disabled] {
-		box-shadow: none;
-		cursor: not-allowed;
-	}
-
-	button[value="Y"][disabled] {
-		background-color: var(--disabled-confirm-button-color);
-	}
-
-	button[value="N"][disabled] {
-		background-color: var(--disabled-button-color);
+		form {
+			button {
+				width: 15%;
+				margin-top: 0;
+			}
+		}
 	}
 }
+

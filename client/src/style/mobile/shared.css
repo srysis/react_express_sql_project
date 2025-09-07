@@ -23,13 +23,41 @@
 		padding-inline: 2vw;
 	}
 
-	div#confirm_delete {
-		width: 96%;
-		justify-content: space-between;
+	
 
-		button {
-			width: 47%;
-			font-size: 1.2em;
+	section#delete {
+		margin-top: 0;
+
+		section#first_check {
+			p {
+				font-size: 1.2em;
+			}
+
+			p#question {
+				font-size: 1.6em;
+			}
+
+			div#confirm_delete {
+				width: 96%;
+				justify-content: space-between;
+
+				button {
+					width: 47%;
+					font-size: 1.2em;
+				}
+			}
+		}
+
+		section#second_check {
+			h2 {
+				font-size: 1.5em;
+			}
+
+			form {
+				button {
+					width: 50%;
+				}
+			}
 		}
 	}
 }
