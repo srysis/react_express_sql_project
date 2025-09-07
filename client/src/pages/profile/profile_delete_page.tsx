@@ -7,7 +7,8 @@ import axios from '../../api/axios'
 import half_circle from "../../assets/half-circle.png"
 
 import "../../style/shared.css"
-import "../../style/profile/profile_delete_page.css"
+
+import "../../style/mobile/shared.css"
 
 interface props {
 	logOff: Function,
@@ -95,11 +96,11 @@ function ProfileDeletePage({logOff, setNotificationMessage, setNotificationType}
 	}
 
 	return(
-		<section id="authorize_delete">
+		<section id="delete">
 			<section id="first_check">
 				<h1>Warning!</h1>
 				{/*<h2>You about to delete "!PROFILE NAME HERE!"</h2>*/}
-				<p>This is an irreverseable action. Deleting your account will make it inaccessible. Any posts made by you, will still be viewable through search.</p>
+				<p>This is an irreverseable action. Deleting your account will make it inaccessible.</p>
 				<p id="question">Are you sure?</p>
 				<div id="confirm_delete">
 					<button type="button" onClick={onConfirmDeleteClickHandler} value="Y" disabled={confirm_delete_action}>Yes</button>
