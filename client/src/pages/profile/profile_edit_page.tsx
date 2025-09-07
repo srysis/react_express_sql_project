@@ -9,6 +9,8 @@ import UploadProfilePictureForm from "../../components/profile_page/UploadProfil
 
 import "../../style/profile/profile_edit_page.css"
 
+import "../../style/mobile/profile/profile_edit_page.css"
+
 interface props {
 	setNotificationMessage: Function,
 	setNotificationType: Function
