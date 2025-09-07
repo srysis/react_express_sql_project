@@ -7,10 +7,8 @@ import axios from '../../api/axios'
 import half_circle from "../../assets/half-circle.png"
 
 import "../../style/shared.css"
-import "../../style/post_page/post_delete_page.css"
 
 import "../../style/mobile/shared.css"
-import "../../style/mobile/post_page/post_delete_page.css"
 
 interface props {
 	USER_ID: string | number | null,
@@ -119,7 +117,7 @@ function PostDeletePage({USER_ID, setNotificationMessage, setNotificationType}: 
 
 	if (post_ownership && isPostRetrieved) {
 		return(
-			<section id="delete_post">
+			<section id="delete">
 				<section id="first_check">
 					<p id="question">Are you sure?</p>
 					<div id="confirm_delete">
