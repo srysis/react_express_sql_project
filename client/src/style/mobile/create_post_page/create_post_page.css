@@ -1,0 +1,57 @@
+@media screen and (max-width: 550px) {
+	section#create_post {
+		margin-top: 0;
+
+		div#post_type_switch {
+			width: 95.5%;
+			justify-content: space-between;
+
+			div.label {
+				font-size: 1.3em;
+			}
+
+			div.buttons_container {
+				button {
+					margin-right: 5vw;
+					padding: 10px 30px;
+					font-size: 1.1em;
+				}
+			}
+		}
+
+		form#regular_post_form {
+			div.button_container {
+				button {
+					width: 50%;
+				}
+			}
+		}
+
+		form#image_post_form {
+			div.input_container:nth-child(even) {
+				div.inner_container {
+					width: 96%;
+
+					button {
+						margin-left: 3.6vw;
+					}
+
+					div.image_preview {
+						min-height: 50px;
+						max-height: 50vh;
+
+						img {
+							padding-inline: 10px;
+						}
+					}
+				}
+			}
+
+			div.button_container {
+				button {
+					width: 50%;
+				}
+			}
+		}
+	}
+}
