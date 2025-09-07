@@ -22,4 +22,14 @@
 	div.button_container {
 		padding-inline: 2vw;
 	}
+
+	div#confirm_delete {
+		width: 96%;
+		justify-content: space-between;
+
+		button {
+			width: 47%;
+			font-size: 1.2em;
+		}
+	}
 }
