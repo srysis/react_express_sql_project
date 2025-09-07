@@ -2,6 +2,12 @@ section#loading {
 	margin-top: 20px;
 }
 
+@media screen and (max-width: 550px) {
+	section#loading {
+		margin-top: 0;
+	}
+}
+
 span.loading_spinner, div.loading_spinner {
 	display: inline-block;
 
