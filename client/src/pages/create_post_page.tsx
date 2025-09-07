@@ -7,6 +7,8 @@ import ImagePostForm from "../components/create_post_page/ImagePostForm"
 
 import "../style/create_post_page/create_post_page.css"
 
+import "../style/mobile/create_post_page/create_post_page.css"
+
 interface props {
 	USER_ID: string | number | null,
 	logOff: Function,
@@ -47,10 +49,8 @@ function CreatePostPage({USER_ID, logOff, setNotificationMessage, setNotificatio
 				<div className="label">
 					Post type
 				</div>
-				<div className="button_container">
+				<div className="buttons_container">
 					<button type="button" value="text" onClick={onClickHandler} className={post_type === "text" ? "selected" : ""}>Text</button>
-				</div>
-				<div className="button_container">
 					<button type="button" value="image" onClick={onClickHandler} className={post_type === "image" ? "selected" : ""}>Image</button>
 				</div>
 			</div>
