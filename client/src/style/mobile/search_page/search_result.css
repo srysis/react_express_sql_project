@@ -1,0 +1,22 @@
+@media screen and (max-width: 550px) {
+	div.search_result {
+		div.link_container {
+			div.profile_picture {
+				width: 8vh;
+				height: 8vh;
+			}
+
+			div.user_info {
+				padding-inline: 4%;
+
+				p {
+					font-size: 0.9em;
+				}
+
+				p:first-child {
+					margin-bottom: 5px;
+				}
+			}
+		}
+	}
+}
