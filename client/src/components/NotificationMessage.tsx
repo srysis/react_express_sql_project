@@ -2,6 +2,7 @@ import acknowledge_icon from "../assets/success-icon.png"
 import error_icon from "../assets/error-icon.png"
 
 import "../style/notification.css"
+import "../style/mobile/notification.css"
 
 interface props {
 	message: string,
