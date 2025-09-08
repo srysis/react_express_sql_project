@@ -1,5 +1,7 @@
 @media screen and (max-width: 550px) {
 	section#login {
+		margin-top: 0;
+
 		form {
 			div.submit_container {
 				button {
