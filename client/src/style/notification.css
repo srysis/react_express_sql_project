@@ -9,7 +9,7 @@ div#notification {
 	align-items: center;
 	box-shadow: 0 0 25px #000;
 	border: 2px solid rgb(57, 58, 58);
-	padding: 10px 1vw;
+	padding: 10px 1%;
 
 	div.icon_container {
 		img {
@@ -19,7 +19,7 @@ div#notification {
 
 	div.text_container {
 		width: 100%;
-		padding-inline: 1vw;
+		padding-inline: 2%;
 		font-size: 1.7em;
 		text-align: left;
 	}
