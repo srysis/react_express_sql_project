@@ -9,6 +9,9 @@ import half_circle from "../assets/half-circle.png"
 import "../style/search_page/search_page.css"
 import "../style/search_page/search_result.css"
 
+import "../style/mobile/search_page/search_page.css"
+import "../style/mobile/search_page/search_result.css"
+
 type User = {
 	description: string,
 	name: string,
@@ -33,9 +36,9 @@ function SearchPage() {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setSearchResults([]);
 		setSearchFinished(false);
 		setSearchInProgress(true);
-		setSearchResults([]);
 
 		const button = document.querySelector("div.button_container > button");
 		if (button) { 
@@ -45,16 +48,27 @@ function SearchPage() {
 		setSearchQueue(() => {
 			const new_search_queue : string = event.target.elements[0].value;
 
-			axios.get(`/search/${new_search_queue}`)
-			.then((response: any) => {
-				setSearchResults(response.data.results);
+			// make the request if new value is not null, else - do not and display 'no users found' message
+
+			if (new_search_queue) {
+				axios.get(`/search/${new_search_queue}`)
+				.then((response: any) => {
+					setSearchResults(response.data.results);
+					setSearchInProgress(false);
+					setSearchFinished(true);
+
+					if (button) button.removeAttribute("disabled");
+				})
+				.catch((error: any) => {
+					console.error(error.response)
+				});
+			} else {
+				setSearchResults([]);
+				setSearchInProgress(false);
 				setSearchFinished(true);
 
 				if (button) button.removeAttribute("disabled");
-			})
-			.catch((error: any) => {
-				console.error(error.response)
-			});
+			}
 
 			return new_search_queue;
 		});
@@ -78,7 +92,7 @@ function SearchPage() {
 					{search_results.length > 0 && 
 						<> 
 							<h3>{`Results for "${search_queue}"`}</h3>
-							<p style={ {'textAlign': 'left'} }>{`${search_results.length} entries found.`}</p>
+							<p style={ {'textAlign': 'left', 'paddingBlock': '20px'} }>{`${search_results.length} entries found.`}</p>
 							{search_results.map((user, index) => <SearchResult key={index} user={user} />)}
 						</>
 					}
@@ -86,7 +100,7 @@ function SearchPage() {
 				</section>
 			}
 
-			{ search_in_progress && !search_results.length && 
+			{ search_in_progress && 
 				<section id="loading">
 					<div className="loading_spinner"><img src={half_circle}/></div>
 				</section>
