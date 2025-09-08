@@ -53,7 +53,7 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
-		const button = document.querySelector("button");
+		const button = document.querySelector("div.submit_container > button");
 		if (button) { 
 			button.setAttribute("disabled", true.toString());
 			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
