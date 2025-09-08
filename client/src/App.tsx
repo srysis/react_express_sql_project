@@ -157,7 +157,7 @@ function App() {
 	return (
 		<BrowserRouter basename="/">
 			<Routes>
-				<Route element={<BaseLayout isLoggedIn={isLoggedIn} logOff={logOff} notification_visible={notification_visible} notification_message={notification_message} notification_type={notification_type} />} >
+				<Route element={<BaseLayout DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} logOff={logOff} notification_visible={notification_visible} notification_message={notification_message} notification_type={notification_type} />} >
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} logIn={logIn} />} />
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
