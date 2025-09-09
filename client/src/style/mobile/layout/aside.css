@@ -24,11 +24,11 @@
 			width: 75%;
 			height: 100vh;
 			padding-top: 30px;
+			padding-inline: 4vw;
 			background-color: var(--section-color);
 
 			span {
 				margin-block: 15px;
-				padding-left: 10vw;
 				text-align: left;
 				font-size: 1.2em;
 
