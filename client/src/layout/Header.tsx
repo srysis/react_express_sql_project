@@ -48,6 +48,11 @@ function Header({DEVICE_TYPE, isLoggedIn, logOff, setAsideVisibility}: props) {
 					}
 				</nav>
 			}
+			{ DEVICE_TYPE === "mobile" && 
+				<nav>
+					<User DEVICE_TYPE={DEVICE_TYPE} USER_ID={stored_user_id} logOff={logOff} />
+				</nav>
+			}
 		</header>
 	)
 }
