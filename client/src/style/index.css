@@ -53,7 +53,8 @@ body {
 	font-family: "Open Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background: #232427 url(../assets/background.png) bottom center no-repeat fixed;
+/*	background: #232427 url(../assets/background.png) bottom center no-repeat fixed;*/
+	background-color: #000;
 	background-size: cover;
 	color: #fff;
 
