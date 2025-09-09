@@ -25,7 +25,7 @@ function Base({DEVICE_TYPE, isLoggedIn, logOff, notification_visible, notificati
 	return(
 		<>
 			<Header DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} logOff={logOff} setAsideVisibility={setAsideVisibilityWrapper} />
-			{ DEVICE_TYPE === "mobile" && <Aside DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} logOff={logOff} visibility={aside_visibility} setAsideVisibility={setAsideVisibilityWrapper} /> }
+			{ DEVICE_TYPE === "mobile" && <Aside isLoggedIn={isLoggedIn} logOff={logOff} visibility={aside_visibility} setAsideVisibility={setAsideVisibilityWrapper} /> }
 			{notification_visible && 
 				<Notification message={notification_message} type={notification_type} />
 			}
