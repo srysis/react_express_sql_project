@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 
+import User from "../components/layout/User"
+
 import bars_solid from "../assets/bars-solid.png"
 
 import "../style/layout/header.css"
@@ -37,12 +39,10 @@ function Header({DEVICE_TYPE, isLoggedIn, logOff, setAsideVisibility}: props) {
 
 					{isLoggedIn && 
 						<> 
-							<Link to={`/user/${stored_user_id}`}>Profile</Link>
 							<Link to={`/user/${stored_user_id}/create_post`}>Create a post</Link>
-							<button id="log_off_button" onClick={() => { logOff(); }}>Log Off</button>
+							<User DEVICE_TYPE={DEVICE_TYPE} USER_ID={stored_user_id} logOff={logOff} />
 						</>
 					}
-
 				</nav>
 			}
 		</header>
