@@ -1,9 +1,9 @@
 @media screen and (max-width: 550px) {
 	header {
-		align-items: flex-end;
 		justify-content: normal;
 
 		div#toggle_aside {
+			margin-top: 5px;
 			margin-right: 6vw;
 
 			button {
@@ -19,8 +19,26 @@
 		}
 
 		div#logo_container {
+			width: 80%;
+			text-align: left;
+
 			h1 {
 				font-size: 1.6em;
+			}
+		}
+
+		nav {
+			div#user {
+				margin: 0;
+				border: none;
+				border-radius: 0;
+
+				div.user_picture {
+					width: 6vh;
+					height: 6vh;
+					min-width: auto;
+					min-height: auto;
+				}
 			}
 		}
 	}
