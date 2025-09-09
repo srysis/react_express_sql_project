@@ -52,7 +52,7 @@ function User({DEVICE_TYPE, USER_ID, logOff}: props) {
 		}
 	}
 
-	if (hasUserData) {
+	if (hasUserData && userData != null) {
 		return(
 			<div id="user">
 				{ DEVICE_TYPE === "desktop" && <div className={list_active ? "list_overlay active" : "list_overlay"} onClick={toggleOptionsList}></div> }
