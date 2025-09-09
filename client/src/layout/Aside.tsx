@@ -25,14 +25,14 @@ function Aside({isLoggedIn, logOff, visibility, setAsideVisibility}: props) {
 						<Link id="log_in_button" to="/login" onClick={onInteractHandler}>Log In</Link>
 					</span> 
 				}
-				<span><Link to="/search" onClick={onInteractHandler}>Search</Link></span>
+				
 				{ isLoggedIn && 
 					<> 
-						<span><Link to={`/user/${stored_user_id}`} onClick={onInteractHandler}>Profile</Link></span>
 						<span><Link to={`/user/${stored_user_id}/create_post`} onClick={onInteractHandler}>Create a post</Link></span>
-						<span><button id="log_off_button" onClick={() => { logOff(); }}>Log Off</button></span>
 					</>
 				}
+				<span><Link to="/search" onClick={onInteractHandler}>Search</Link></span>
+				{ isLoggedIn && <span><button id="log_off_button" onClick={() => { logOff(); }}>Log Off</button></span> }
 			</div>
 		</aside>
 	)
