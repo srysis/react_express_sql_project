@@ -5,21 +5,6 @@ header {
 	padding: 15px 3.35vw 15px 4.5vw;
 	background-color: var(--section-color);
 
-	button#log_off_button {
-		margin-inline: 1vw;
-		border: none;
-		border-radius: 15px;
-		padding: 10px 2vw;
-		background-color: var(--login-logoff-button-color);
-		color: #fff;
-		font-size: 1.4em;
-		font-weight: bold;
-	}
-
-	button#log_off_button:hover {
-		background-color: var(--login-logoff-button-hover-color);
-	}
-
 	nav {
 		display: flex;
 		justify-content: flex-end;
@@ -28,7 +13,7 @@ header {
 		a {
 			margin-inline: 1vw;
 			border-radius: 15px;
-			padding: 15px 1vw;
+			padding: 22.41px 1vw;
 			font-weight: bold;
 		}
 
@@ -37,13 +22,141 @@ header {
 		}
 		
 		a#log_in_button {
-			padding: 10px 2vw;
+			padding: 16.8px 3vw;
 			font-size: 1.5em;
 			background-color: var(--login-logoff-button-color);
 		}
 
 		a#log_in_button:hover {
 			background-color: var(--login-logoff-button-hover-color);
+		}
+
+		div#user {
+			display: flex;
+			align-items: center;
+			margin-left: 1vw;
+			border: 1px solid #555;
+			border-radius: 15px;
+			padding: 4px 1vw;
+
+			div.list_overlay {
+				display: none;
+				position: absolute;
+				z-index: 6;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
+
+			div.list_overlay.active {
+				display: block;
+			}
+
+			div.user_picture {
+				width: 8vh;
+				height: 8vh;
+				min-width: 20px;
+				min-height: 20px;
+
+				img {
+					display: block;
+					width: inherit;
+					height: inherit;
+					min-width: inherit;
+					min-height: inherit;
+					border: 3px solid black;
+					object-fit: cover;
+					object-position: 0% 50%;
+				}
+			}
+
+			div.user_name {
+				width: 120px;
+				margin-inline: 1vw;
+				text-align: left;
+				
+				p {
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+
+				p > a {
+					margin: 0;
+					border-radius: 0;
+					padding: 0;
+				}
+				
+				p > a:hover {
+					text-decoration-line: underline;
+					color: #fff;
+					background-color: transparent;
+				}
+			}
+
+			div.user_actions {
+				position: relative;
+				z-index: 7;
+
+				button {
+					border: none;
+					background-color: transparent;
+
+					img {
+						user-select: none;
+					}
+				}
+				button:hover {
+					img {
+						filter: invert(20%);
+					}
+				}
+
+				div.user_actions_list {
+					display: none;
+					flex-direction: column;
+					position: absolute;
+					z-index: 7;
+					top: 30px;
+					right: -2vw;
+					border: 1px solid #444;
+					background-color: var(--section-color);
+
+					button {
+						width: 10vw;
+						padding: 10px 1vw;
+						color: #fff;
+						text-align: left;
+						font-weight: bold;
+						font-size: .9em;
+
+						img {
+							width: 24px;
+							margin-right: .4vw;
+							vertical-align: middle;
+						}
+					}
+
+					button:hover {
+						img {
+							filter: invert(0%);
+						}
+					}
+
+					button:first-child {
+						border-bottom: 1px solid #444;
+					}
+
+					button:hover {
+						background-color: var(--login-logoff-button-hover-color);
+					}
+				}
+
+				div.user_actions_list.active {
+					display: flex;
+				}
+			}
 		}
 	}
 }
