@@ -1,0 +1,80 @@
+import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router"
+import { Link } from 'react-router-dom'
+
+import axios from '../../api/axios'
+
+import down_arrow from "../../assets/down-arrow.png"
+import up_arrow from "../../assets/up-arrow.png"
+import gear_icon from "../../assets/gear-icon.png"
+import logout_icon from "../../assets/logout.png"
+
+interface props {
+	DEVICE_TYPE: string,
+	USER_ID: string,
+	logOff: Function
+}
+
+type UserData = {
+	user_id: number,
+	name: string,
+	description: string,
+	profile_picture: string
+}
+
+function User({DEVICE_TYPE, USER_ID, logOff}: props) {
+	const [hasUserData, setHasUserData] = useState<boolean>(false);
+	const [userData, setUserData] = useState<UserData | null>(null);
+
+	const [list_active, setListActive] = useState<boolean>(false);
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		axios.get(`/user/${USER_ID}`)
+		.then((response: any) => {
+			if (response.data.user_info !== null) {
+				setUserData(response.data.user_info);
+				setHasUserData(true);
+			} else {
+				setUserData(null);
+				setHasUserData(false);
+			}
+		})
+	}, [])
+
+	function toggleOptionsList() {
+		const list_element: any = document.querySelector("div.user_actions_list");
+
+		if (list_element) {
+			list_element.classList.toggle("active");
+			setListActive(!list_active);
+		}
+	}
+
+	if (hasUserData) {
+		return(
+			<div id="user">
+				{ DEVICE_TYPE === "desktop" && <div className={list_active ? "list_overlay active" : "list_overlay"} onClick={toggleOptionsList}></div> }
+				<div className="user_picture">
+					<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${userData.profile_picture}`} />
+				</div>
+				<div className="user_name">
+					<p><Link to={`/user/${USER_ID}`}>{userData.name}</Link></p>
+				</div>
+				{ DEVICE_TYPE === "desktop" && 
+					<div className="user_actions">
+						<button onClick={toggleOptionsList}><img src={list_active ? up_arrow : down_arrow} /></button>
+						<div className="user_actions_list">
+							<button onClick={() => { navigate(`/user/${USER_ID}/options`); toggleOptionsList(); }}><img src={gear_icon} />Options</button>
+							<button onClick={() => { logOff() }}><img src={logout_icon} />Log off</button>
+						</div>
+					</div>
+				}
+			</div>
+		)
+	}
+	
+}
+
+export default User;
