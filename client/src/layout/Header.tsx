@@ -15,7 +15,10 @@ interface props {
 }
 
 function Header({DEVICE_TYPE, isLoggedIn, logOff, setAsideVisibility}: props) {
-	const stored_user_id : string | null = window.localStorage.getItem('id');
+	// give this var an 'any' type, because TS compiler for whatever reason refuses to compile when given a 'string | null' union type...
+	// this variable can be null, but if it has value, it will be 'string', but for some reason TS can't assign a value type propertly, so it throws an error
+	
+	const stored_user_id: any = window.localStorage.getItem('id');
 
 	return(
 		<header>
