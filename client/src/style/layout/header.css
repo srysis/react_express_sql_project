@@ -54,10 +54,10 @@ header {
 			}
 
 			div.user_picture {
-				width: 8vh;
-				height: 8vh;
-				min-width: 20px;
-				min-height: 20px;
+				width: 6vh;
+				height: 6vh;
+				min-width: 52px;
+				min-height: 52px;
 
 				img {
 					display: block;
