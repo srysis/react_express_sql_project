@@ -57,19 +57,22 @@ function User({DEVICE_TYPE, USER_ID, logOff}: props) {
 			<div id="user">
 				{ DEVICE_TYPE === "desktop" && <div className={list_active ? "list_overlay active" : "list_overlay"} onClick={toggleOptionsList}></div> }
 				<div className="user_picture">
-					<img src={`${import.meta.env.VITE_IMAGE_STORAGE}${userData.profile_picture}`} />
+					<Link to={`/user/${USER_ID}`}><img src={`${import.meta.env.VITE_IMAGE_STORAGE}${userData.profile_picture}`} /></Link>
 				</div>
-				<div className="user_name">
-					<p><Link to={`/user/${USER_ID}`}>{userData.name}</Link></p>
-				</div>
-				{ DEVICE_TYPE === "desktop" && 
-					<div className="user_actions">
-						<button onClick={toggleOptionsList}><img src={list_active ? up_arrow : down_arrow} /></button>
-						<div className="user_actions_list">
-							<button onClick={() => { navigate(`/user/${USER_ID}/options`); toggleOptionsList(); }}><img src={gear_icon} />Options</button>
-							<button onClick={() => { logOff() }}><img src={logout_icon} />Log off</button>
+				
+				{ DEVICE_TYPE === "desktop" &&
+					<>
+						<div className="user_name">
+							<p><Link to={`/user/${USER_ID}`}>{userData.name}</Link></p>
+						</div> 
+						<div className="user_actions">
+							<button onClick={toggleOptionsList}><img src={list_active ? up_arrow : down_arrow} /></button>
+							<div className="user_actions_list">
+								<button onClick={() => { navigate(`/user/${USER_ID}/options`); toggleOptionsList(); }}><img src={gear_icon} />Options</button>
+								<button onClick={() => { logOff() }}><img src={logout_icon} />Log off</button>
+							</div>
 						</div>
-					</div>
+					</>
 				}
 			</div>
 		)
