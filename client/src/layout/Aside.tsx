@@ -23,7 +23,7 @@ function Aside({isLoggedIn, logOut, visibility, setAsideVisibility}: props) {
 
 	return(
 		<aside className={visibility ? "active" : ""}>
-			<div className="overlay" onClick={onInteractHandler}></div>
+			<div className="overlay" onTouchStart={onInteractHandler}></div>
 			<div id="content">
 				{!isLoggedIn && 
 					<span> 
