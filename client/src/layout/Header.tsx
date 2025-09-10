@@ -24,7 +24,7 @@ function Header({DEVICE_TYPE, isLoggedIn, logOut, setAsideVisibility}: props) {
 		<header>
 			{ DEVICE_TYPE === "mobile" && 
 				<div id="toggle_aside">
-					<button type="button" onTouchStart={() => {setAsideVisibility(true)}}><img src={bars_solid} /></button>
+					<button type="button" onClick={() => {setAsideVisibility(true)}}><img src={bars_solid} /></button>
 				</div>
 			}
 			<div id="logo_container">
