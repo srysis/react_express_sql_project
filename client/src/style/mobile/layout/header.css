@@ -1,6 +1,7 @@
 @media screen and (max-width: 550px) {
 	header {
 		justify-content: normal;
+		padding-block: 10px;
 
 		div#toggle_aside {
 			margin-top: 5px;
@@ -23,7 +24,7 @@
 			text-align: left;
 
 			h1 {
-				font-size: 1.6em;
+				font-size: 1.7em;
 			}
 		}
 
