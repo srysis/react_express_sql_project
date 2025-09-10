@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom'
 
+import create_post_icon from "../assets/create-post-icon.png"
+import search_icon from "../assets/search-icon.png"
+import logout_icon from "../assets/logout.png"
+
 import "../style/mobile/layout/aside.css"
 
 interface props {
@@ -28,11 +32,11 @@ function Aside({isLoggedIn, logOff, visibility, setAsideVisibility}: props) {
 				
 				{ isLoggedIn && 
 					<> 
-						<span><Link to={`/user/${stored_user_id}/create_post`} onClick={onInteractHandler}>Create a post</Link></span>
+						<span><Link to={`/user/${stored_user_id}/create_post`} onClick={onInteractHandler}><img src={create_post_icon} />Create a post</Link></span>
 					</>
 				}
-				<span><Link to="/search" onClick={onInteractHandler}>Search</Link></span>
-				{ isLoggedIn && <span><button id="log_off_button" onClick={() => { logOff(); }}>Log Off</button></span> }
+				<span><Link to="/search" onClick={onInteractHandler}><img src={search_icon} />Search users</Link></span>
+				{ isLoggedIn && <span><button id="log_off_button" onClick={() => { logOff(); }}><img src={logout_icon}/>Log Off</button></span> }
 			</div>
 		</aside>
 	)
