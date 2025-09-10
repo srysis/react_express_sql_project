@@ -27,17 +27,17 @@ function Aside({isLoggedIn, logOut, visibility, setAsideVisibility}: props) {
 			<div id="content">
 				{!isLoggedIn && 
 					<span> 
-						<Link id="log_in_button" to="/login" onClick={onInteractHandler}><img src={login_icon} />Log In</Link>
+						<Link id="log_in_button" to="/login" onTouchStart={onInteractHandler}><img src={login_icon} />Log In</Link>
 					</span> 
 				}
 				
 				{ isLoggedIn && 
 					<> 
-						<span><Link to={`/user/${stored_user_id}/create_post`} onClick={onInteractHandler}><img src={create_post_icon} />Create a post</Link></span>
+						<span><Link to={`/user/${stored_user_id}/create_post`} onTouchStart={onInteractHandler}><img src={create_post_icon} />Create a post</Link></span>
 					</>
 				}
-				<span><Link to="/search" onClick={onInteractHandler}><img src={search_icon} />Search users</Link></span>
-				{ isLoggedIn && <span><button id="log_off_button" onClick={() => { logOut(); }}><img src={logout_icon}/>Log Out</button></span> }
+				<span><Link to="/search" onTouchStart={onInteractHandler}><img src={search_icon} />Search users</Link></span>
+				{ isLoggedIn && <span><button id="log_off_button" onTouchStart={() => { logOut(); }}><img src={logout_icon}/>Log Out</button></span> }
 			</div>
 		</aside>
 	)
