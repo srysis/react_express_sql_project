@@ -66,13 +66,13 @@ function App() {
 
 			axios.get(`/auth/verify/${stored_user_ID}`)
 			.then((response: any) => {
-				if (!response.data.success) logOff();
+				if (!response.data.success) logOut();
 			})
 			.catch(() => {
-				logOff();
+				logOut();
 			});
 		} else {
-			logOff();
+			logOut();
 		}
 	}, [isLoggedIn])
 
@@ -125,7 +125,7 @@ function App() {
 		if (login_data.admin) setHasAdminRights(true);
 	}
 
-	function logOff() {
+	function logOut() {
 		if (stored_web_token && stored_user_ID) {
 			axios.post('/auth/logoff')
 			.then((response: any) => {
@@ -157,7 +157,7 @@ function App() {
 	return (
 		<BrowserRouter basename="/">
 			<Routes>
-				<Route element={<BaseLayout DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} logOff={logOff} notification_visible={notification_visible} notification_message={notification_message} notification_type={notification_type} />} >
+				<Route element={<BaseLayout DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} logOut={logOut} notification_visible={notification_visible} notification_message={notification_message} notification_type={notification_type} />} >
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} logIn={logIn} />} />
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
@@ -168,8 +168,8 @@ function App() {
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/options" element={<ProfileOptionsPage isAdmin={hasAdminRights} />} />
 						<Route path="/user/:id/edit" element={<ProfileEditPage setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
-						<Route path="/user/:id/delete" element={<ProfileDeletePage logOff={logOff} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
-						<Route path="/user/:id/create_post" element={<CreatePostPage USER_ID={stored_user_ID} logOff={logOff} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
+						<Route path="/user/:id/delete" element={<ProfileDeletePage logOut={logOut} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
+						<Route path="/user/:id/create_post" element={<CreatePostPage USER_ID={stored_user_ID} logOut={logOut} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 						
 						<Route path="/post/:post_id/edit" element={<PostEditPage />} />
 						<Route path="/post/:post_id/delete" element={<PostDeletePage USER_ID={stored_user_ID} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />

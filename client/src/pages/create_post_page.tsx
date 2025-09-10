@@ -11,12 +11,12 @@ import "../style/mobile/create_post_page/create_post_page.css"
 
 interface props {
 	USER_ID: string | number | null,
-	logOff: Function,
+	logOut: Function,
 	setNotificationMessage: Function,
 	setNotificationType: Function
 }
 
-function CreatePostPage({USER_ID, logOff, setNotificationMessage, setNotificationType}: props) {
+function CreatePostPage({USER_ID, logOut, setNotificationMessage, setNotificationType}: props) {
 	const navigate = useNavigate();
 
 	const { id } = useParams();
@@ -54,7 +54,7 @@ function CreatePostPage({USER_ID, logOff, setNotificationMessage, setNotificatio
 					<button type="button" value="image" onClick={onClickHandler} className={post_type === "image" ? "selected" : ""}>Image</button>
 				</div>
 			</div>
-			{post_type === "text" && <RegularPostForm USER_ID={USER_ID} logOff={logOff} />}
+			{post_type === "text" && <RegularPostForm USER_ID={USER_ID} logOut={logOut} />}
 			{post_type === "image" && <ImagePostForm USER_ID={USER_ID} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} />}
 		</section>
 	)

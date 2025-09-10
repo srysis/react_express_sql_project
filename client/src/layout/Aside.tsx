@@ -9,12 +9,12 @@ import "../style/mobile/layout/aside.css"
 
 interface props {
 	isLoggedIn: boolean,
-	logOff: Function,
+	logOut: Function,
 	visibility: boolean,
 	setAsideVisibility: Function
 }
 
-function Aside({isLoggedIn, logOff, visibility, setAsideVisibility}: props) {
+function Aside({isLoggedIn, logOut, visibility, setAsideVisibility}: props) {
 	const stored_user_id : string | null = window.localStorage.getItem('id');
 
 	function onInteractHandler() {
@@ -37,7 +37,7 @@ function Aside({isLoggedIn, logOff, visibility, setAsideVisibility}: props) {
 					</>
 				}
 				<span><Link to="/search" onClick={onInteractHandler}><img src={search_icon} />Search users</Link></span>
-				{ isLoggedIn && <span><button id="log_off_button" onClick={() => { logOff(); }}><img src={logout_icon}/>Log Off</button></span> }
+				{ isLoggedIn && <span><button id="log_off_button" onClick={() => { logOut(); }}><img src={logout_icon}/>Log Out</button></span> }
 			</div>
 		</aside>
 	)

@@ -11,12 +11,12 @@ import "../../style/shared.css"
 import "../../style/mobile/shared.css"
 
 interface props {
-	logOff: Function,
+	logOut: Function,
 	setNotificationMessage: Function,
 	setNotificationType: Function
 }
 
-function ProfileDeletePage({logOff, setNotificationMessage, setNotificationType}: props) {
+function ProfileDeletePage({logOut, setNotificationMessage, setNotificationType}: props) {
 	const REQUEST_HEADERS : any = {
 		'Content-Type': 'application/json'
 	}
@@ -73,7 +73,7 @@ function ProfileDeletePage({logOff, setNotificationMessage, setNotificationType}
 			});
 
 			if (response.data.success) {
-				logOff();
+				logOut();
 
 				navigate('/');
 			} else if (!response.data.success) {

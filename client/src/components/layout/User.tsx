@@ -12,7 +12,7 @@ import logout_icon from "../../assets/logout.png"
 interface props {
 	DEVICE_TYPE: string,
 	USER_ID: string,
-	logOff: Function
+	logOut: Function
 }
 
 type UserData = {
@@ -22,7 +22,7 @@ type UserData = {
 	profile_picture: string
 }
 
-function User({DEVICE_TYPE, USER_ID, logOff}: props) {
+function User({DEVICE_TYPE, USER_ID, logOut}: props) {
 	const [hasUserData, setHasUserData] = useState<boolean>(false);
 	const [userData, setUserData] = useState<UserData | null>(null);
 
@@ -69,7 +69,7 @@ function User({DEVICE_TYPE, USER_ID, logOff}: props) {
 							<button onClick={toggleOptionsList}><img src={list_active ? up_arrow : down_arrow} /></button>
 							<div className="user_actions_list">
 								<button onClick={() => { navigate(`/user/${USER_ID}/options`); toggleOptionsList(); }}><img src={gear_icon} />Options</button>
-								<button onClick={() => { logOff() }}><img src={logout_icon} />Log off</button>
+								<button onClick={() => { logOut() }}><img src={logout_icon} />Log Out</button>
 							</div>
 						</div>
 					</>
