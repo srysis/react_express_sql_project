@@ -11,6 +11,21 @@ div#notification {
 	border: 2px solid rgb(57, 58, 58);
 	padding: 10px 1%;
 
+	div.overlay {
+		position: absolute;
+		z-index: 5;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		cursor: pointer;
+	}
+
+	div.overlay:hover {
+		background-color: #000;
+		opacity: 0.2;
+	}
+
 	div.icon_container {
 		img {
 			width: 48px;
