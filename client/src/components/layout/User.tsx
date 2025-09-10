@@ -31,17 +31,19 @@ function User({DEVICE_TYPE, USER_ID, logOut}: props) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		axios.get(`/user/${USER_ID}`)
-		.then((response: any) => {
-			if (response.data.user_info !== null) {
-				setUserData(response.data.user_info);
-				setHasUserData(true);
-			} else {
-				setUserData(null);
-				setHasUserData(false);
-			}
-		})
-	}, [])
+		if (USER_ID) {
+			axios.get(`/user/${USER_ID}`)
+			.then((response: any) => {
+				if (response.data.user_info != null) {
+					setUserData(response.data.user_info);
+					setHasUserData(true);
+				} else {
+					setUserData(null);
+					setHasUserData(false);
+				}
+			})
+		}
+	}, [USER_ID])
 
 	function toggleOptionsList() {
 		const list_element: any = document.querySelector("div.user_actions_list");
