@@ -17,6 +17,21 @@ section#search {
 			div.input_container {
 				width: 85%;
 				margin-block: 10px;
+
+				input::-webkit-search-cancel-button {
+					-webkit-appearance: none;
+					box-sizing: border-box;
+					margin: auto;
+					cursor: pointer;
+					width: 32px;
+					height: 32px;
+					background-image: url("../../assets/cross.png");
+					background-size: contain;
+				}
+
+				input::-webkit-search-cancel-button:hover {
+					opacity: 0.5;
+				}
 			}
 
 			div.button_container {
