@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 
 import create_post_icon from "../assets/create-post-icon.png"
 import search_icon from "../assets/search-icon.png"
+import login_icon from "../assets/login-icon.png"
 import logout_icon from "../assets/logout.png"
 
 import "../style/mobile/layout/aside.css"
@@ -26,7 +27,7 @@ function Aside({isLoggedIn, logOff, visibility, setAsideVisibility}: props) {
 			<div id="content">
 				{!isLoggedIn && 
 					<span> 
-						<Link id="log_in_button" to="/login" onClick={onInteractHandler}>Log In</Link>
+						<Link id="log_in_button" to="/login" onClick={onInteractHandler}><img src={login_icon} />Log In</Link>
 					</span> 
 				}
 				
