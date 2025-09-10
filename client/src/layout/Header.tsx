@@ -32,7 +32,7 @@ function Header({DEVICE_TYPE, isLoggedIn, logOff, setAsideVisibility}: props) {
 			</div>
 			{ DEVICE_TYPE === "desktop" &&
 				<nav>
-					<Link to="/search">Search</Link>
+					<Link to="/search">Search users</Link>
 					
 					{!isLoggedIn && 
 						<> 
