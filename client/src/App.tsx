@@ -127,7 +127,7 @@ function App() {
 
 	function logOut() {
 		if (stored_web_token && stored_user_ID) {
-			axios.post('/auth/logoff')
+			axios.post('/auth/logout')
 			.then((response: any) => {
 				if (response.data.success) {
 					setLoggedInState(false);
