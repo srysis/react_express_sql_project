@@ -7,10 +7,10 @@ import half_circle from "../../assets/half-circle.png"
 
 interface props {
 	USER_ID: string | number | null,
-	logOff: Function
+	logOut: Function
 }
 
-function RegularPostForm({USER_ID, logOff}: props) {
+function RegularPostForm({USER_ID, logOut}: props) {
 	const navigate = useNavigate();
 	
 	const [post_content, setPostContent] = useState<{post_content: string, post_title: string}>({post_content: "", post_title: ""});
@@ -48,7 +48,7 @@ function RegularPostForm({USER_ID, logOff}: props) {
 			}
 		} catch (error: any) {
 			if (!error.response.data.success) {
-				logOff();
+				logOut();
 			}
 		}
 	}
