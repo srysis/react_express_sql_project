@@ -33,11 +33,11 @@ function Aside({isLoggedIn, logOut, visibility, setAsideVisibility}: props) {
 				
 				{ isLoggedIn && 
 					<> 
-						<span><Link to={`/user/${stored_user_id}/create_post`} onTouchStart={onInteractHandler}><img src={create_post_icon} />Create a post</Link></span>
+						<span><Link to={`/user/${stored_user_id}/create_post`} onClick={onInteractHandler}><img src={create_post_icon} />Create a post</Link></span>
 					</>
 				}
-				<span><Link to="/search" onTouchStart={onInteractHandler}><img src={search_icon} />Search users</Link></span>
-				{ isLoggedIn && <span><button id="log_off_button" onTouchStart={() => { logOut(); }}><img src={logout_icon}/>Log Out</button></span> }
+				<span><Link to="/search" onClick={onInteractHandler}><img src={search_icon} />Search users</Link></span>
+				{ isLoggedIn && <span><button id="log_off_button" onClick={() => { logOut(); }}><img src={logout_icon}/>Log Out</button></span> }
 			</div>
 		</aside>
 	)
