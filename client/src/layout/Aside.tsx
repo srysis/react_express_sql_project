@@ -27,7 +27,7 @@ function Aside({isLoggedIn, logOut, visibility, setAsideVisibility}: props) {
 			<div id="content">
 				{!isLoggedIn && 
 					<span> 
-						<Link id="log_in_button" to="/login" onTouchStart={onInteractHandler}><img src={login_icon} />Log In</Link>
+						<Link id="log_in_button" to="/login" onClick={onInteractHandler}><img src={login_icon} />Log In</Link>
 					</span> 
 				}
 				
