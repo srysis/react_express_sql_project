@@ -28,7 +28,8 @@
 			background-color: var(--section-color);
 
 			span {
-				margin-block: 15px;
+				margin-block: 20px;
+				border-bottom: 1px solid #444;
 				text-align: left;
 				font-size: 1.2em;
 
@@ -37,6 +38,11 @@
 					background-color: transparent;
 					color: #fff;
 					font-size: 1em;
+				}
+
+				img {
+					margin-right: 1.5vw;
+					vertical-align: bottom;
 				}
 			}
 		}
