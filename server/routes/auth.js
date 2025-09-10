@@ -83,7 +83,7 @@ router.post('/login', (request, response) => {
 	})
 });
 
-router.post('/logoff', (request, response) => {
+router.post('/logout', (request, response) => {
 	response.clearCookie('t', {
 		httpOnly: true,
 		path: '/',
@@ -91,7 +91,7 @@ router.post('/logoff', (request, response) => {
 		sameSite: "none"
 	})
 
-	response.json({success: true, message: "Logged off."});
+	response.json({success: true, message: "Logged out."});
 })
 
 router.get('/verify/:id', (request, response) => {
