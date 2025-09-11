@@ -12,6 +12,7 @@ import logout_icon from "../../assets/logout.png"
 interface props {
 	DEVICE_TYPE: string,
 	USER_ID: string,
+	isAdmin: boolean,
 	logOut: Function
 }
 
@@ -22,7 +23,7 @@ type UserData = {
 	profile_picture: string
 }
 
-function User({DEVICE_TYPE, USER_ID, logOut}: props) {
+function User({DEVICE_TYPE, USER_ID, isAdmin, logOut}: props) {
 	const [hasUserData, setHasUserData] = useState<boolean>(false);
 	const [userData, setUserData] = useState<UserData | null>(null);
 
@@ -60,12 +61,14 @@ function User({DEVICE_TYPE, USER_ID, logOut}: props) {
 				{ DEVICE_TYPE === "desktop" && <div className={list_active ? "list_overlay active" : "list_overlay"} onClick={toggleOptionsList}></div> }
 				<div className="user_picture">
 					<Link to={`/user/${USER_ID}`}><img src={`${import.meta.env.VITE_IMAGE_STORAGE}${userData.profile_picture}`} /></Link>
+					{ isAdmin && (DEVICE_TYPE === "mobile") && <p className="admin_tag">Admin</p> }
 				</div>
 				
 				{ DEVICE_TYPE === "desktop" &&
 					<>
 						<div className="user_name">
 							<p><Link to={`/user/${USER_ID}`}>{userData.name}</Link></p>
+							{ isAdmin && <p className="admin_tag">Administrator</p> }
 						</div> 
 						<div className="user_actions">
 							<button onClick={toggleOptionsList}><img src={list_active ? up_arrow : down_arrow} /></button>
