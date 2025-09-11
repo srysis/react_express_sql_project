@@ -20,7 +20,7 @@
 		}
 
 		div#logo_container {
-			width: 80%;
+			width: 100%;
 			text-align: left;
 
 			h1 {
@@ -39,6 +39,11 @@
 					height: 6vh;
 					min-width: auto;
 					min-height: auto;
+
+					p.admin_tag {
+						font-size: 0.6em;
+						color: yellow;
+					}
 				}
 			}
 		}
