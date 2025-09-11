@@ -67,6 +67,8 @@ function App() {
 			axios.get(`/auth/verify/${stored_user_ID}`)
 			.then((response: any) => {
 				if (!response.data.success) logOut();
+
+				if (response.data.admin) setHasAdminRights(true);
 			})
 			.catch(() => {
 				logOut();
@@ -163,7 +165,7 @@ function App() {
 					<Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} />} />
 					<Route path="/search" element={<SearchPage />} />
 					<Route path="/user/:id" element={<ProfilePage DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} />} />
-					<Route path="/post/:post_id" element={<PostPage DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
+					<Route path="/post/:post_id" element={<PostPage DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} isAdmin={hasAdminRights} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
 						<Route path="/user/:id/options" element={<ProfileOptionsPage />} />
@@ -172,7 +174,7 @@ function App() {
 						<Route path="/user/:id/create_post" element={<CreatePostPage USER_ID={stored_user_ID} logOut={logOut} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 						
 						<Route path="/post/:post_id/edit" element={<PostEditPage />} />
-						<Route path="/post/:post_id/delete" element={<PostDeletePage USER_ID={stored_user_ID} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
+						<Route path="/post/:post_id/delete" element={<PostDeletePage USER_ID={stored_user_ID} isAdmin={hasAdminRights} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 					</Route>
 
 				</Route>
