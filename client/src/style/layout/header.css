@@ -22,6 +22,7 @@ header {
 		}
 		
 		a#log_in_button {
+			margin-right: 0;
 			padding: 16.8px 3vw;
 			font-size: 1.5em;
 			background-color: var(--login-logoff-button-color);
