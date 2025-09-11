@@ -166,7 +166,7 @@ function App() {
 					<Route path="/post/:post_id" element={<PostPage DEVICE_TYPE={DEVICE_TYPE} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 
 					<Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
-						<Route path="/user/:id/options" element={<ProfileOptionsPage isAdmin={hasAdminRights} />} />
+						<Route path="/user/:id/options" element={<ProfileOptionsPage />} />
 						<Route path="/user/:id/edit" element={<ProfileEditPage setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 						<Route path="/user/:id/delete" element={<ProfileDeletePage isAdmin={hasAdminRights} logOut={logOut} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
 						<Route path="/user/:id/create_post" element={<CreatePostPage USER_ID={stored_user_ID} logOut={logOut} setNotificationMessage={setNotificationMessageWrapper} setNotificationType={setNotificationTypeWrapper} />} />
