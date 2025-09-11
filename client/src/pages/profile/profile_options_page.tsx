@@ -6,11 +6,7 @@ import "../../style/profile/profile_options_page.css"
 
 import "../../style/mobile/profile/profile_options_page.css"
 
-interface props {
-	isAdmin: boolean
-}
-
-function ProfileOptionsPage({isAdmin}: props) {
+function ProfileOptionsPage() {
 	const { id } = useParams();
 
 	const navigate = useNavigate();
