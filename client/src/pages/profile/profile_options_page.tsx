@@ -25,12 +25,10 @@ function ProfileOptionsPage({isAdmin}: props) {
 				<div><Link to={`/user/${id}/edit`}>Edit profile</Link></div>
 				<p>Change your profile's name, description or avatar</p>
 			</div>
-			{!isAdmin && 
-				<div className="delete">
-					<div><Link to={`/user/${id}/delete`}>Delete profile</Link></div>
-					<p>Delete your profile and make it inaccessible</p>
-				</div>
-			}
+			<div className="delete">
+				<div><Link to={`/user/${id}/delete`}>Delete profile</Link></div>
+				<p>Delete your profile and make it inaccessible</p>
+			</div>
 		</section>
 	)
 }
