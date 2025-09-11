@@ -4,9 +4,26 @@
 		padding: 20px 2vw;
 
 		div.edit, div.delete {
+			display: block;
+			text-align: left;
+
 			div {
 				width: 50%;
+				margin: 0;
+				margin-bottom: 10px;
 			}
+
+			p {
+				font-size: 1em;
+			}
+		}
+
+		div.edit {
+			padding-bottom: 20px;
+		}
+
+		div.delete {
+			padding-top: 20px;
 		}
 	}
 }
