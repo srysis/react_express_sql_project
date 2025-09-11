@@ -12,11 +12,12 @@ import "../../style/mobile/shared.css"
 
 interface props {
 	USER_ID: string | number | null,
+	isAdmin: boolean,
 	setNotificationMessage: Function,
 	setNotificationType: Function
 }
 
-function PostDeletePage({USER_ID, setNotificationMessage, setNotificationType}: props) {
+function PostDeletePage({USER_ID, isAdmin, setNotificationMessage, setNotificationType}: props) {
 	const REQUEST_HEADERS = {
 		'Content-Type': 'application/json'
 	}
@@ -36,7 +37,7 @@ function PostDeletePage({USER_ID, setNotificationMessage, setNotificationType}: 
 		axios.get(`/post/${post_id}`)
 		.then((response: any) => {
 			if (response.data.post != null) { 
-				if (!response.data.post_ownership) { 
+				if (!response.data.post_ownership && !isAdmin) { 
 					navigate(`/`); 
 				} else {
 					setPostOwnership(true);
