@@ -10,15 +10,14 @@ import "../style/mobile/layout/header.css"
 interface props {
 	DEVICE_TYPE: string,
 	isLoggedIn: boolean,
+	isAdmin: boolean,
 	logOut: Function,
 	setAsideVisibility: Function
 }
 
-function Header({DEVICE_TYPE, isLoggedIn, logOut, setAsideVisibility}: props) {
-	// give this var an 'any' type, because TS compiler for whatever reason refuses to compile when given a 'string | null' union type...
-	// this variable can be null, but if it has value, it will be 'string', but for some reason TS can't assign a value type propertly, so it throws an error
-	
-	const stored_user_id: any = window.localStorage.getItem('id');
+function Header({DEVICE_TYPE, isLoggedIn, isAdmin, logOut, setAsideVisibility}: props) {
+
+	const stored_user_id: string | number | null = window.localStorage.getItem('id');
 
 	return(
 		<header>
@@ -43,14 +42,14 @@ function Header({DEVICE_TYPE, isLoggedIn, logOut, setAsideVisibility}: props) {
 					{isLoggedIn && 
 						<> 
 							<Link to={`/user/${stored_user_id}/create_post`}>Create a post</Link>
-							<User DEVICE_TYPE={DEVICE_TYPE} USER_ID={stored_user_id} logOut={logOut} />
+							<User DEVICE_TYPE={DEVICE_TYPE} USER_ID={stored_user_id} isAdmin={isAdmin} logOut={logOut} />
 						</>
 					}
 				</nav>
 			}
 			{ DEVICE_TYPE === "mobile" && 
 				<nav>
-					<User DEVICE_TYPE={DEVICE_TYPE} USER_ID={stored_user_id} logOut={logOut} />
+					<User DEVICE_TYPE={DEVICE_TYPE} USER_ID={stored_user_id} isAdmin={isAdmin} logOut={logOut} />
 				</nav>
 			}
 		</header>
