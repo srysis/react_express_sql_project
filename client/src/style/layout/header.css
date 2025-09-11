@@ -2,7 +2,7 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 15px 3.35vw 15px 4.5vw;
+	padding: 15px 4.25vw 15px 4.5vw;
 	background-color: var(--section-color);
 
 	nav {
