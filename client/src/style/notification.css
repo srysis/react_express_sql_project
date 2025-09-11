@@ -1,6 +1,6 @@
 div#notification {
 	position: fixed;
-	z-index: 4;
+	z-index: 15;
 	top: 3%;
 	left: 31%;
 	min-width: 800px;
