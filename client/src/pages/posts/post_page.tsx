@@ -84,14 +84,14 @@ function PostPage({DEVICE_TYPE, isLoggedIn, isAdmin, setNotificationMessage, set
 
 					setAreCommentsRetrieved(true);
 				})
-				.catch((error: any) => console.error(error.response.data));
+				.catch((error: any) => console.error(error));
 			} else if (response.data.post == null) {
 				setPostContent(null);
 				setIsPostRetrieved(true);
 			}
 
 		})
-		.catch((error: any) => console.error(error.response.data))
+		.catch((error: any) => console.error(error))
 	}, [post_id])
 
 	function checkElementClasses(event: any) {
