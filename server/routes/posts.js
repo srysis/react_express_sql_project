@@ -213,7 +213,7 @@ router.delete('/post/:post_id/delete', [checkPostOwner, checkAdminRights], (requ
 			}
 		})
 	} else {
-		return response.status(401).json({success: false, message: "No authorization header passed."});
+		response.status(401).json({success: false, message: "No authorization header passed."});
 	}
 });
 
