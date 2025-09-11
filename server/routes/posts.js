@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const database = require('../database.js');
 
 const checkPostOwner = require('../middlewares/checkPostOwner.js');
+const checkAdminRights = require('../middlewares/checkAdminRights.js');
 
 const findDifferenceBetweenDates = require('../modules/date.js');
 
@@ -119,7 +120,7 @@ router.patch('/post/:post_id/edit', checkPostOwner, (request, response) => {
 	}
 });
 
-router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
+router.delete('/post/:post_id/delete', [checkPostOwner, checkAdminRights], (request, response) => {
 	const token = request.headers['authorization'];
 
 	if (token) {
@@ -168,8 +169,37 @@ router.delete('/post/:post_id/delete', checkPostOwner, (request, response) => {
 								console.log(error)
 								response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
 							}
+						} else if (response.locals.isAdmin) {
+							try {
+								const decoded_token = jwt.verify(token, access_key);
+
+								if (decoded_token.id == user_id) {
+									const delete_post_query = "DELETE FROM `user_posts` WHERE `post_id` = " + requested_post_id;
+
+									database.query(delete_post_query, (error, data) => {
+										if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+
+										const delete_related_comments_query = "DELETE FROM `comments` WHERE `post_id` = " + requested_post_id;
+
+										database.query(delete_related_comments_query, (error, data) => {
+											if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+
+											const delete_ratings_query = "DELETE FROM `user_posts_ratings` WHERE (`post_id` = '" + requested_post_id + "') and (`user_id` = '" + user_id + "')";
+
+											database.query(delete_ratings_query, (error, data) => {
+												if (error) return response.status(500).json({success: false, message: "Something went wrong."});
+
+												response.json({success: true, message: "Post was deleted."});
+											})
+										})
+									});
+								}
+							} catch (error) {
+								console.log(error)
+								response.status(401).json({success: false, message: "Passed token is either invalid, modified or expired."});
+							}
 						} else {
-							response.status(403).json({success: false, message: "Client does not own this post."});
+							response.status(403).json({success: false, message: "Client is not allowed to delete this post."});
 						}
 					} else {
 						response.status(401).json({success: false, message: "Invalid credentials supplied."});
