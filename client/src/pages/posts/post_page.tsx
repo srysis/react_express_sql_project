@@ -18,6 +18,7 @@ import "../../style/mobile/post_page/post_page.css"
 interface props {
 	DEVICE_TYPE: string,
 	isLoggedIn: boolean,
+	isAdmin: boolean,
 	setNotificationMessage: Function,
 	setNotificationType: Function
 }
@@ -48,7 +49,7 @@ type Comment = {
 }
 
 
-function PostPage({DEVICE_TYPE, isLoggedIn, setNotificationMessage, setNotificationType}: props) {
+function PostPage({DEVICE_TYPE, isLoggedIn, isAdmin, setNotificationMessage, setNotificationType}: props) {
 	const { post_id } = useParams();
 
 	const [post_content, setPostContent] = useState<Post | null>(null);
@@ -124,6 +125,20 @@ function PostPage({DEVICE_TYPE, isLoggedIn, setNotificationMessage, setNotificat
 						{ DEVICE_TYPE === "desktop" && 
 							<Rating post_id={post_content.post_id} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} /> 
 						}
+						{!post_ownership && isAdmin && (DEVICE_TYPE === "mobile") &&
+							<div className="options_container">
+								<div className="icon_container" title="Post options" 
+									 onClick={() => {
+									 	const element = document.querySelector("div.list_container");
+										if (element) element.classList.toggle("active");
+									 }}>
+									<img src={dots_icon} />
+								</div>
+								<div className="list_container">
+									<Link to={`/post/${post_id}/delete`}>Delete</Link>
+								</div>
+							</div>
+						}
 						{post_ownership && (DEVICE_TYPE === "mobile") && 
 							<div className="options_container">
 								<div className="icon_container" title="Post options" 
@@ -155,6 +170,20 @@ function PostPage({DEVICE_TYPE, isLoggedIn, setNotificationMessage, setNotificat
 								<Rating post_id={post_content.post_id} isLoggedIn={isLoggedIn} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} /> 
 							}
 						</div>
+						{!post_ownership && isAdmin && (DEVICE_TYPE === "desktop") &&
+							<div className="options_container">
+								<div className="icon_container" title="Post options" 
+									 onClick={() => {
+									 	const element = document.querySelector("div.list_container");
+										if (element) element.classList.toggle("active");
+									 }}>
+									<img src={dots_icon} />
+								</div>
+								<div className="list_container">
+									<Link to={`/post/${post_id}/delete`}>Delete</Link>
+								</div>
+							</div>
+						}
 						{post_ownership && (DEVICE_TYPE === "desktop") && 
 							<div className="options_container">
 								<div className="icon_container" title="Post options" 
