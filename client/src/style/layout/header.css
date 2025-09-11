@@ -87,6 +87,12 @@ header {
 					text-overflow: ellipsis;
 				}
 
+				p.admin_tag {
+					margin-top: 2px;
+					font-size: 0.7em;
+					color: yellow;
+				}
+
 				p > a {
 					margin: 0;
 					border-radius: 0;
