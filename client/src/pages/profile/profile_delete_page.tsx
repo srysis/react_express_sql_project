@@ -11,12 +11,13 @@ import "../../style/shared.css"
 import "../../style/mobile/shared.css"
 
 interface props {
+	isAdmin: boolean,
 	logOut: Function,
 	setNotificationMessage: Function,
 	setNotificationType: Function
 }
 
-function ProfileDeletePage({logOut, setNotificationMessage, setNotificationType}: props) {
+function ProfileDeletePage({isAdmin, logOut, setNotificationMessage, setNotificationType}: props) {
 	const REQUEST_HEADERS : any = {
 		'Content-Type': 'application/json'
 	}
@@ -31,6 +32,12 @@ function ProfileDeletePage({logOut, setNotificationMessage, setNotificationType}
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
+			navigate(`/`);
+		}
+
+		if (isAdmin) {
+			setNotificationType("error");
+			setNotificationMessage("Admins cannot personally delete their accounts!");
 			navigate(`/`);
 		}
 	}, []);
