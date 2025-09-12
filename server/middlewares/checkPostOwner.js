@@ -30,9 +30,9 @@ function checkPostOwner(request, response, next) {
 		} else {
 			response.locals.post_ownership = false;
 		}
+		
+		next();
 	});
-
-	next();
 }
 
 module.exports = checkPostOwner;
