@@ -136,13 +136,9 @@ function RegistrationPage({isLoggedIn}: props) {
 			const register_response = await axios.post('/auth/register', { username: username, password: password } , { headers: REQUEST_HEADERS });
 
 			if (register_response.data.success) {
-				const set_default_info_response = await axios.post('/auth/set_default_user_info', { username: username }, { headers: REQUEST_HEADERS });
-
-				if (set_default_info_response.data.success) {
-					navigate('/login');
-				} else {
-					navigate('/register');
-				}
+				navigate('/login');
+			} else {
+				navigate('/register');
 			}
 		} catch (error: any) {
 			if (error?.status === 409) {
