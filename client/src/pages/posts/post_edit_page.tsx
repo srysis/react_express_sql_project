@@ -84,7 +84,7 @@ function PostEditPage() {
 		}
 
 		try {
-			const response = await axios.patch(`/post/${post_id}/edit`, {new_post_content: new_post_content});
+			const response = await axios.patch(`/post/${post_id}`, {new_post_content: new_post_content});
 
 			if (response.data.success) {
 				navigate(`/post/${post_id}`);
