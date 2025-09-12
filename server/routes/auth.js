@@ -23,8 +23,14 @@ router.post('/register', (request, response) => {
 				const register_query = "INSERT INTO `users` (`username`, `password`) VALUES ('" + username + "', '" + hash + "');"
 
 				database.query(register_query, (error, data) => {
-					if (error) return response.json(error);
-					return response.json({success: true, message: data});
+					if (error) return response.status(500).json(error);
+
+					const sql_query = "INSERT INTO `users_info` (`name`) VALUES ('" + username + "');"
+
+					database.query(sql_query, (error, data) => {
+						if (error) return response.status(500).json(error);
+						return response.json({success: true, message: data});
+					})
 				})
 			})
 			.catch(error => {
@@ -33,17 +39,6 @@ router.post('/register', (request, response) => {
 		} else {
 			response.status(409).json({success: false, message: "Username is already taken."});
 		}
-	})
-});
-
-router.post('/set_default_user_info', (request, response) => {
-	const username = request.body.username;
-
-	const sql_query = "INSERT INTO `users_info` (`name`) VALUES ('" + username + "');"
-
-	database.query(sql_query, (error, data) => {
-		if (error) return response.json(error);
-		return response.json({success: true, message: data});
 	})
 });
 
