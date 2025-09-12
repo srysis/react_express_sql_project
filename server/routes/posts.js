@@ -102,7 +102,7 @@ router.get('/post/:post_id', checkPostOwner, (request, response) => {
 	})
 });
 
-router.patch('/post/:post_id/edit', checkPostOwner, (request, response) => {
+router.patch('/post/:post_id', checkPostOwner, (request, response) => {
 	const requested_post_id = request.params.post_id;
 
 	if (response.locals.post_ownership) {
@@ -120,7 +120,7 @@ router.patch('/post/:post_id/edit', checkPostOwner, (request, response) => {
 	}
 });
 
-router.delete('/post/:post_id/delete', [checkPostOwner, checkAdminRights], (request, response) => {
+router.delete('/post/:post_id', [checkPostOwner, checkAdminRights], (request, response) => {
 	const token = request.headers['authorization'];
 
 	if (token) {
