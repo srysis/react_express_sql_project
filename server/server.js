@@ -37,8 +37,8 @@ app.get('/', (request, response) => {
 	response.json(`API is running. Awaiting instructions...`);
 });
 
-app.get('/api/search/:queue', (request, response) => {
-	const search_queue = request.params.queue;
+app.get('/api/search', (request, response) => {
+	const search_queue = request.query.queue;
 
 	if (search_queue) {
 		const sql_query = "SELECT * FROM `users_info` WHERE `name` LIKE '%" + search_queue + "%'"
