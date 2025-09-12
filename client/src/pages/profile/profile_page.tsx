@@ -78,6 +78,8 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 	}, [isLoggedIn]);
 
 	useEffect(() => {
+		setUserPosts([]);
+
 		axios.get(`/user/${id}`)
 		.then((response: any) => {
 			if (response.data.user_info !== null) {
@@ -221,7 +223,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 
 				{/* if request has been completed and posts exist */}
 				{ 
-					arePostsRetrieved && (user_posts != undefined) && 
+					arePostsRetrieved && (user_posts.length != 0) && 
 					<section id="posts_by_user">
 						<h2>Recent posts</h2>
 						{user_posts.map((post, index) => <PostByUser key={index} content={post} />)}
@@ -232,7 +234,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 
 				{/* if request has been completed, but posts do not exist */}
 				{
-					arePostsRetrieved && (user_posts == undefined) &&
+					arePostsRetrieved && (user_posts.length == 0) &&
 					<section id="posts_by_user">
 						<h2>Recent posts</h2>
 						<p style={{'padding': '20px 2vw', 'textAlign': 'left'}}>Seems like this user is not very active here...</p>
