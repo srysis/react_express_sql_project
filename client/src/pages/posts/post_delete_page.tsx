@@ -87,7 +87,7 @@ function PostDeletePage({USER_ID, isAdmin, setNotificationMessage, setNotificati
 			const verify_access = await axios.get(`/auth/verify/${USER_ID}`);
 
 			if (verify_access.data.success) {
-				const response = await axios.delete(`/post/${post_id}/delete`, {
+				const response = await axios.delete(`/post/${post_id}`, {
 					headers: REQUEST_HEADERS,
 					data: { 
 						user_credentials,
