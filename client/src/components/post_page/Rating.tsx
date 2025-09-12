@@ -26,7 +26,7 @@ function Rating({post_id, isLoggedIn, setNotificationMessage, setNotificationTyp
 	const [isDisliked, setIsDisliked] = useState<boolean | null>(null);
 
 	useEffect(() => {
-		axios.get(`post/${post_id}/get_rating`)
+		axios.get(`post/${post_id}/rating`)
 		.then((response: any) => {
 			if (response.data.success) {
 				setLikes(response.data.likes);
