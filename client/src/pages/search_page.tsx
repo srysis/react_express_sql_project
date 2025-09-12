@@ -51,7 +51,7 @@ function SearchPage() {
 			// make the request if new value is not null, else - do not and display 'no users found' message
 
 			if (new_search_queue) {
-				axios.get(`/search/${new_search_queue}`)
+				axios.get(`/search?queue=${new_search_queue}`)
 				.then((response: any) => {
 					setSearchResults(response.data.results);
 					setSearchInProgress(false);
