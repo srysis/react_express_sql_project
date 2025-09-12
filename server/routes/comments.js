@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken');
 
 const database = require('../database.js');
 
-const authenticator = require('../middlewares/auth.js');
-
 const findDifferenceBetweenDates = require('../modules/date.js');
 
 const router = express.Router();
@@ -32,7 +30,7 @@ router.get('/:post_id/comments', (request, response) => {
 	})
 });
 
-router.post('/:post_id/comments/add', (request, response) => {
+router.post('/:post_id/comments', (request, response) => {
 	const token = request.headers['authorization'];
 	const requested_post_id = request.params.post_id;
 	const user_id = request.body.user_id;
