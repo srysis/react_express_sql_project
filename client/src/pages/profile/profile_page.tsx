@@ -223,10 +223,10 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 
 				{/* if request has been completed and posts exist */}
 				{ 
-					arePostsRetrieved && (user_posts.length != 0) && 
+					arePostsRetrieved && (user_posts?.length != 0) && 
 					<section id="posts_by_user">
 						<h2>Recent posts</h2>
-						{user_posts.map((post, index) => <PostByUser key={index} content={post} />)}
+						{user_posts?.map((post, index) => <PostByUser key={index} content={post} />)}
 						<button type="button" id="load_more" onClick={increaseOffset} disabled={hasReachedEnd}>Load more posts</button>
 						{(isLoadingNewPosts && !hasReachedEnd) && <div className="loading_spinner"><img src={half_circle}/></div>}
 					</section> 
@@ -234,7 +234,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 
 				{/* if request has been completed, but posts do not exist */}
 				{
-					arePostsRetrieved && (user_posts.length == 0) &&
+					arePostsRetrieved && (user_posts?.length == 0) &&
 					<section id="posts_by_user">
 						<h2>Recent posts</h2>
 						<p style={{'padding': '20px 2vw', 'textAlign': 'left'}}>Seems like this user is not very active here...</p>
