@@ -8,7 +8,7 @@ const checkPostOwner = require('../middlewares/checkPostOwner.js');
 
 const router = express.Router();
 
-router.get('/post/:post_id/get_rating', (request, response) => {
+router.get('/post/:post_id/rating', (request, response) => {
 	const post_id = request.params.post_id;
 
 	const select_post_query = "SELECT * FROM `user_posts` WHERE `post_id` = " + post_id;
