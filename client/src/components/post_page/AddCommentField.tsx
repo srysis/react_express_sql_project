@@ -28,7 +28,7 @@ function AddCommentField({post_id}: props) {
 		}
 
 		try {
-			const response: any = await axios.post(`/post/${post_id}/comments/add`, {comment: comment, user_id: window.localStorage.getItem('id')});
+			const response: any = await axios.post(`/post/${post_id}/comments`, {comment: comment, user_id: window.localStorage.getItem('id')});
 
 			if (response.data.success) {
 				window.location.reload();
