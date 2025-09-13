@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
+
 import error_icon from "../../assets/exclamation-mark-2.png"
 
 import "../../style/shared.css"
@@ -23,6 +24,7 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 
 	const [user_credentials, setUserCredentials] = useState<{username: string, password: string} | {}>({});
 
+	const [login_in_progress, setLoginInProgress] = useState<boolean>(false);
 	const [login_failed, setLoginFailed] = useState<boolean>(false);
 	const [error_message, setErrorMessage] = useState<string>("");
 
@@ -53,10 +55,12 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setLoginFailed(false);
+		setLoginInProgress(true);
+
 		const button = document.querySelector("div.submit_container > button");
 		if (button) { 
 			button.setAttribute("disabled", true.toString());
-			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		try {
@@ -70,11 +74,11 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 		} catch (error: any) {
 			if (error.status === 404) {
 				setLoginFailed(true);
+				setLoginInProgress(false);
 
-				const button = document.querySelector("button");
+				const button = document.querySelector("div.submit_container > button");
 				if (button) { 
 					button.removeAttribute("disabled");
-					button.innerHTML = "Login";
 				}
 
 				setErrorMessage("Invalid username or password.");
@@ -107,7 +111,7 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 							<input type="password" id="password" name="password" onChange={onChangeHandler} onFocus={onFocusHandler} required />
 						</div>
 						<div className="submit_container">
-							<button>Login</button>
+							<button>{login_in_progress ? <LoadingSpinnerInline /> : "Login"}</button>
 						</div>
 					</form>
 					<div id="register"><span>Don't have an account? </span><Link to="/register">Register now.</Link></div>
