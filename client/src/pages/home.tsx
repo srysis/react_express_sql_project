@@ -56,6 +56,10 @@ function Home() {
 				}
 
 				setIsLoadingNewPosts(false);
+
+				if (response.data.posts.length < POST_LIMIT) {
+					setHasReachedEnd(true);
+				}
 			} else {
 				setIsLoadingNewPosts(false);
 				setHasReachedEnd(true);
