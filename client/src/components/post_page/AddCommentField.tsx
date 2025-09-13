@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import axios from '../../api/axios'
 
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
 
 import "../../style/post_page/add_comment_field.css"
 import "../../style/mobile/post_page/add_comment_field.css"
@@ -14,6 +14,8 @@ interface props {
 function AddCommentField({post_id}: props) {
 	const [comment, setComment] = useState<string>("");
 
+	const [action_in_progress, setActionInProgress] = useState<boolean>(false);
+
 	function onChangeHandler(event: any) {
 		setComment(event.target.value);
 	}
@@ -21,10 +23,11 @@ function AddCommentField({post_id}: props) {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setActionInProgress(true);
+
 		const button = document.querySelector("div.button_container > button");
 		if (button) { 
 			button.setAttribute("disabled", true.toString());
-			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		try {
@@ -47,7 +50,7 @@ function AddCommentField({post_id}: props) {
 					<textarea id="description" placeholder="Comment on this post" onChange={onChangeHandler}></textarea>
 				</div>
 				<div className="button_container" style={!comment ? {"display": "none"} : undefined}>
-					<button disabled={!comment}>Comment</button>
+					<button disabled={!comment}>{ action_in_progress ? <LoadingSpinnerInline /> : "Comment" }</button>
 				</div>
 			</form>
 		</section>
