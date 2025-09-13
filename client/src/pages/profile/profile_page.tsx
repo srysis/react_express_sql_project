@@ -78,6 +78,9 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 	}, [isLoggedIn]);
 
 	useEffect(() => {
+		// reset these state variables explicitly to assure proper data management and 'spinner' displaying behaviour
+		setHasUserData(false);
+		setUserData(null);
 		setUserPosts([]);
 
 		axios.get(`/user/${id}`)
@@ -90,27 +93,6 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 				} else {
 					setOwnership(false);
 				}
-
-				axios.get(`/user/${id}/posts?limit=${POST_LIMIT}&offset=${offset}`)
-				.then((response: any) => {
-					if (response.data.posts) {
-						setUserPosts([...(user_posts as []), ...response.data.posts]);
-
-						const button = document.querySelector("button#load_more");
-
-						if (button != null) {
-							button.removeAttribute("disabled");
-						}
-
-						setIsLoadingNewPosts(false);
-					} else {
-						setIsLoadingNewPosts(false);
-						setHasReachedEnd(true);
-					}
-
-					if (!arePostsRetrieved) setArePostsRetrieved(true);
-				})
-				.catch((error: any) => console.log(error.response.data))
 
 				setHasUserData(true);
 			} else if (response.data.user_info === null) {
@@ -127,7 +109,70 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 			setHasUserData(false);
 			setUserData(null);
 		}) 
-	}, [id, offset]);
+	}, [id]);
+
+
+	// this 'effect' fires once profile's info has been successfully and fully loaded,
+	// info's loading status is being defined by 'hasUserData' state value
+	useEffect(() => {
+		if (hasUserData) {
+			axios.get(`/user/${id}/posts?limit=${POST_LIMIT}&offset=0`)
+			.then((response: any) => {
+				if (response.data.posts) {
+					setUserPosts(response.data.posts);
+
+					const button = document.querySelector("button#load_more");
+
+					if (button != null) {
+						button.removeAttribute("disabled");
+					}
+
+					setIsLoadingNewPosts(false);
+
+					if (response.data.posts.length < POST_LIMIT) {
+						setHasReachedEnd(true);
+					}
+				} else {
+					setIsLoadingNewPosts(false);
+					setHasReachedEnd(true);
+				}
+
+				if (!arePostsRetrieved) setArePostsRetrieved(true);
+			})
+			.catch((error: any) => console.log(error.response.data))
+		}
+	}, [hasUserData]);
+
+
+	// this 'effect' fires when the 'offset' state has been modified, 
+	// which usually happens if current profile has more posts than the amount defined by 'POST_LIMIT' constant,
+	// to load more posts
+	useEffect(() => {
+		axios.get(`/user/${id}/posts?limit=${POST_LIMIT}&offset=${offset}`)
+		.then((response: any) => {
+			if (response.data.posts) {
+				setUserPosts([...(user_posts as []), ...response.data.posts]);
+
+				const button = document.querySelector("button#load_more");
+
+				if (button != null) {
+					button.removeAttribute("disabled");
+				}
+
+				setIsLoadingNewPosts(false);
+
+				if (response.data.posts.length < POST_LIMIT) {
+					setHasReachedEnd(true);
+				}
+			} else {
+				setIsLoadingNewPosts(false);
+				setHasReachedEnd(true);
+			}
+
+			if (!arePostsRetrieved) setArePostsRetrieved(true);
+		})
+		.catch((error: any) => console.log(error.response.data))
+	}, [offset])
 
 	function loadMorePosts() {
 		const button = document.querySelector("button#load_more") as HTMLButtonElement;
