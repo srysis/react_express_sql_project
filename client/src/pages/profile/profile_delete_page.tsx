@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
 
 import "../../style/shared.css"
 
@@ -29,6 +29,8 @@ function ProfileDeletePage({isAdmin, logOut, setNotificationMessage, setNotifica
 	const [confirm_delete_action, setConfirmDeleteAction] = useState<boolean>(false);
 
 	const [user_credentials, setUserCredentials] = useState<{username: string, password: string}>({username: "", password: ""});
+
+	const [delete_in_progress, setDeleteInProgress] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (window.localStorage.getItem('id') !== id) {
@@ -64,13 +66,13 @@ function ProfileDeletePage({isAdmin, logOut, setNotificationMessage, setNotifica
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setDeleteInProgress(true);
 		setNotificationType("");
 		setNotificationMessage("");
 
 		const button = document.querySelector("div.submit_container > button");
 		if (button) { 
 			button.setAttribute("disabled", true.toString());
-			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		try {
@@ -93,9 +95,9 @@ function ProfileDeletePage({isAdmin, logOut, setNotificationMessage, setNotifica
 
 				if (button) {
 					button.removeAttribute("disabled");
-					button.innerHTML = "Confirm";
 				}
 
+				setDeleteInProgress(false);
 				setNotificationType("error");
 				setNotificationMessage("Invaild credentials supplied.");
 			}
@@ -107,7 +109,7 @@ function ProfileDeletePage({isAdmin, logOut, setNotificationMessage, setNotifica
 			<section id="first_check">
 				<h1>Warning!</h1>
 				{/*<h2>You about to delete "!PROFILE NAME HERE!"</h2>*/}
-				<p>This is an irreverseable action. Deleting your account will make it inaccessible.</p>
+				<p>This is an irreversable action. Deleting your account will make it inaccessible.</p>
 				<p id="question">Are you sure?</p>
 				<div id="confirm_delete">
 					<button type="button" onClick={onConfirmDeleteClickHandler} value="Y" disabled={confirm_delete_action}>Yes</button>
@@ -127,7 +129,7 @@ function ProfileDeletePage({isAdmin, logOut, setNotificationMessage, setNotifica
 							<input type="password" id="password" name="password" onChange={onChangeHandler} required />
 						</div>
 						<div className="submit_container">
-							<button disabled={!user_credentials.username || !user_credentials.password}>Confirm</button>
+							<button disabled={!user_credentials.username || !user_credentials.password}>{ delete_in_progress ? <LoadingSpinnerInline /> : "Confirm" }</button>
 						</div>
 					</form>
 				</section>
