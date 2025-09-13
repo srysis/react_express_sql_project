@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import axios from '../../api/axios'
 
 import LoadingSpinnerBlock from "../../components/LoadingSpinnerBlock"
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
 
 import "../../style/shared.css"
 
@@ -33,6 +33,8 @@ function PostDeletePage({USER_ID, isAdmin, setNotificationMessage, setNotificati
 	const [isPostRetrieved, setIsPostRetrieved] = useState<boolean>(false);
 
 	const [user_credentials, setUserCredentials] = useState<{username: string, password: string}>({username: "", password: ""});
+
+	const [delete_in_progress, setDeleteInProgress] = useState<boolean>(false);
 
 	useEffect(() => {
 		axios.get(`/post/${post_id}`)
@@ -75,13 +77,13 @@ function PostDeletePage({USER_ID, isAdmin, setNotificationMessage, setNotificati
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setDeleteInProgress(true);
 		setNotificationType("");
 		setNotificationMessage("");
 
 		const button = document.querySelector("div.submit_container > button");
 		if (button) { 
 			button.setAttribute("disabled", true.toString());
-			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		try {
@@ -108,9 +110,9 @@ function PostDeletePage({USER_ID, isAdmin, setNotificationMessage, setNotificati
 			} else if (error?.status === 404 || error?.status === 401) {
 				if (button) {
 					button.removeAttribute("disabled");
-					button.innerHTML = "Confirm";
 				}
 
+				setDeleteInProgress(false);
 				setNotificationType("error");
 				setNotificationMessage("Invaild credentials supplied.");
 			}
@@ -140,7 +142,7 @@ function PostDeletePage({USER_ID, isAdmin, setNotificationMessage, setNotificati
 								<input type="password" id="password" name="password" onChange={onChangeHandler} required />
 							</div>
 							<div className="submit_container">
-								<button disabled={!user_credentials.username || !user_credentials.password}>Confirm</button>
+								<button disabled={!user_credentials.username || !user_credentials.password}>{ delete_in_progress ? <LoadingSpinnerInline /> : "Confirm" }</button>
 							</div>
 						</form>
 					</section>
