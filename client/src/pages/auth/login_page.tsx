@@ -33,7 +33,7 @@ function LoginPage({ isLoggedIn, logIn }: props) {
 	}
 
 	useEffect(() => {
-		userRef.current.focus();
+		userRef.current?.focus();
 
 		if (isLoggedIn) navigate('/');
 	}, [])
