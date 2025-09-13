@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
 
 import eye_icon from "../../assets/eye-icon.png"
 import error_icon from "../../assets/exclamation-mark-2.png"
@@ -28,6 +28,7 @@ interface props {
 function RegistrationPage({isLoggedIn}: props) {
 	const userRef = useRef<HTMLInputElement | null>(null);
 
+	const [registration_in_progress, setRegistrationInProgress] = useState<boolean>(false);
 	const [registration_failed, setRegistrationFailed] = useState<boolean>(false);
 
 	const [username, setUsername] = useState<string>("");
@@ -116,14 +117,15 @@ function RegistrationPage({isLoggedIn}: props) {
 
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
+
 		setRegistrationFailed(false);
+		setRegistrationInProgress(true);
 
 		const submit_button = document.querySelector("div.submit_container > button");
 		const clear_button = document.querySelector("div.clear_container > button");
 
 		if (submit_button) { 
 			submit_button.setAttribute("disabled", true.toString());
-			submit_button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 		if (clear_button) clear_button.setAttribute("disabled", true.toString());
 
@@ -151,10 +153,10 @@ function RegistrationPage({isLoggedIn}: props) {
 
 			if (submit_button) { 
 				submit_button.removeAttribute("disabled");
-				submit_button.innerHTML = "Register!";
 			}
 			if (clear_button) clear_button.removeAttribute("disabled");
 			setRegistrationFailed(true);
+			setRegistrationInProgress(false);
 		}
 	}
 
@@ -230,7 +232,9 @@ function RegistrationPage({isLoggedIn}: props) {
 								<button type="button" onClick={clearFields}>Clear</button>
 							</div>
 							<div className="submit_container">
-								<button type="submit" disabled={!isUsernameValid || !isPasswordValid || !doPasswordsMatch ? true : false}>Register!</button>
+								<button type="submit" disabled={!isUsernameValid || !isPasswordValid || !doPasswordsMatch ? true : false}>
+									{ registration_in_progress ? <LoadingSpinnerInline /> : "Register!"}
+								</button>
 							</div>
 						</div>
 						
