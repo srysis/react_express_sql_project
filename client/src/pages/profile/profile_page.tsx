@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import axios from '../../api/axios'
 
 import PostByUser from "../../components/profile_page/PostByUser"
+import LoadingSpinnerBlock from "../../components/LoadingSpinnerBlock"
 
-import half_circle from "../../assets/half-circle.png"
 import options_icon from "../../assets/gear-icon.png"
 
 import "../../style/profile/profile_page.css"
@@ -264,12 +264,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 				}
 				
 				{/* if posts are being loaded */}
-				{
-					!arePostsRetrieved && 
-					<section id="loading">
-						<div className="loading_spinner"><img src={half_circle}/></div>
-					</section>
-				}
+				{ !arePostsRetrieved && <LoadingSpinnerBlock /> }
 
 				{/* if request has been completed and posts exist */}
 				{ 
@@ -278,7 +273,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 						<h2>Recent posts</h2>
 						{user_posts?.map((post, index) => <PostByUser key={index} content={post} />)}
 						<button type="button" id="load_more" onClick={increaseOffset} disabled={hasReachedEnd}>Load more posts</button>
-						{(isLoadingNewPosts && !hasReachedEnd) && <div className="loading_spinner"><img src={half_circle}/></div>}
+						{(isLoadingNewPosts && !hasReachedEnd) && <LoadingSpinnerBlock />}
 					</section> 
 				}
 
@@ -301,9 +296,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 		)
 	} else {
 		return(
-			<section id="loading">
-				<div className="loading_spinner"><img src={half_circle}/></div>
-			</section>
+			<LoadingSpinnerBlock />
 		)
 	}
 }
