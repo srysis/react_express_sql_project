@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
 
 interface props {
 	USER_ID: string | number | null,
@@ -18,6 +18,8 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 
 	const [selected_image, setSelectedImage] = useState<any>(null);
 	const [preview_image, setPreviewImage] = useState<any>(null);
+
+	const [posting_in_progress, setPostingInProgress] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (!selected_image) {
@@ -70,10 +72,11 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 
 		if (!image_data) return;
 
+		setPostingInProgress(true);
+
 		const button = document.querySelector("div.button_container > button.submit");
 		if (button) { 
 			button.setAttribute("disabled", true.toString());
-			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		const image = document.querySelector("input#post_image") as HTMLInputElement;
@@ -92,12 +95,12 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 			}
 		} catch (error: any) {
 			if (error.status == 400) {
+				setPostingInProgress(false);
 				setNotificationType("error");
 				setNotificationMessage("Only .png files are allowed!");
 
 				if (button) {
 					button.removeAttribute("disabled");
-					button.innerHTML = "Post";
 				}
 				
 			}
@@ -126,7 +129,7 @@ function ImagePostForm({USER_ID, setNotificationMessage, setNotificationType}: p
 				</div>
 				
 				<div className="button_container">
-					<button type="submit" className="submit" disabled={!image_data}>Post</button>
+					<button type="submit" className="submit" disabled={!image_data}>{ posting_in_progress ? <LoadingSpinnerInline /> : "Post" }</button>
 				</div>
 			</form>
 			

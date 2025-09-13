@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
 
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
 
 interface props {
 	USER_ID: string | number | null,
@@ -15,6 +15,8 @@ function RegularPostForm({USER_ID, logOut}: props) {
 	
 	const [post_content, setPostContent] = useState<{post_content: string, post_title: string}>({post_content: "", post_title: ""});
 
+	const [posting_in_progress, setPostingInProgress] = useState<boolean>(false);
+
 	function onChangeHandler(event: any) {
 		setPostContent({
 			...post_content,
@@ -25,10 +27,11 @@ function RegularPostForm({USER_ID, logOut}: props) {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setPostingInProgress(true);
+
 		const button = document.querySelector("div.button_container > button.submit");
 		if (button) { 
 			button.setAttribute("disabled", true.toString());
-			button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		try {
@@ -64,7 +67,7 @@ function RegularPostForm({USER_ID, logOut}: props) {
 				<textarea id="post_content" rows={4} cols={50} placeholder="Share your opinions..." onChange={onChangeHandler} required></textarea>
 			</div>
 			<div className="button_container">
-				<button className="submit" disabled={(!post_content.post_content || !post_content.post_title)}>Post</button>
+				<button className="submit" disabled={(!post_content.post_content || !post_content.post_title)}>{ posting_in_progress ? <LoadingSpinnerInline /> : "Post" }</button>
 			</div>
 		</form>
 	)
