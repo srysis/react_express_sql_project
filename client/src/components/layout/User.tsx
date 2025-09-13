@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
+
 import down_arrow from "../../assets/down-arrow.png"
 import up_arrow from "../../assets/up-arrow.png"
 import gear_icon from "../../assets/gear-icon.png"
@@ -81,8 +83,11 @@ function User({DEVICE_TYPE, USER_ID, isAdmin, logOut}: props) {
 				}
 			</div>
 		)
+	} else {
+		return(
+			<div id="user"><LoadingSpinnerInline /></div>
+		)
 	}
-	
 }
 
 export default User;
