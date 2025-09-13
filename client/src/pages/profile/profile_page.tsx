@@ -82,6 +82,7 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 		setHasUserData(false);
 		setUserData(null);
 		setUserPosts([]);
+		setHasReachedEnd(false);
 
 		axios.get(`/user/${id}`)
 		.then((response: any) => {
@@ -131,6 +132,8 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 
 					if (response.data.posts.length < POST_LIMIT) {
 						setHasReachedEnd(true);
+
+						if (button != null) button.setAttribute("disabled", "");
 					}
 				} else {
 					setIsLoadingNewPosts(false);
@@ -163,6 +166,8 @@ function ProfilePage({DEVICE_TYPE, isLoggedIn} : props) {
 
 				if (response.data.posts.length < POST_LIMIT) {
 					setHasReachedEnd(true);
+
+					if (button != null) button.setAttribute("disabled", "");
 				}
 			} else {
 				setIsLoadingNewPosts(false);
