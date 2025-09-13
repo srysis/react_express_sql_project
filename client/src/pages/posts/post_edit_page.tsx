@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import axios from '../../api/axios'
 
 import LoadingSpinnerBlock from "../../components/LoadingSpinnerBlock"
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
 
 import "../../style/post_page/post_edit_page.css"
 
@@ -36,6 +36,8 @@ function PostEditPage() {
 	const [wasPostChanged, setWasPostChanged] = useState<boolean>(false);
 
 	const [new_post_content, setNewPostContent] = useState<string>("");
+
+	const [editing_in_progress, setEditingInProgress] = useState<boolean>(false);
 
 	useEffect(() => {
 		axios.get(`/post/${post_id}`)
@@ -72,12 +74,13 @@ function PostEditPage() {
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setEditingInProgress(true);
+
 		const submit_button = document.querySelector("div.button_container > button[type='submit']");
 		const discard_button = document.querySelector("div.button_container > button[type='button']");
 
 		if (submit_button) { 
 			submit_button.setAttribute("disabled", true.toString());
-			submit_button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		if (discard_button) {
@@ -109,7 +112,7 @@ function PostEditPage() {
 					</div>
 					<div className="button_container">
 						<button type="button" disabled={!wasPostChanged} onClick={discardChanges}>Discard changes</button>
-						<button type="submit" disabled={!wasPostChanged}>Apply changes</button>
+						<button type="submit" disabled={!wasPostChanged}>{ editing_in_progress ? <LoadingSpinnerInline /> : "Apply changes" }</button>
 					</div>
 				</form>
 			</section>
