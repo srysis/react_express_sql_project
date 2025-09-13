@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import axios from '../../api/axios'
 
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
 
 interface props {
 	USER_ID: string | undefined,
@@ -23,6 +23,8 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, s
 
 	const [newUsername, setNewUsername] = useState<string>("");
 	const [newDescription, setNewDescription] = useState<string>("");
+
+	const [action_in_progress, setActionInProgress] = useState<boolean>(false);
 
 	useEffect(() => {
 		setNewUsername(defaultUserData.name);
@@ -57,12 +59,13 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, s
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setActionInProgress(true);
+
 		const apply_button = document.querySelector("section#change_user_info > form > div.button_container > button[type='submit']");
 		const discard_button = document.querySelector("section#change_user_info > form > div.button_container > button[type='button']");
 
 		if (apply_button) { 
 			apply_button.setAttribute("disabled", true.toString());
-			apply_button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		if (discard_button) {
@@ -78,9 +81,7 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, s
 
 				setWasNewUserDataChanged(false);
 
-				if (apply_button) {
-					apply_button.innerHTML = "Apply changes";
-				}
+				setActionInProgress(false);
 			}
 		} catch (error: any) {
 			const apply_button = document.querySelector("section#change_user_info > form > div.button_container > button[type='submit']");
@@ -88,7 +89,6 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, s
 
 			if (apply_button) {
 				apply_button.removeAttribute("disabled");
-				apply_button.innerHTML = "Apply changes";
 			}
 
 			if (discard_button) {
@@ -110,7 +110,7 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, s
 				</div>
 				<div className="button_container">
 					<button type="button" disabled={!wasUserDataChanged} onClick={discardChanges}>Discard changes</button>
-					<button type="submit" disabled={!wasUserDataChanged}>Apply changes</button>
+					<button type="submit" disabled={!wasUserDataChanged}>{ action_in_progress ? <LoadingSpinnerInline /> : "Apply changes" }</button>
 				</div>
 			</form>
 		</section>

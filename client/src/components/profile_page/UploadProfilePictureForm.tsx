@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import axios from '../../api/axios'
 
-import half_circle from "../../assets/half-circle.png"
+import LoadingSpinnerInline from "../../components/LoadingSpinnerInline"
 
 interface props {
 	USER_ID: string | undefined,
@@ -21,6 +21,8 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 
 	const [selected_image, setSelectedImage] = useState<any>(null);
 	const [preview_image, setPreviewImage] = useState<any>(null);
+
+	const [action_in_progress, setActionInProgress] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (!selected_image) {
@@ -58,12 +60,13 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 	async function onSubmitHandler(event: any) {
 		event.preventDefault();
 
+		setActionInProgress(true);
+
 		const apply_button = document.querySelector("section#upload_profile_picture > form > div.button_container > button[type='submit']");
 		const discard_button = document.querySelector("section#upload_profile_picture > form > div.button_container > button[type='button']");
 
 		if (apply_button) { 
 			apply_button.setAttribute("disabled", true.toString());
-			apply_button.innerHTML = `<span class="loading_spinner"><img src=${half_circle} /></span>`;
 		}
 
 		if (discard_button) {
@@ -76,21 +79,18 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 			if (response.data.success) {
 				setImageData(null);
 
-				if (apply_button) {
-					apply_button.innerHTML = "Apply changes";
-				}
-
+				setActionInProgress(false);
 				setNotificationType("success");
 				setNotificationMessage("Your avatar has been changed.");
 			}
 		} catch (error: any) {
 			if (error.status == 400) {
+				setActionInProgress(false);
 				setNotificationType("error");
 				setNotificationMessage("Only .png files are allowed!");
 
 				if (apply_button) {
 					apply_button.removeAttribute("disabled");
-					apply_button.innerHTML = "Apply changes";
 				}
 
 				if (discard_button) {
@@ -113,7 +113,7 @@ function UploadProfilePictureForm({USER_ID, defaultUserData, setNotificationMess
 				</div>
 				<div className="button_container">
 					<button type="button" disabled={!image_data} onClick={discardChanges}>Discard changes</button>
-					<button type="submit" disabled={!image_data}>Apply changes</button>
+					<button type="submit" disabled={!image_data}>{ action_in_progress ? <LoadingSpinnerInline /> : "Apply changes" }</button>
 				</div>
 			</form>
 		</section>
