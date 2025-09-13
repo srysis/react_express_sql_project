@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import LoadingSpinnerBlock from "../../components/LoadingSpinnerBlock"
 import half_circle from "../../assets/half-circle.png"
 
 import "../../style/shared.css"
@@ -148,9 +149,7 @@ function PostDeletePage({USER_ID, isAdmin, setNotificationMessage, setNotificati
 		)
 	} else {
 		return(
-			<section id="loading">
-				<div className="loading_spinner"><img src={half_circle}/></div>
-			</section>
+			<LoadingSpinnerBlock />
 		)
 	}
 }

@@ -3,8 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from '../api/axios'
 
 import SearchResult from "../components/search_page/SearchResult"
-
-import half_circle from "../assets/half-circle.png"
+import LoadingSpinnerBlock from "../components/LoadingSpinnerBlock"
 
 import "../style/search_page/search_page.css"
 import "../style/search_page/search_result.css"
@@ -100,12 +99,7 @@ function SearchPage() {
 				</section>
 			}
 
-			{ search_in_progress && 
-				<section id="loading">
-					<div className="loading_spinner"><img src={half_circle}/></div>
-				</section>
-			}
-
+			{ search_in_progress && <LoadingSpinnerBlock /> }
 			</div>
 		</section>
 	)

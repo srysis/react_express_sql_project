@@ -7,8 +7,8 @@ import Rating from "../../components/post_page/Rating"
 
 import AddCommentField from "../../components/post_page/AddCommentField"
 import CommentsSection from "../../components/post_page/CommentsSection"
+import LoadingSpinnerBlock from "../../components/LoadingSpinnerBlock"
 
-import half_circle from "../../assets/half-circle.png"
 import dots_icon from "../../assets/v_dots-icon.png"
 
 import "../../style/post_page/post_page.css"
@@ -202,11 +202,7 @@ function PostPage({DEVICE_TYPE, isLoggedIn, isAdmin, setNotificationMessage, set
 					</div>
 				</section>
 				{isLoggedIn && <AddCommentField post_id={post_id} />}
-				{areCommentsRetrieved ? <CommentsSection comments={comments} /> : 
-					<section id="loading">
-						<div className="loading_spinner"><img src={half_circle}/></div>
-					</section>
-			}
+				{areCommentsRetrieved ? <CommentsSection comments={comments} /> : <LoadingSpinnerBlock /> }
 			</>
 		)
 	} else if (isPostRetrieved && post_content === null) {
@@ -217,9 +213,7 @@ function PostPage({DEVICE_TYPE, isLoggedIn, isAdmin, setNotificationMessage, set
 		)
 	} else {
 		return(
-			<section id="loading">
-				<div className="loading_spinner"><img src={half_circle}/></div>
-			</section>
+			<LoadingSpinnerBlock />
 		)
 	}
 }

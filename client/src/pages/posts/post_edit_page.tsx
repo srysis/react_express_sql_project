@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import axios from '../../api/axios'
 
+import LoadingSpinnerBlock from "../../components/LoadingSpinnerBlock"
 import half_circle from "../../assets/half-circle.png"
 
 import "../../style/post_page/post_edit_page.css"
@@ -115,9 +116,7 @@ function PostEditPage() {
 		)
 	} else {
 		return(
-			<section id="loading">
-				<div className="loading_spinner"><img src={half_circle}/></div>
-			</section>
+			<LoadingSpinnerBlock />
 		)
 	}
 }
