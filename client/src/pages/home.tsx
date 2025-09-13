@@ -2,8 +2,7 @@ import axios from '../api/axios'
 import { useState, useEffect } from 'react'
 
 import Post from "../components/home/Post"
-
-import half_circle from "../assets/half-circle.png"
+import LoadingSpinnerBlock from "../components/LoadingSpinnerBlock"
 
 import "../style/home/home.css"
 import "../style/home/posts.css"
@@ -103,15 +102,13 @@ function Home() {
 						{retrieved_posts.map((post) => <Post key={post.post_id} content={post} />)}
 					</section>
 					<button type="button" id="load_more" onClick={increaseOffset} disabled={hasReachedEnd}>Load more posts</button>
-					{(isLoadingNewPosts && !hasReachedEnd) && <div className="loading_spinner"><img src={half_circle}/></div>}
+					{(isLoadingNewPosts && !hasReachedEnd) && <LoadingSpinnerBlock />}
 				</section>
 			</>
 		)
 	} else {
 		return(
-			<section id="loading">
-				<div className="loading_spinner"><img src={half_circle}/></div>
-			</section>
+			<LoadingSpinnerBlock />
 		)
 	}
 }
