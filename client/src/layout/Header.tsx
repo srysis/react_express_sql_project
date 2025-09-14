@@ -50,9 +50,13 @@ function Header({DEVICE_TYPE, isLoggedIn, isAdmin, logOut, setAsideVisibility}: 
 				</nav>
 			}
 			{ DEVICE_TYPE === "mobile" && 
-				<nav>
-					<User DEVICE_TYPE={DEVICE_TYPE} USER_ID={stored_user_id} isAdmin={isAdmin} logOut={logOut} />
-				</nav>
+				<>
+					{ isLoggedIn && 
+						<nav>
+							<User DEVICE_TYPE={DEVICE_TYPE} USER_ID={stored_user_id} isAdmin={isAdmin} logOut={logOut} />
+						</nav>
+					}
+				</>
 			}
 		</header>
 	)
