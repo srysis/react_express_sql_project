@@ -10,7 +10,6 @@ div.rating_container {
 	align-items: center;
 	margin: 15px auto;
 	border-radius: 30px;
-	background-color: rgb(5, 6, 7);
 
 	div:nth-child(odd) {
 		border-right: var(--border-style);
@@ -37,8 +36,8 @@ div.rating_container {
 	div {
 		button {
 			border: none;
-			padding: 5px;
-			background-color: transparent;
+			padding: 1vh 1vw;
+			background-color: #000;
 			font-size: 1.2em;
 			font-weight: bold;
 			color: #fff;
