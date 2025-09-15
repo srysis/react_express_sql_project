@@ -15,6 +15,9 @@ const imageUpload = multer();
 
 dot_env.config();
 
+// specify the default image name to prevent the server from sending a 'delete' request
+const DEFAULT_IMAGE_NAME = "default.png";
+
 const router = express.Router();
 
 router.get('/:id', (request, response) => {
@@ -174,7 +177,7 @@ router.post('/:id/upload_profile_picture', [authenticator, imageUpload.single("p
 								database.query(set_image_path_query, (error, data) => {
 									if (error) return response.json(error);
 
-									deleteImageFromVercel(previous_image);
+									if (previous_image != DEFAULT_IMAGE_NAME) deleteImageFromVercel(previous_image);
 
 									response.json({success: true, message: "Profile picture has been updated"});
 								})
