@@ -58,6 +58,7 @@ function Home() {
 
 				if (response.data.posts.length < POST_LIMIT) {
 					setHasReachedEnd(true);
+					if (button != null) button.setAttribute("disabled", "");
 				}
 			} else {
 				setIsLoadingNewPosts(false);
