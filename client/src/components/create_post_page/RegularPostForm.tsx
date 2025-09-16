@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
 import axios from '../../api/axios'
@@ -12,16 +12,52 @@ interface props {
 
 function RegularPostForm({USER_ID, logOut}: props) {
 	const navigate = useNavigate();
+
+	const [initial_post_content_field_height, setInitialPostContentFieldHeight] = useState<number| null>(null);
+	const [current_post_content_field_height, setCurrentPostContentFieldHeight] = useState<number| null>(null);
 	
 	const [post_content, setPostContent] = useState<{post_content: string, post_title: string}>({post_content: "", post_title: ""});
 
 	const [posting_in_progress, setPostingInProgress] = useState<boolean>(false);
+
+	useEffect(() => {
+		const post_content_field: HTMLElement | null = document.querySelector("textarea#post_content");
+
+		if (post_content_field != null) {
+			setInitialPostContentFieldHeight(post_content_field.clientHeight);
+			setCurrentPostContentFieldHeight(post_content_field.clientHeight);
+		}
+	}, [])
+
+	function isOverflowing(element: HTMLElement) {
+		return element.scrollHeight > element.clientHeight;
+	}
+
+	function isNotOverflowing(element: HTMLElement) {
+		return element.scrollHeight <= element.clientHeight;
+	}
 
 	function onChangeHandler(event: any) {
 		setPostContent({
 			...post_content,
 			[event.target.id]: event.target.value
 		})
+
+		if (isOverflowing(event.target)) {
+			event.target.style.height = `${event.target.scrollHeight}px`;
+			setCurrentPostContentFieldHeight(event.target.scrollHeight);
+		} else if (isNotOverflowing(event.target)) {
+			event.target.style.height = "auto";
+			setCurrentPostContentFieldHeight(initial_post_content_field_height);
+		}
+	}
+
+	function onBlurHandler(event: any) {
+		event.target.style.height = `${initial_post_content_field_height}px`;
+	}
+
+	function onFocusHandler(event: any) {
+		event.target.style.height = `${current_post_content_field_height}px`;
 	}
 
 	async function onSubmitHandler(event: any) {
@@ -64,7 +100,7 @@ function RegularPostForm({USER_ID, logOut}: props) {
 			</div>
 			<div className="textarea_container">
 				<label htmlFor="post_content"><span>Content</span></label>
-				<textarea id="post_content" rows={4} cols={50} placeholder="Share your opinions..." onChange={onChangeHandler} required></textarea>
+				<textarea id="post_content" rows={4} cols={50} maxLength={10000} placeholder="Share your opinions..." onChange={onChangeHandler} onFocus={onFocusHandler} onBlur={onBlurHandler} required></textarea>
 			</div>
 			<div className="button_container">
 				<button className="submit" disabled={(!post_content.post_content || !post_content.post_title)}>{ posting_in_progress ? <LoadingSpinnerInline /> : "Post" }</button>
