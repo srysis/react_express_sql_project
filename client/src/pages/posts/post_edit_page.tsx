@@ -39,6 +39,9 @@ function PostEditPage() {
 
 	const [editing_in_progress, setEditingInProgress] = useState<boolean>(false);
 
+	const [initial_post_content_field_height, setInitialPostContentFieldHeight] = useState<number| null>(null);
+	const [current_post_content_field_height, setCurrentPostContentFieldHeight] = useState<number| null>(null);
+
 	useEffect(() => {
 		axios.get(`/post/${post_id}`)
 		.then((response: any) => {
@@ -52,6 +55,13 @@ function PostEditPage() {
 				setIsPostRetrieved(true);
 
 				setOldPostContent(response.data.post.post_content);
+
+				const post_content_field: HTMLElement | null = document.querySelector("textarea#post_content");
+
+				if (post_content_field != null) {
+					setInitialPostContentFieldHeight(post_content_field.clientHeight);
+					setCurrentPostContentFieldHeight(post_content_field.clientHeight);
+				}
 			}
 
 		})
@@ -69,6 +79,19 @@ function PostEditPage() {
 		setNewPostContent(event.target.value);
 
 		setWasPostChanged(true);
+
+		event.target.style.height = "auto";
+		event.target.style.height = `${event.target.scrollHeight}px`;
+
+		setCurrentPostContentFieldHeight(event.target.scrollHeight);
+	}
+
+	function onBlurHandler(event: any) {
+		event.target.style.height = `${initial_post_content_field_height}px`;
+	}
+
+	function onFocusHandler(event: any) {
+		event.target.style.height = `${current_post_content_field_height}px`;
 	}
 
 	async function onSubmitHandler(event: any) {
@@ -108,7 +131,7 @@ function PostEditPage() {
 					</div>
 					<div className="textarea_container">
 						<label htmlFor="post_content"><span>Content</span></label>
-						<textarea id="post_content" rows={4} cols={50} placeholder="Share your opinions..." defaultValue={post_data.post_content} onChange={onChangeHandler}></textarea>
+						<textarea id="post_content" rows={4} cols={50} maxLength={10000} placeholder="Share your opinions..." defaultValue={post_data.post_content} onChange={onChangeHandler} onFocus={onFocusHandler} onBlur={onBlurHandler} ></textarea>
 					</div>
 					<div className="button_container">
 						<button type="button" disabled={!wasPostChanged} onClick={discardChanges}>Discard changes</button>
