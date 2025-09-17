@@ -29,27 +29,16 @@ function RegularPostForm({USER_ID, logOut}: props) {
 		}
 	}, [])
 
-	function isOverflowing(element: HTMLElement) {
-		return element.scrollHeight > element.clientHeight;
-	}
-
-	function isNotOverflowing(element: HTMLElement) {
-		return element.scrollHeight <= element.clientHeight;
-	}
-
 	function onChangeHandler(event: any) {
 		setPostContent({
 			...post_content,
 			[event.target.id]: event.target.value
 		})
 
-		if (isOverflowing(event.target)) {
-			event.target.style.height = `${event.target.scrollHeight}px`;
-			setCurrentPostContentFieldHeight(event.target.scrollHeight);
-		} else if (isNotOverflowing(event.target)) {
-			event.target.style.height = "auto";
-			setCurrentPostContentFieldHeight(initial_post_content_field_height);
-		}
+		event.target.style.height = "auto";
+		event.target.style.height = `${event.target.scrollHeight}px`;
+
+		setCurrentPostContentFieldHeight(event.target.scrollHeight);
 	}
 
 	function onBlurHandler(event: any) {
