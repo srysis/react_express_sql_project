@@ -7,6 +7,12 @@ section#edit_post {
 		user-select: none;
 	}
 
+	div.textarea_container {
+		textarea {
+			max-height: 1000px;
+		}
+	}
+
 	div.button_container {
 		button {
 			width: 20%;
