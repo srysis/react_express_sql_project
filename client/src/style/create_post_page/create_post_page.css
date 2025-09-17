@@ -51,6 +51,10 @@ section#create_post {
 	form#regular_post_form {
 		div.textarea_container {
 			margin-block: 20px;
+
+			textarea {
+				max-height: 1000px;
+			}
 		}
 
 		div.button_container {
