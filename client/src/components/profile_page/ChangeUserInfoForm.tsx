@@ -106,7 +106,7 @@ function ChangeUserInfoForm({USER_ID, defaultUserData, setNotificationMessage, s
 				</div>
 				<div className="textarea_container">
 					<label htmlFor="description"><span>Description</span></label>
-					<textarea id="description" defaultValue={defaultUserData.description} rows={4} cols={50} placeholder="Content" onChange={onChangeHandler}></textarea>
+					<textarea id="description" defaultValue={defaultUserData.description} maxLength={10000} rows={10} cols={50} placeholder="Content" onChange={onChangeHandler}></textarea>
 				</div>
 				<div className="button_container">
 					<button type="button" disabled={!wasUserDataChanged} onClick={discardChanges}>Discard changes</button>
