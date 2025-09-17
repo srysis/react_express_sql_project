@@ -28,24 +28,13 @@ function AddCommentField({post_id}: props) {
 		}
 	}, [])
 
-	function isOverflowing(element: HTMLElement) {
-		return element.scrollHeight > element.clientHeight;
-	}
-
-	function isNotOverflowing(element: HTMLElement) {
-		return element.scrollHeight <= element.clientHeight;
-	}
-
 	function onChangeHandler(event: any) {
 		setComment(event.target.value);
 
-		if (isOverflowing(event.target)) {
-			event.target.style.height = `${event.target.scrollHeight}px`;
-			setCurrentCommentFieldHeight(event.target.scrollHeight);
-		} else if (isNotOverflowing(event.target)) {
-			event.target.style.height = "auto";
-			setCurrentCommentFieldHeight(initial_comment_field_height);
-		}
+		event.target.style.height = "auto";
+		event.target.style.height = `${event.target.scrollHeight}px`;
+
+		setCurrentCommentFieldHeight(event.target.scrollHeight);
 	}
 
 	function onBlurHandler(event: any) {
@@ -83,7 +72,7 @@ function AddCommentField({post_id}: props) {
 		<section id="add_comment">
 			<form onSubmit={onSubmitHandler}>
 				<div className="input_container" style={!comment ? {"marginBottom": "0"} : undefined}>
-					<textarea id="comment_field" maxLength={2048} placeholder="Comment on this post" onChange={onChangeHandler} onFocus={onFocusHandler} onBlur={onBlurHandler}></textarea>
+					<textarea id="comment_field" maxLength={2000} placeholder="Comment on this post" onChange={onChangeHandler} onFocus={onFocusHandler} onBlur={onBlurHandler}></textarea>
 				</div>
 				<div className="button_container" style={!comment ? {"display": "none"} : undefined}>
 					<button disabled={!comment}>{ action_in_progress ? <LoadingSpinnerInline /> : "Comment" }</button>
