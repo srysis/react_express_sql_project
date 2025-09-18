@@ -1,6 +1,6 @@
 # Forum
 
-This a full-stack 'Forum' web-application, that allows users to discuss different topics and share images.
+This a full-stack 'Forum' web-application, where users could discuss different topics and share images.
 
 
 ## Features
