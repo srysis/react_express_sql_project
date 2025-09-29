@@ -37,17 +37,6 @@ type Post = {
 	dislikes_amount: number
 }
 
-type Comment = {
-	comment_id: number,
-	content: string,
-	comment_date: string,
-	post_id: number,
-	comment_author: number,
-	comment_author_name: string,
-	comment_author_profile_picture: string,
-	date_difference: string
-}
-
 
 function PostPage({DEVICE_TYPE, isLoggedIn, isAdmin, setNotificationMessage, setNotificationType}: props) {
 	const { post_id } = useParams();
@@ -56,9 +45,6 @@ function PostPage({DEVICE_TYPE, isLoggedIn, isAdmin, setNotificationMessage, set
 	const [isPostRetrieved, setIsPostRetrieved] = useState<boolean>(false);
 
 	const [post_ownership, setPostOwnership] = useState<boolean>(false);
-
-	const [comments, setComments] = useState<Comment[]>([]);
-	const [areCommentsRetrieved, setAreCommentsRetrieved] = useState<boolean>(false);
 
 	const [date_difference, setDateDifference] = useState<string | null | undefined>();
 
@@ -77,14 +63,6 @@ function PostPage({DEVICE_TYPE, isLoggedIn, isAdmin, setNotificationMessage, set
 				setPostOwnership(response.data.post_ownership);
 
 				setDateDifference(response.data.date_difference);
-
-				axios.get(`/post/${post_id}/comments`)
-				.then((response: any) => {
-					setComments(response.data.comments);
-
-					setAreCommentsRetrieved(true);
-				})
-				.catch((error: any) => console.error(error));
 			} else if (response.data.post == null) {
 				setPostContent(null);
 				setIsPostRetrieved(true);
@@ -202,7 +180,7 @@ function PostPage({DEVICE_TYPE, isLoggedIn, isAdmin, setNotificationMessage, set
 					</div>
 				</section>
 				{isLoggedIn && <AddCommentField post_id={post_id} />}
-				{areCommentsRetrieved ? <CommentsSection comments={comments} /> : <LoadingSpinnerBlock /> }
+				<CommentsSection post_id={post_id} />
 			</>
 		)
 	} else if (isPostRetrieved && post_content === null) {
