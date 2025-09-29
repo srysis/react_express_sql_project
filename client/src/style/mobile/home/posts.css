@@ -10,6 +10,7 @@
 					padding-inline: 0;
 
 					div.image_container {
+						height: auto;
 						margin-block: 5px;
 
 						a > img {
