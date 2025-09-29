@@ -95,6 +95,11 @@ function Home() {
 		if (hasReachedEnd) window.removeEventListener("scroll", loadMorePosts);
 	}, [hasReachedEnd]);
 
+	// not removing the 'scroll' event listener causes some other pages to attempt to load more posts
+	useEffect(() => {
+		return () => window.removeEventListener("scroll", loadMorePosts);
+	}, []);
+
 	if (arePostsRetrieved && retrieved_posts != undefined) {
 		return(
 			<>
