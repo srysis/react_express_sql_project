@@ -52,6 +52,11 @@
 		}
 	}
 
+	button#load_more {
+		margin-top: 5px;
+		padding-block: 10px;
+	}
+
 	section#comments.empty {
 		padding: 20px 3.3vw;
 
