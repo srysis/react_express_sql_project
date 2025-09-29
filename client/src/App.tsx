@@ -143,12 +143,14 @@ function App() {
 		}
 	}
 
-	const initial_device_type = window.innerWidth < 550 ? "mobile" : "desktop";
+	const WIDTH_THRESHOLD = 550;
+
+	const initial_device_type = window.innerWidth < WIDTH_THRESHOLD ? "mobile" : "desktop";
 
 	const [DEVICE_TYPE, setDeviceType] = useState<string>(initial_device_type);
 
 	window.addEventListener("resize", () => {
-		if (window.innerWidth > 500) {
+		if (window.innerWidth > WIDTH_THRESHOLD) {
 			setDeviceType("desktop");
 		} else {
 			setDeviceType("mobile");
